@@ -273,7 +273,7 @@ export default function Testimonials() {
                     </div>
 
                     <p className="text-white text-xl md:text-2xl mb-8 leading-relaxed font-light max-w-2xl">
-                      "{review.content}"
+                      &quot;{review.content}&quot;
                     </p>
 
                     <div className="flex flex-col items-center gap-2">
