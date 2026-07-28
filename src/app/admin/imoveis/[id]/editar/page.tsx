@@ -7,7 +7,7 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 export default function EditPropertyPage({ params }: { params: { id: string } }) {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
