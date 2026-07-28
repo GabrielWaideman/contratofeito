@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #111827; /* dark-900 */
+    --foreground: #f9fafb; /* gray-50 */
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

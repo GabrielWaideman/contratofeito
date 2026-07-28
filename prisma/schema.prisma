@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Imóveis ───────────────────────────────────────────────────────────────────
+model Property {
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(255)
+  description   String   @db.Text
+  type          String   @db.VarChar(20)       // RURAL | URBANO
+  category      String   @db.VarChar(20)       // Venda | Locação
+  purpose       String   @db.VarChar(30)       // Residencial | Comercial | Rural
+  city          String   @db.VarChar(100)
+  neighborhood  String   @db.VarChar(100)
+  state         String   @db.VarChar(2)        // SP, MG, etc.
+  price         Decimal  @db.Decimal(12, 2)
+  bedrooms      Int      @default(0)
+  suites        Int      @default(0)
+  bathrooms     Int      @default(0)
+  garageSpots   Int      @default(0)
+  area          Float
+  areaUnit      String   @db.VarChar(10)       // m² | ha | alq
+  builtArea     Float?
+  builtAreaUnit String?  @db.VarChar(10)
+  imageUrl      String   @db.VarChar(500)      // foto de capa
+  images        String   @db.Text              // JSON serializado: String[]
+  features      String   @db.Text              // JSON serializado: String[]
+  isFeatured    Boolean  @default(false)
+  isPublished   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([city])
+  @@index([category])
+  @@index([type])
+  @@index([isPublished])
+}
+
+// ─── Depoimentos ──────────────────────────────────────────────────────────────
+model Review {
+  id          Int      @id @default(autoincrement())
+  clientName  String   @db.VarChar(100)
+  content     String   @db.Text
+  rating      Int      @default(5)
+  imageUrl    String?  @db.VarChar(500)
+  isApproved  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+// ─── Usuários Admin ───────────────────────────────────────────────────────────
+model AdminUser {
+  id            Int       @id @default(autoincrement())
+  username      String    @unique @db.VarChar(50)
+  passwordHash  String    @db.VarChar(255)     // bcrypt hash — nunca texto puro
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  lastLoginAt   DateTime?
+}
