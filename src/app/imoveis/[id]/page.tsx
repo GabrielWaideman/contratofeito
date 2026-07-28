@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 import { getPropertyById, getSuggestedProperties } from '@/lib/properties'
 import PropertyClient from './PropertyClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function PropertyPage({ params }: { params: { id: string } }) {
   const propertyId = Number(params.id)
   
