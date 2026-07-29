@@ -7,10 +7,12 @@ export const loginSchema = z.object({
 
 export const propertySchema = z.object({
   title: z.string().min(5, 'Título deve ter pelo menos 5 caracteres').max(255).trim(),
+  code: z.string().max(50, 'Código muito longo').optional().nullable().transform(val => val?.trim() === '' ? null : val),
+  videoUrl: z.string().url('URL de vídeo inválida').max(500, 'URL muito longa').optional().nullable().transform(val => val?.trim() === '' ? null : val),
   description: z.string().min(10, 'Descrição muito curta').trim(),
-  type: z.enum(['RURAL', 'URBANO']),
-  category: z.enum(['Venda', 'Locação']),
-  purpose: z.enum(['Residencial', 'Comercial', 'Rural']),
+  type: z.string().min(1, 'Tipo obrigatório').max(100),
+  category: z.string().min(1, 'Categoria obrigatória').max(100),
+  purpose: z.string().min(1, 'Finalidade obrigatória').max(100),
   city: z.string().min(2, 'Cidade obrigatória').max(100).trim(),
   neighborhood: z.string().min(2, 'Bairro obrigatório').max(100).trim(),
   state: z.string().length(2, 'Estado deve ter 2 letras').toUpperCase(),
@@ -28,6 +30,7 @@ export const propertySchema = z.object({
   features: z.array(z.string().trim()).default([]),
   isFeatured: z.boolean().default(false),
   isPublished: z.boolean().default(false),
+  acceptsExchange: z.boolean().default(false),
 })
 
 export type PropertyInput = z.infer<typeof propertySchema>

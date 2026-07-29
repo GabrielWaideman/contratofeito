@@ -28,10 +28,11 @@ export default function PropertiesListPage() {
 
   const filtered = properties.filter(p => 
     p.title.toLowerCase().includes(search.toLowerCase()) || 
-    String(p.id).includes(search)
+    String(p.id).includes(search) ||
+    (p.code && p.code.toLowerCase().includes(search.toLowerCase()))
   )
 
-  const priceFormat = (val: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 }).format(val)
+  const priceFormat = (val: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(val)
 
   return (
     <div className="space-y-6">
@@ -82,7 +83,9 @@ export default function PropertiesListPage() {
               ) : (
                 filtered.map(p => (
                   <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 font-mono text-xs text-gray-500">#{String(p.id).padStart(4, '0')}</td>
+                    <td className="px-6 py-4 font-mono text-xs text-gray-500">
+                      {p.code ? p.code : `#${String(p.id).padStart(4, '0')}`}
+                    </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden shrink-0 border border-gray-200 flex items-center justify-center">

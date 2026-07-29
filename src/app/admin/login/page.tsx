@@ -41,12 +41,11 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="bg-brand-600 p-8 text-center text-white">
-          <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm">
-            <Lock size={32} />
+        <div className="bg-brand-600 p-8 text-center text-white flex flex-col items-center">
+          <div className="bg-white rounded-xl p-3 mb-2 shadow-sm inline-flex items-center justify-center">
+            <img src="/logo.png" alt="Contrato Feito" className="h-12 w-auto object-contain" />
           </div>
-          <h1 className="text-2xl font-black tracking-tight">Contrato Feito</h1>
-          <p className="text-brand-100 font-medium mt-1">Painel Administrativo</p>
+          <h1 className="text-2xl font-black tracking-tight mt-2">Painel Administrativo</h1>
         </div>
 
         <form onSubmit={handleLogin} className="p-8 space-y-6">

@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import WhatsAppButton from "@/components/WhatsAppButton";
+import TestimonialToast from "@/components/TestimonialToast";
+import PageTracker from "@/components/PageTracker";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -30,6 +32,8 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased overflow-x-hidden bg-white text-gray-900`}>
         {children}
         <WhatsAppButton />
+        <TestimonialToast />
+        <PageTracker />
       </body>
     </html>
   );

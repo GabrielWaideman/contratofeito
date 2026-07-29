@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, Home } from 'lucide-react'
 
-export default function Header() {
+export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -25,7 +25,9 @@ export default function Header() {
   ]
 
   return (
-    <header className={`fixed top-0 w-full z-50 transition-all duration-300 bg-white shadow-sm py-4`}>
+    <header className={`fixed top-0 w-full z-50 transition-all duration-300 shadow-sm py-4 ${
+      theme === 'dark' ? 'bg-dark-950' : 'bg-white'
+    }`}>
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         
         {/* Logo */}
@@ -39,7 +41,9 @@ export default function Header() {
             <Link 
               key={link.name} 
               href={link.href}
-              className="font-semibold text-sm hover:text-brand-600 transition-colors text-slate-800 uppercase tracking-wide"
+              className={`font-semibold text-sm hover:text-brand-600 transition-colors uppercase tracking-wide ${
+                theme === 'dark' ? 'text-white' : 'text-slate-800'
+              }`}
             >
               {link.name}
             </Link>
@@ -51,7 +55,7 @@ export default function Header() {
 
         {/* Mobile Toggle */}
         <button 
-          className="md:hidden p-2 text-slate-800"
+          className={`md:hidden p-2 ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X /> : <Menu />}

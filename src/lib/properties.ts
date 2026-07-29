@@ -2,6 +2,8 @@
 
 export type Property = {
   id: number
+  code?: string | null
+  videoUrl?: string | null
   title: string
   type: 'RURAL' | 'URBANO'
   category: 'Venda' | 'Locação'

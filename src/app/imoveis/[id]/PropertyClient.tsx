@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import VideoEmbed from '@/components/VideoEmbed'
 import { getPropertyById, getSuggestedProperties, Property } from '@/lib/properties'
 import {
   MapPin, Bed, Bath, Square, CheckCircle2,
@@ -270,7 +271,7 @@ function SuggestionsCarousel({ properties }: { properties: Property[] }) {
   }, [maxIndex])
 
   const priceFormat = (p: number) =>
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 0 }).format(p)
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(p)
 
   return (
     <div>
@@ -304,8 +305,8 @@ function SuggestionsCarousel({ properties }: { properties: Property[] }) {
         >
           {properties.map((p) => (
             <div key={p.id} className="shrink-0 w-full md:w-[calc(33.333%-14px)]">
-              <Link href={`/imoveis/${p.id}`} className="block group">
-                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200 transition-all duration-300 hover:-translate-y-1.5">
+              <Link href={`/imoveis/${p.id}`} className="block group h-full">
+                <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200 transition-all duration-300 hover:-translate-y-1.5 h-full flex flex-col">
                   <div className="relative h-48 overflow-hidden">
                     <img src={p.imageUrl} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -316,13 +317,13 @@ function SuggestionsCarousel({ properties }: { properties: Property[] }) {
                       </span>
                     </div>
                   </div>
-                  <div className="p-4">
+                  <div className="p-4 flex-1 flex flex-col">
                     <div className="flex items-center gap-1.5 text-brand-600 text-xs font-bold uppercase tracking-wider mb-2">
                       <MapPin size={11} className="shrink-0" />
                       <span className="truncate">{p.neighborhood} · {p.city}</span>
                     </div>
-                    <h3 className="text-gray-900 font-bold text-sm line-clamp-2 mb-3">{p.title}</h3>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-gray-400 text-xs border-t border-gray-100 pt-3">
+                    <h3 className="text-gray-900 font-bold text-sm line-clamp-2 mb-3 mb-auto">{p.title}</h3>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 text-gray-400 text-xs border-t border-gray-100 pt-3 mt-4">
                       {p.bedrooms > 0 && <span className="flex items-center gap-1"><Bed size={12} className="text-brand-500" /> {p.bedrooms} qtos</span>}
                       {p.bathrooms > 0 && <span className="flex items-center gap-1"><Bath size={12} className="text-brand-500" /> {p.bathrooms} ban.</span>}
                       <span className="flex items-center gap-1"><Square size={12} className="text-brand-500" /> {p.area} {p.areaUnit}</span>
@@ -364,7 +365,7 @@ export default function PropertyClient({
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-brand-200">
-      <Header />
+      <Header theme="dark" />
 
       <main className="flex-1 pt-32 pb-24">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
@@ -444,6 +445,17 @@ export default function PropertyClient({
                   </li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {/* ── Vídeo do Imóvel ── */}
+          {property.videoUrl && (
+            <section className="mb-12 max-w-3xl">
+              <h2 className="text-gray-900 font-extrabold text-xl mb-5 flex items-center gap-3">
+                <span className="w-1 h-6 rounded-full bg-brand-600 inline-block" />
+                Vídeo do Imóvel
+              </h2>
+              <VideoEmbed url={property.videoUrl} />
             </section>
           )}
 

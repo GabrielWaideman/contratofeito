@@ -76,3 +76,4 @@ Toda a fundação técnica estrutural de banco de dados, upload de imagem, deplo
 - [ ] **Página "Sobre" (Detalhes da Empresa):** Validar se os textos sobre a história da empresa na landing page estão adequados ou se exigem reescrita e edição de *copywriting*.
 
 *(Atualizado na última sessão iterativa com Inteligência Artificial).*
+

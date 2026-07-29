@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
-import { Star, ChevronLeft, ChevronRight, Quote, Plus, X, Send, CheckCircle2 } from 'lucide-react'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Star, ChevronLeft, ChevronRight, Quote, Plus, X, Send, CheckCircle2, MessageSquare, Loader2 } from 'lucide-react'
 
 type Review = {
   id: number
@@ -10,56 +10,77 @@ type Review = {
   rating: number
 }
 
-const INITIAL_REVIEWS: Review[] = [
-  {
-    id: 1,
-    clientName: 'João Silva',
-    content: 'Atendimento excelente! Encontraram a chácara perfeita para minha família em tempo recorde. Muito satisfeito com a transparência.',
-    rating: 5,
-  },
-  {
-    id: 2,
-    clientName: 'Maria Fernanda',
-    content: 'Vendi minha casa com a Contrato Feito e foi a melhor escolha. Eles cuidaram de tudo, desde as fotos até a documentação final.',
-    rating: 5,
-  },
-  {
-    id: 3,
-    clientName: 'Carlos e Ana',
-    content: 'Profissionalismo do começo ao fim. Recomendamos de olhos fechados para quem busca investir em imóveis na região.',
-    rating: 5,
-  },
-]
+// ─── Skeleton de loading ───────────────────────────────────────────────────────
+function ReviewSkeleton() {
+  return (
+    <div className="bg-dark-800/60 backdrop-blur-xl border border-dark-700/50 rounded-3xl p-8 md:p-12 shadow-2xl animate-pulse flex flex-col items-center gap-6">
+      <div className="flex gap-2">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="w-6 h-6 bg-dark-700 rounded-full" />
+        ))}
+      </div>
+      <div className="w-full space-y-3 max-w-2xl">
+        <div className="h-4 bg-dark-700 rounded-full w-full" />
+        <div className="h-4 bg-dark-700 rounded-full w-5/6 mx-auto" />
+        <div className="h-4 bg-dark-700 rounded-full w-4/6 mx-auto" />
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <div className="w-14 h-14 rounded-full bg-dark-700" />
+        <div className="h-4 bg-dark-700 rounded-full w-28" />
+      </div>
+    </div>
+  )
+}
 
 // ─── Modal de adicionar depoimento ────────────────────────────────────────────
-
 function AddReviewModal({
   onClose,
-  onAdd,
+  onSuccess,
 }: {
   onClose: () => void
-  onAdd: (r: Omit<Review, 'id'>) => void
+  onSuccess: () => void
 }) {
   const [name, setName] = useState('')
   const [content, setContent] = useState('')
   const [rating, setRating] = useState(5)
   const [hovered, setHovered] = useState(0)
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name.trim()) { setError('Por favor, informe seu nome.'); return }
     if (!content.trim() || content.trim().length < 20) { setError('Escreva pelo menos 20 caracteres no depoimento.'); return }
     setError('')
-    onAdd({ clientName: name.trim(), content: content.trim(), rating })
-    setSubmitted(true)
+    setLoading(true)
+
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientName: name.trim(), content: content.trim(), rating }),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        setError(data.error || 'Erro ao enviar. Tente novamente.')
+        setLoading(false)
+        return
+      }
+
+      setSubmitted(true)
+      onSuccess() // Notifica o pai para recarregar se necessário
+    } catch {
+      setError('Erro de conexão. Tente novamente.')
+      setLoading(false)
+    }
   }
 
   // Fecha automaticamente após mostrar a tela de sucesso
   useEffect(() => {
     if (submitted) {
-      const t = setTimeout(onClose, 2200)
+      const t = setTimeout(onClose, 2500)
       return () => clearTimeout(t)
     }
   }, [submitted, onClose])
@@ -94,8 +115,10 @@ function AddReviewModal({
             <div className="w-16 h-16 rounded-full bg-brand-600/20 border border-brand-600/40 flex items-center justify-center mb-4">
               <CheckCircle2 size={32} className="text-brand-500" />
             </div>
-            <h4 className="text-white font-bold text-lg mb-2">Depoimento adicionado!</h4>
-            <p className="text-slate-400 text-sm">Obrigado por compartilhar sua experiência.</p>
+            <h4 className="text-white font-bold text-lg mb-2">Depoimento enviado!</h4>
+            <p className="text-slate-400 text-sm">
+              Obrigado! Seu depoimento será exibido após aprovação da nossa equipe.
+            </p>
           </div>
         ) : (
           /* Formulário */
@@ -157,10 +180,10 @@ function AddReviewModal({
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 rows={4}
-                maxLength={300}
+                maxLength={500}
                 className="w-full bg-dark-800 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-brand-500 placeholder-slate-600 transition-colors resize-none"
               />
-              <p className="text-slate-600 text-xs text-right mt-1">{content.length}/300</p>
+              <p className="text-slate-600 text-xs text-right mt-1">{content.length}/500</p>
             </div>
 
             {/* Erro */}
@@ -175,16 +198,21 @@ function AddReviewModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-3 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500 text-sm font-medium transition-all"
+                disabled={loading}
+                className="flex-1 py-3 rounded-xl border border-slate-700 text-slate-400 hover:text-white hover:border-slate-500 text-sm font-medium transition-all disabled:opacity-50"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
-                className="flex-1 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-brand-600/30"
+                disabled={loading}
+                className="flex-1 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all hover:shadow-lg hover:shadow-brand-600/30 disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                <Send size={15} />
-                Enviar Depoimento
+                {loading ? (
+                  <><Loader2 size={15} className="animate-spin" /> Enviando...</>
+                ) : (
+                  <><Send size={15} /> Enviar Depoimento</>
+                )}
               </button>
             </div>
           </form>
@@ -197,35 +225,60 @@ function AddReviewModal({
 // ─── Componente principal ─────────────────────────────────────────────────────
 
 export default function Testimonials() {
-  const [reviews, setReviews] = useState<Review[]>(INITIAL_REVIEWS)
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [loading, setLoading] = useState(true)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
   const [showModal, setShowModal] = useState(false)
 
+  const fetchReviews = useCallback(async () => {
+    try {
+      const res = await fetch('/api/reviews')
+      if (res.ok) {
+        const data = await res.json()
+        setReviews(data)
+      }
+    } catch (err) {
+      console.error('Erro ao carregar depoimentos:', err)
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchReviews()
+  }, [fetchReviews])
+
   const navigate = (to: number) => {
-    if (isAnimating) return
+    if (isAnimating || reviews.length === 0) return
     setIsAnimating(true)
     setCurrentIndex(to)
     setTimeout(() => setIsAnimating(false), 500)
   }
 
-  const nextReview = () => navigate((currentIndex + 1) % reviews.length)
-  const prevReview = () => navigate((currentIndex - 1 + reviews.length) % reviews.length)
+  const nextReview = useCallback(() => {
+    if (reviews.length === 0) return
+    navigate((currentIndex + 1) % reviews.length)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex, reviews.length, isAnimating])
+
+  const prevReview = () => {
+    if (reviews.length === 0) return
+    navigate((currentIndex - 1 + reviews.length) % reviews.length)
+  }
 
   useEffect(() => {
-    if (showModal) return
+    if (showModal || reviews.length === 0) return
     const timer = setInterval(nextReview, 6000)
     return () => clearInterval(timer)
-  }, [currentIndex, reviews.length, showModal])
+  }, [nextReview, showModal, reviews.length])
 
-  const handleAddReview = (data: Omit<Review, 'id'>) => {
-    const newReview: Review = { id: Date.now(), ...data }
-    setReviews((prev) => [...prev, newReview])
-    // Vai automaticamente para o novo depoimento após fechar o modal
-    setTimeout(() => {
-      setCurrentIndex(reviews.length) // índice do recém-adicionado
-    }, 2400)
-  }
+  // Garante que o índice não fique fora dos bounds ao recarregar
+  useEffect(() => {
+    if (reviews.length > 0 && currentIndex >= reviews.length) {
+      setCurrentIndex(0)
+    }
+  }, [reviews.length, currentIndex])
 
   return (
     <section id="avaliacoes" className="py-24 bg-dark-900 relative overflow-hidden flex flex-col items-center min-h-[600px]">
@@ -249,79 +302,99 @@ export default function Testimonials() {
         {/* Carrossel */}
         <div className="relative max-w-4xl mx-auto">
 
-          {/* Cards */}
-          <div className="relative">
-            {reviews.map((review, index) => {
-              const isActive = index === currentIndex
-              return (
-                <div
-                  key={review.id}
-                  className={`transition-all duration-700 ease-in-out ${
-                    isActive
-                      ? 'opacity-100 translate-y-0 scale-100 relative z-20'
-                      : 'opacity-0 translate-y-8 scale-95 absolute inset-0 z-0 pointer-events-none'
-                  }`}
-                >
-                  <div className="bg-dark-800/60 backdrop-blur-xl border border-dark-700/50 rounded-3xl p-8 md:p-12 shadow-2xl relative text-center flex flex-col items-center">
-                    <Quote className="text-brand-600 opacity-20 absolute top-8 left-8 w-16 h-16" />
-                    <Quote className="text-brand-600 opacity-20 absolute bottom-8 right-8 w-16 h-16 rotate-180" />
+          {/* Estado de loading */}
+          {loading && <ReviewSkeleton />}
 
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} size={24} className="fill-gold-500 text-gold-500 drop-shadow-md" />
-                      ))}
-                    </div>
-
-                    <p className="text-white text-xl md:text-2xl mb-8 leading-relaxed font-light max-w-2xl">
-                      &quot;{review.content}&quot;
-                    </p>
-
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-dark-800">
-                        {review.clientName.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="text-center">
-                        <h4 className="text-white font-bold text-lg">{review.clientName}</h4>
-                        <span className="text-brand-400 text-sm font-medium tracking-wide uppercase">Cliente Real</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* Controles de navegação */}
-          <div className="flex items-center justify-center gap-6 mt-10">
-            <button
-              onClick={prevReview}
-              className="w-12 h-12 rounded-full border border-dark-700 bg-dark-800/50 flex items-center justify-center text-white hover:bg-brand-600 hover:border-brand-600 transition-colors shadow-lg group"
-              aria-label="Depoimento anterior"
-            >
-              <ChevronLeft className="group-hover:-translate-x-1 transition-transform" />
-            </button>
-
-            <div className="flex gap-2 items-center">
-              {reviews.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => navigate(idx)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
-                    idx === currentIndex ? 'w-8 bg-brand-600' : 'w-2.5 bg-dark-700 hover:bg-dark-600'
-                  }`}
-                  aria-label={`Ir para o depoimento ${idx + 1}`}
-                />
-              ))}
+          {/* Sem depoimentos */}
+          {!loading && reviews.length === 0 && (
+            <div className="bg-dark-800/60 backdrop-blur-xl border border-dark-700/50 rounded-3xl p-12 shadow-2xl flex flex-col items-center gap-4 text-center">
+              <div className="w-16 h-16 rounded-full bg-dark-700 flex items-center justify-center">
+                <MessageSquare size={28} className="text-slate-500" />
+              </div>
+              <h4 className="text-white font-bold text-lg">Seja o primeiro a avaliar!</h4>
+              <p className="text-slate-400 text-sm max-w-sm">
+                Ainda não temos depoimentos cadastrados. Clique abaixo e compartilhe sua experiência com a Contrato Feito.
+              </p>
             </div>
+          )}
 
-            <button
-              onClick={nextReview}
-              className="w-12 h-12 rounded-full border border-dark-700 bg-dark-800/50 flex items-center justify-center text-white hover:bg-brand-600 hover:border-brand-600 transition-colors shadow-lg group"
-              aria-label="Próximo depoimento"
-            >
-              <ChevronRight className="group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
+          {/* Cards do carrossel */}
+          {!loading && reviews.length > 0 && (
+            <>
+              <div className="relative">
+                {reviews.map((review, index) => {
+                  const isActive = index === currentIndex
+                  return (
+                    <div
+                      key={review.id}
+                      className={`transition-all duration-700 ease-in-out ${
+                        isActive
+                          ? 'opacity-100 translate-y-0 scale-100 relative z-20'
+                          : 'opacity-0 translate-y-8 scale-95 absolute inset-0 z-0 pointer-events-none'
+                      }`}
+                    >
+                      <div className="bg-dark-800/60 backdrop-blur-xl border border-dark-700/50 rounded-3xl p-8 md:p-12 shadow-2xl relative text-center flex flex-col items-center">
+                        <Quote className="text-brand-600 opacity-20 absolute top-8 left-8 w-16 h-16" />
+                        <Quote className="text-brand-600 opacity-20 absolute bottom-8 right-8 w-16 h-16 rotate-180" />
+
+                        <div className="flex gap-1 mb-6">
+                          {[...Array(review.rating)].map((_, i) => (
+                            <Star key={i} size={24} className="fill-gold-500 text-gold-500 drop-shadow-md" />
+                          ))}
+                        </div>
+
+                        <p className="text-white text-xl md:text-2xl mb-8 leading-relaxed font-light max-w-2xl">
+                          &quot;{review.content}&quot;
+                        </p>
+
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white font-bold text-xl shadow-lg border-2 border-dark-800">
+                            {review.clientName.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="text-center">
+                            <h4 className="text-white font-bold text-lg">{review.clientName}</h4>
+                            <span className="text-brand-400 text-sm font-medium tracking-wide uppercase">Cliente Real</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* Controles de navegação */}
+              <div className="flex items-center justify-center gap-6 mt-10">
+                <button
+                  onClick={prevReview}
+                  className="w-12 h-12 rounded-full border border-dark-700 bg-dark-800/50 flex items-center justify-center text-white hover:bg-brand-600 hover:border-brand-600 transition-colors shadow-lg group"
+                  aria-label="Depoimento anterior"
+                >
+                  <ChevronLeft className="group-hover:-translate-x-1 transition-transform" />
+                </button>
+
+                <div className="flex gap-2 items-center">
+                  {reviews.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => navigate(idx)}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        idx === currentIndex ? 'w-8 bg-brand-600' : 'w-2.5 bg-dark-700 hover:bg-dark-600'
+                      }`}
+                      aria-label={`Ir para o depoimento ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+
+                <button
+                  onClick={nextReview}
+                  className="w-12 h-12 rounded-full border border-dark-700 bg-dark-800/50 flex items-center justify-center text-white hover:bg-brand-600 hover:border-brand-600 transition-colors shadow-lg group"
+                  aria-label="Próximo depoimento"
+                >
+                  <ChevronRight className="group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </>
+          )}
 
           {/* Botão adicionar depoimento */}
           <div className="flex justify-center mt-10">
@@ -341,7 +414,7 @@ export default function Testimonials() {
       {showModal && (
         <AddReviewModal
           onClose={() => setShowModal(false)}
-          onAdd={handleAddReview}
+          onSuccess={fetchReviews}
         />
       )}
     </section>

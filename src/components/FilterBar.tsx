@@ -1,17 +1,77 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Search } from 'lucide-react'
 
+type SelectOption = {
+  id?: number
+  label: string
+  value: string
+  isDefault: boolean
+}
+
+type OptionsMap = {
+  category: SelectOption[]
+  type: SelectOption[]
+  purpose: SelectOption[]
+}
+
 export default function FilterBar() {
+  const [options, setOptions] = useState<OptionsMap>({
+    category: [
+      { label: 'Venda', value: 'Venda', isDefault: true },
+      { label: 'Locação', value: 'Locação', isDefault: true },
+    ],
+    type: [
+      { label: 'Casa', value: 'Casa', isDefault: true },
+      { label: 'Apartamento', value: 'Apartamento', isDefault: true },
+      { label: 'Terreno', value: 'Terreno', isDefault: true },
+      { label: 'Chácara/Sítio', value: 'Chácara/Sítio', isDefault: true },
+    ],
+    purpose: [
+      { label: 'Residencial', value: 'Residencial', isDefault: true },
+      { label: 'Comercial', value: 'Comercial', isDefault: true },
+      { label: 'Rural', value: 'Rural', isDefault: true },
+    ],
+  })
+
+  const [selectedCategory, setSelectedCategory] = useState<string>('Venda')
+
+  useEffect(() => {
+    fetch('/api/property-options')
+      .then(r => r.json())
+      .then((data: OptionsMap) => {
+        if (data.category && data.type && data.purpose) {
+          // Merge defaults just in case, or use the API response directly if it handles defaults
+          setOptions(data)
+          if (data.category.length > 0 && !data.category.find(c => c.value === selectedCategory)) {
+            setSelectedCategory(data.category[0].value)
+          }
+        }
+      })
+      .catch(() => {
+        console.error("Falha ao carregar opções dinâmicas no FilterBar")
+      })
+  }, [])
+
   return (
     <div className="container mx-auto px-4 -mt-16 -mb-16 relative z-30">
       <div className="bg-white rounded-lg shadow-xl p-4 md:p-6 border-t-4 border-brand-600 flex flex-col gap-4">
-        {/* Tabs - Mantidas como atalhos rápidos para Modalidade */}
+        {/* Tabs - Dinâmicas a partir da Categoria */}
         <div className="flex flex-wrap gap-2 mb-2">
-          <button className="bg-brand-600 text-white px-6 py-2 text-sm font-bold uppercase tracking-wider rounded-md">Venda</button>
-          <button className="bg-slate-100 text-slate-600 hover:bg-slate-200 px-6 py-2 text-sm font-bold uppercase tracking-wider rounded-md transition-colors">Locação</button>
-          <button className="bg-slate-100 text-slate-600 hover:bg-slate-200 px-6 py-2 text-sm font-bold uppercase tracking-wider rounded-md transition-colors hidden sm:block">Lançamentos</button>
+          {options.category.map(cat => (
+            <button
+              key={cat.value}
+              onClick={() => setSelectedCategory(cat.value)}
+              className={`px-6 py-2 text-sm font-bold uppercase tracking-wider rounded-md transition-colors ${
+                selectedCategory === cat.value
+                  ? 'bg-brand-600 text-white'
+                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
         </div>
 
         {/* Inputs - Linha 1 */}
@@ -19,21 +79,20 @@ export default function FilterBar() {
           <div className="flex flex-col">
             <label className="text-xs text-slate-500 mb-1">Finalidade</label>
             <select className="border border-slate-300 rounded-md p-3 text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500">
-              <option>Selecione</option>
-              <option>Residencial</option>
-              <option>Comercial</option>
-              <option>Rural</option>
+              <option value="">Selecione</option>
+              {options.purpose.map(purp => (
+                <option key={purp.value} value={purp.value}>{purp.label}</option>
+              ))}
             </select>
           </div>
 
           <div className="flex flex-col">
             <label className="text-xs text-slate-500 mb-1">Qual o tipo?</label>
             <select className="border border-slate-300 rounded-md p-3 text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-brand-500">
-              <option>Selecione o tipo</option>
-              <option>Casa</option>
-              <option>Apartamento</option>
-              <option>Terreno</option>
-              <option>Chácara/Sítio</option>
+              <option value="">Selecione o tipo</option>
+              {options.type.map(t => (
+                <option key={t.value} value={t.value}>{t.label}</option>
+              ))}
             </select>
           </div>
           

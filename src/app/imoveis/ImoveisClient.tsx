@@ -54,7 +54,7 @@ function unique<T>(arr: T[]): T[] {
 
 function applyFilters(list: Property[], f: Filters, sort: SortOption): Property[] {
   let result = list.filter((p) => {
-    if (f.codigo && p.id.toString() !== f.codigo) return false
+    if (f.codigo && p.id.toString() !== f.codigo && p.code?.toLowerCase() !== f.codigo.toLowerCase()) return false
 
     const search = f.search.toLowerCase()
     if (

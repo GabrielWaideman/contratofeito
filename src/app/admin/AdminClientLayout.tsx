@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare } from 'lucide-react'
 
 export default function AdminClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -25,6 +25,7 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
     { href: '/admin', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
     { href: '/admin/imoveis', icon: <Home size={20} />, label: 'Imóveis' },
     { href: '/admin/imoveis/novo', icon: <PlusSquare size={20} />, label: 'Novo Imóvel' },
+    { href: '/admin/depoimentos', icon: <MessageSquare size={20} />, label: 'Depoimentos' },
   ]
 
   return (
@@ -45,8 +46,8 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
       >
         <div className="p-6">
           <Link href="/admin" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-              <span className="font-black text-xl tracking-tighter">CF</span>
+            <div className="bg-white rounded-lg p-1.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform shrink-0 border border-gray-100">
+              <img src="/logo.png" alt="Contrato Feito" className="h-8 w-auto object-contain" />
             </div>
             <div>
               <h2 className="font-bold text-lg leading-tight">Admin</h2>
