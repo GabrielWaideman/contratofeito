@@ -75,5 +75,29 @@ Toda a fundação técnica estrutural de banco de dados, upload de imagem, deplo
 - [ ] **Finalizar Depoimentos Dinâmicos:** Conectar o frontend do grid de Depoimentos ao Banco de Dados MySQL (Prisma), da mesma forma que fizemos com os Imóveis.
 - [ ] **Página "Sobre" (Detalhes da Empresa):** Validar se os textos sobre a história da empresa na landing page estão adequados ou se exigem reescrita e edição de *copywriting*.
 
+---
+
+## 🚀 Sessão de Atualizações e Refinamentos
+
+Durante nossa última sessão de desenvolvimento iterativo, focamos em refinar a experiência do usuário, expandir as funcionalidades do painel administrativo e aprimorar o layout visual do site e os filtros. O sistema foi totalmente analisado, passou por testes de build e compilação sem erros, e tudo já foi commitado e enviado para o GitHub.
+
+### 🛠️ O que foi desenvolvido e corrigido:
+
+1. **Dashboard Analytics:** Implementamos filtros nos gráficos de acesso (dia, semana e mês) no painel administrativo e corrigimos um erro que ocorria na visualização mensal.
+2. **Gerenciamento Dinâmico de Atributos:** Criação de funcionalidade via modal (botão `+`) no cadastro do imóvel para adicionar dinamicamente novas Categorias, Tipos e Finalidades. Essas novas opções já são refletidas automaticamente nos filtros de pesquisa do site público.
+3. **Novos Campos e Identificadores (Imóvel):**
+   - **Aceita Permuta:** Flag visual adicionada para destacar imóveis que aceitam troca.
+   - **Código do Imóvel:** Campo opcional customizado (alfanumérico) para controle manual, já indexado e pesquisável nos filtros.
+   - **Vídeos:** Suporte a URLs de vídeo (YouTube, TikTok, Instagram) com player embutido (iframe) na página do imóvel.
+4. **Ajustes de UI/UX e Layout:**
+   - Padronização de valores monetários para formato contábil (ex: `R$ 110.000,00`).
+   - Reordenação da página de detalhes do imóvel (seção de Vídeo agora fica abaixo dos Diferenciais).
+   - Aplicação de regras de alinhamento (`Flexbox / h-full`) nos cartões de "Você também pode gostar" e outros carrosséis para garantir que fiquem 100% nivelados independentemente do tamanho do título.
+   - Cabeçalho personalizado com tema escuro (Dark Blue e letras brancas/vermelhas) sendo ativado exclusivamente na página individual do imóvel.
+   - Substituição de ícones genéricos pelos Logos oficiais da empresa na página de login e na sidebar do admin.
+5. **Responsividade Mobile:**
+   - Adequação do espaçamento inferior (padding) do rodapé no celular para que o botão flutuante do WhatsApp não cubra o cadeado de acesso restrito ao painel.
+   - Remoção da exibição do botão flutuante do WhatsApp dentro do painel administrativo.
+
 *(Atualizado na última sessão iterativa com Inteligência Artificial).*
 
