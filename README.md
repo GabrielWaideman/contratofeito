@@ -101,15 +101,33 @@ Durante nossa última sessão de desenvolvimento iterativo, focamos em refinar a
 
 *(Atualizado na última sessão iterativa com Inteligência Artificial).*
 
+*(Atualizado na última sessão iterativa com Inteligência Artificial).*
 
-#Tudo analisado, testado e 100% online! 🚀
+---
 
-#Executei uma varredura completa no projeto e realizei o processo de build (compilação) de produção do Next.js. Não foram encontrados erros de tipagem, problemas de compilação ou falhas de rotas. O sistema está íntegro, o banco de dados (Prisma) está atualizado corretamente e as responsividades para mobile nas telas de site e painel admin estão garantidas.
+### 🚀 Última Sessão de Desenvolvimento (Sobre Nós & Responsividade)
 
-#Já realizei o commit com todas as nossas implementações ("feat: complete platform updates and fixes") e enviei tudo para o seu repositório no GitHub.
+Nesta sessão mais recente, focamos integralmente em transformar a página "Sobre Nós" em uma seção dinâmica, elegante e 100% responsiva, além de integrá-la completamente ao painel administrativo.
 
-#As seguintes funcionalidades foram concluídas com sucesso e já estão em produção: ✅ Dashboard Analytics com gráficos por dia/semana/mês atualizados e corrigidos. ✅ Gerenciamento dinâmico de Opções e Atributos (Cadastro + Pesquisa de Imóveis). ✅ Flag visual de "Aceita Permuta". ✅ Código alfanumérico customizado do imóvel, indexado nos filtros e sem conflitos. ✅ Integração de URLs de vídeo (YouTube, TikTok, Instagram) diretamente na listagem do imóvel (abaixo dos diferenciais). ✅ Ajuste minucioso de nivelamento, altura (Flexbox) e formatação contábil padrão ("R$ 110.000,00") nos carrosséis e cartões. ✅ Cores personalizadas no cabeçalho na página do imóvel. ✅ Logos customizados adicionados ao Login/Sidebar e adequação do botão WhatsApp para não cobrir itens no celular e não aparecer no admin.
+**O que foi desenvolvido e ajustado hoje:**
 
-#Seu site está pronto, otimizado e rodando perfeitamente. Se precisar de mais alguma otimização futura ou surgir qualquer nova ideia, estarei por aqui!
+1. **Nova Página "Sobre Nós" Pública (`/sobre`):**
+   - Criação do layout moderno e minimalista baseado no design do site (fundo escuro, detalhes em ouro/vermelho).
+   - Ajustes finos de tipografia, cores e contraste para legibilidade perfeita.
 
-#em linguagem Markdown
+2. **Integração com o Painel Admin (`/admin/sobre`):**
+   - Adicionada a capacidade de fazer **upload de imagens dinâmicas** para diversas seções: Fundo do Hero, "Nossa Trajetória", Foto da Cidade e Foto do Corretor.
+   - Inclusão de dicas informativas de **tamanho ideal em pixels (px)** ao lado de cada campo de upload no painel (ex: 1920x650px para Hero).
+   - Criação da coluna `historyImageUrl` no banco de dados (Prisma) para suportar a imagem da trajetória.
+
+3. **Responsividade Total (Mobile First):**
+   - **Hero Section:** Reduzida para um formato mais retangular e compacto no celular (`55vh`), ocultando textos secundários para evitar poluição visual, e com gradientes reforçados para legibilidade.
+   - **Valores e Princípios:** Cartões empilhados horizontalmente no celular para economizar espaço de tela de forma elegante.
+   - **Tratamento Inteligente de Imagens:** Se o cliente não upar uma imagem para a "Trajetória", a logo padrão aparece apenas no Desktop como decoração e fica oculta no celular para não quebrar o layout. Se houver imagem, ela aparece perfeitamente em ambos.
+
+4. **Correções Técnicas:**
+   - Adicionado `suppressHydrationWarning` no `layout.tsx` para eliminar erros falsos-positivos causados por extensões do navegador (como LastPass/Dashlane).
+   - Executado o `npm run build` com sucesso absoluto (zero erros).
+   - Realizado o commit (`git push`) de todas as atualizações para o GitHub.
+
+**Status Atual:** O site está 100% online, funcional e o painel admin está pronto para que o conteúdo final e imagens oficiais da página Sobre Nós sejam inseridos pelo cliente.
