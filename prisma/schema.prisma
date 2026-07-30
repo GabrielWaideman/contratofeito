@@ -87,3 +87,37 @@ model PageView {
   @@index([visitedAt])
   @@index([path])
 }
+
+// ─── Página Sobre Nós ─────────────────────────────────────────────────────────
+model AboutPage {
+  id              Int      @id @default(autoincrement())
+
+  // Hero
+  heroTitle       String   @db.VarChar(200)
+  heroSubtitle    String   @db.VarChar(500)
+  bannerImageUrl  String?  @db.VarChar(500)
+
+  // História
+  historyText     String   @db.Text
+  historyImageUrl String?  @db.VarChar(500)
+
+  // Missão / Visão / Valores
+  missionText     String   @db.Text
+  visionText      String   @db.Text
+  valuesText      String   @db.Text             // JSON serializado: { title, text }[]
+
+  // Álvares Florence
+  cityName        String   @db.VarChar(100)
+  cityText        String   @db.Text
+  cityImageUrl    String?  @db.VarChar(500)
+
+  // Corretor Responsável
+  agentName       String   @db.VarChar(100)
+  agentCreci      String   @db.VarChar(50)
+  agentPhone      String   @db.VarChar(30)
+  agentWhatsapp   String   @db.VarChar(200)
+  agentImageUrl   String?  @db.VarChar(500)
+  agentBio        String?  @db.Text
+
+  updatedAt       DateTime @updatedAt
+}

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare } from 'lucide-react'
+import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info } from 'lucide-react'
 
 export default function AdminClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
@@ -26,6 +26,7 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
     { href: '/admin/imoveis', icon: <Home size={20} />, label: 'Imóveis' },
     { href: '/admin/imoveis/novo', icon: <PlusSquare size={20} />, label: 'Novo Imóvel' },
     { href: '/admin/depoimentos', icon: <MessageSquare size={20} />, label: 'Depoimentos' },
+    { href: '/admin/sobre', icon: <Info size={20} />, label: 'Sobre Nós' },
   ]
 
   return (

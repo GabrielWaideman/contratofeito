@@ -25,11 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </head>
-      <body className={`${inter.variable} font-sans antialiased overflow-x-hidden bg-white text-gray-900`}>
+      <body suppressHydrationWarning className={`${inter.variable} font-sans antialiased overflow-x-hidden bg-white text-gray-900`}>
         {children}
         <WhatsAppButton />
         <TestimonialToast />

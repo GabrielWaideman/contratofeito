@@ -20,7 +20,7 @@ export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }
   const navLinks = [
     { name: 'Início', href: '/' },
     { name: 'Imóveis', href: '/imoveis' },
-    { name: 'Sobre Nós', href: '/#sobre' },
+    { name: 'Sobre Nós', href: '/sobre' },
     { name: 'Avaliações', href: '/#avaliacoes' },
   ]
 
