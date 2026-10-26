@@ -5,6 +5,7 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import TestimonialToast from "@/components/TestimonialToast";
 import PageTracker from "@/components/PageTracker";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -34,6 +35,7 @@ export default function RootLayout({
         <WhatsAppButton />
         <TestimonialToast />
         <PageTracker />
+        <Analytics />
       </body>
     </html>
   );
