@@ -73,6 +73,7 @@ model AdminUser {
   id            Int       @id @default(autoincrement())
   username      String    @unique @db.VarChar(50)
   passwordHash  String    @db.VarChar(255)     // bcrypt hash — nunca texto puro
+  role          String    @default("STANDARD") @db.VarChar(20) // MASTER | STANDARD
   isActive      Boolean   @default(true)
   createdAt     DateTime  @default(now())
   lastLoginAt   DateTime?

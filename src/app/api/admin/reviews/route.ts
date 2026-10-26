@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prismaClient'
 import { getSessionFromRequest } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 // GET — Admin: retorna TODOS os depoimentos (aprovados e pendentes)
 export async function GET(request: Request) {
   try {

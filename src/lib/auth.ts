@@ -20,6 +20,7 @@ export async function verifyPassword(plain: string, hash: string): Promise<boole
 export interface JwtPayload {
   userId: number
   username: string
+  role: string
 }
 
 export function signToken(payload: JwtPayload): string {
@@ -58,6 +59,11 @@ export function getSessionFromRequest(request: Request): JwtPayload | null {
   const match = cookieHeader.match(new RegExp(`${COOKIE_NAME}=([^;]+)`))
   if (!match) return null
   return verifyToken(match[1])
+}
+
+// ─── Verificação de Permissão Master ──────────────────────────────────────────
+export function requireMaster(session: JwtPayload | null): boolean {
+  return session !== null && session.role === 'MASTER'
 }
 
 // ─── Rate Limiting simples (in-memory) ───────────────────────────────────────

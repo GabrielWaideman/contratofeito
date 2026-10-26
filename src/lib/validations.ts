@@ -34,3 +34,27 @@ export const propertySchema = z.object({
 })
 
 export type PropertyInput = z.infer<typeof propertySchema>
+
+// ─── Usuários Admin ───────────────────────────────────────────────────────────
+export const createUserSchema = z.object({
+  username: z.string()
+    .min(3, 'Usuário deve ter pelo menos 3 caracteres')
+    .max(50, 'Usuário muito longo')
+    .regex(/^[a-zA-Z0-9_ ]+$/, 'Apenas letras, números, espaços e _')
+    .trim(),
+  password: z.string().min(4, 'Senha deve ter pelo menos 4 caracteres'),
+  role: z.enum(['MASTER', 'STANDARD']).default('STANDARD'),
+  isActive: z.boolean().default(true),
+})
+
+export const updateUserSchema = z.object({
+  username: z.string()
+    .min(3, 'Usuário deve ter pelo menos 3 caracteres')
+    .max(50, 'Usuário muito longo')
+    .regex(/^[a-zA-Z0-9_ ]+$/, 'Apenas letras, números, espaços e _')
+    .trim()
+    .optional(),
+  password: z.string().min(4, 'Senha deve ter pelo menos 4 caracteres').optional().or(z.literal('')),
+  role: z.enum(['MASTER', 'STANDARD']).optional(),
+  isActive: z.boolean().optional(),
+})

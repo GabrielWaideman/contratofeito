@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     })
 
     // 7. Gerar Token e Cookie
-    const token = signToken({ userId: user.id, username: user.username })
+    const token = signToken({ userId: user.id, username: user.username, role: user.role })
     const cookie = buildSessionCookie(token)
 
     // 8. Responder com cookie HTTP-Only

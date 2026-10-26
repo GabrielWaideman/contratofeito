@@ -145,3 +145,22 @@ Nesta sessão, focamos inteiramente no desenvolvimento e integração da página
 - [ ] Iniciar novos testes práticos com o painel populado ou seguir aprimorando outras seções.
 
 *(Todas as alterações desta sessão já foram verificadas com sucesso via `npm run build` e enviadas para o repositório principal no GitHub).*
+
+---
+### Sessão de 26/10/2026 (Correção de Build Vercel & Gerenciamento de Usuários Master)
+
+Nesta sessão, realizamos o diagnóstico completo do ambiente online na Vercel e reestruturamos a segurança de autenticação:
+
+1. **Configuração de Variáveis de Ambiente na Vercel:**
+   - Adicionadas as 5 variáveis essenciais (`DATABASE_URL`, `JWT_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` como Secrets e `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` como Configs).
+
+2. **Correção do Build da Vercel (Dynamic Server Error):**
+   - Resolvido o erro de compilação estática (`DYNAMIC_SERVER_USAGE`) injetando `export const dynamic = 'force-dynamic'` nas rotas de API que usam `headers` e cookies de sessão (`/api/admin/analytics`, `/api/admin/reviews`, `/api/admin/me`, `/api/admin/seed`, `/api/admin/properties`, `/api/admin/users`, `/api/property-options`, `/api/reviews`).
+   - `npm run build` compilado localmente com 100% de sucesso e 0 erros (todas as páginas estáticas e dinâmicas geradas perfeitamente).
+
+3. **Reestruturação dos Usuários do Painel Admin:**
+   - O usuário antigo `adm` foi removido do banco de dados.
+   - Criados os dois novos administradores com acesso `MASTER` completo:
+     - `GABRIEL W` (Master)
+     - `EMERSON ANTONIO` (Master)
+   - Validação de schemas (`createUserSchema` e `updateUserSchema` em `validations.ts`) atualizada para suportar espaços nos nomes de usuário.

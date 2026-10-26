@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prismaClient'
 import { propertySchema } from '@/lib/validations'
 import { getSessionFromRequest } from '@/lib/auth'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
   try {
     // 1. Verificar Autenticação (redundante, pois o middleware já protege, mas é boa prática)

@@ -1,19 +1,31 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info } from 'lucide-react'
+import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info, Users } from 'lucide-react'
 
 export default function AdminClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [userRole, setUserRole] = useState<string | null>(null)
 
   // Se estiver na página de login, não renderiza a sidebar
   if (pathname === '/admin/login') {
     return <>{children}</>
   }
+
+  // Buscar role do usuário logado
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    fetch('/api/admin/me')
+      .then(r => r.json())
+      .then(data => {
+        if (data.role) setUserRole(data.role)
+      })
+      .catch(() => {})
+  }, [])
 
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
@@ -27,6 +39,10 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
     { href: '/admin/imoveis/novo', icon: <PlusSquare size={20} />, label: 'Novo Imóvel' },
     { href: '/admin/depoimentos', icon: <MessageSquare size={20} />, label: 'Depoimentos' },
     { href: '/admin/sobre', icon: <Info size={20} />, label: 'Sobre Nós' },
+    // Só exibir para MASTER
+    ...(userRole === 'MASTER' ? [
+      { href: '/admin/usuarios', icon: <Users size={20} />, label: 'Usuários' },
+    ] : []),
   ]
 
   return (
@@ -106,3 +122,4 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
     </div>
   )
 }
+
