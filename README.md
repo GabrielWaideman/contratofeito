@@ -147,20 +147,44 @@ Nesta sessão, focamos inteiramente no desenvolvimento e integração da página
 *(Todas as alterações desta sessão já foram verificadas com sucesso via `npm run build` e enviadas para o repositório principal no GitHub).*
 
 ---
-### Sessão de 26/10/2026 (Correção de Build Vercel & Gerenciamento de Usuários Master)
+### Sessão de 26/10/2026 (Infraestrutura, Segurança, Correção de Build e Refinamento de UI)
 
-Nesta sessão, realizamos o diagnóstico completo do ambiente online na Vercel e reestruturamos a segurança de autenticação:
+Nesta sessão, realizamos o diagnóstico completo do ambiente online na Vercel, reconectamos o banco de dados de produção, reestruturamos a segurança de autenticação e refinamos a experiência visual dos formulários e filtros:
 
-1. **Configuração de Variáveis de Ambiente na Vercel:**
-   - Adicionadas as 5 variáveis essenciais (`DATABASE_URL`, `JWT_SECRET`, `SUPABASE_SERVICE_ROLE_KEY` como Secrets e `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` como Configs).
+1. **Reconexão com o Banco de Dados MySQL (UOL Host):**
+   - Configurada e validada a string de conexão oficial `DATABASE_URL` no [.env.local](file:///c:/Users/gabri/.gemini/antigravity-ide/scratch/contratofeito/.env.local) e [.env](file:///c:/Users/gabri/.gemini/antigravity-ide/scratch/contratofeito/.env) (`contratofeito.mysql.uhserver.com`).
+   - Sincronização do schema via `prisma db push` (adicionada coluna `role` ao modelo `AdminUser`).
+   - Confirmada a persistência e integridade dos 9 imóveis reais e tabelas existentes.
 
-2. **Correção do Build da Vercel (Dynamic Server Error):**
-   - Resolvido o erro de compilação estática (`DYNAMIC_SERVER_USAGE`) injetando `export const dynamic = 'force-dynamic'` nas rotas de API que usam `headers` e cookies de sessão (`/api/admin/analytics`, `/api/admin/reviews`, `/api/admin/me`, `/api/admin/seed`, `/api/admin/properties`, `/api/admin/users`, `/api/property-options`, `/api/reviews`).
-   - `npm run build` compilado localmente com 100% de sucesso e 0 erros (todas as páginas estáticas e dinâmicas geradas perfeitamente).
+2. **Configuração das Variáveis de Ambiente na Vercel:**
+   - Adicionadas as 5 variáveis de produção no painel da Vercel:
+     - `DATABASE_URL` (Secret)
+     - `JWT_SECRET` (Secret)
+     - `SUPABASE_SERVICE_ROLE_KEY` (Secret)
+     - `NEXT_PUBLIC_SUPABASE_URL` (Config)
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY` (Config)
 
-3. **Reestruturação dos Usuários do Painel Admin:**
-   - O usuário antigo `adm` foi removido do banco de dados.
-   - Criados os dois novos administradores com acesso `MASTER` completo:
+3. **Correção do Build da Vercel (Dynamic Server Error / SSG):**
+   - Resolvido o erro de compilação estática (`DYNAMIC_SERVER_USAGE` em `headers`) injetando `export const dynamic = 'force-dynamic'` em todas as rotas de API com autenticação ou banco dinâmico (`/api/admin/analytics`, `/api/admin/reviews`, `/api/admin/me`, `/api/admin/seed`, `/api/admin/properties`, `/api/admin/users`, `/api/property-options`, `/api/reviews`).
+   - Build validado com `next build`: 20 páginas estáticas e rotas dinâmicas compiladas com 100% de sucesso e zero erros.
+
+4. **Reestruturação dos Usuários e Acesso Master:**
+   - Removido o usuário legado `adm` do banco de dados.
+   - Criados os dois novos administradores com acesso `MASTER` completo e senhas criptografadas via Bcrypt:
      - `GABRIEL W` (Master)
      - `EMERSON ANTONIO` (Master)
    - Validação de schemas (`createUserSchema` e `updateUserSchema` em `validations.ts`) atualizada para suportar espaços nos nomes de usuário.
+
+5. **Melhoria Visual nos Contornos dos Campos (UX/UI):**
+   - Adicionada regra global no [globals.css](file:///c:/Users/gabri/.gemini/antigravity-ide/scratch/contratofeito/src/app/globals.css) para que todos os campos (`input`, `select`, `textarea`) no site e no painel admin tenham bordas nítidas e visíveis (`#9ca3af`), efeito hover refinado e anel de foco destacado com a cor da marca.
+
+6. **Fundo Vermelho Padrão na Barra de Filtros (`/imoveis`):**
+   - Aplicado o fundo vermelho oficial da marca (`bg-brand-600`) na barra lateral desktop e na gaveta móvel de filtros.
+   - Tipografia de títulos e labels atualizada para branco puro e tons claros com alto contraste.
+   - Campos de preenchimento brancos com contornos nítidos e botões numéricos com destaque visual na opção selecionada.
+   - Botão "Aplicar Filtros" destacado em branco com texto vermelho e contagem dinâmica de resultados.
+
+**Próximos Passos (Para a próxima sessão):**
+- [ ] Testar o painel administrativo em produção na Vercel com os novos usuários Master.
+- [ ] Cadastrar novos imóveis e testar uploads de fotos para o bucket do Supabase.
+- [ ] Revisar metatags de compartilhamento em redes sociais (OpenGraph).
