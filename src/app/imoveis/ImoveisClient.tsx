@@ -104,18 +104,18 @@ function SelectField({
 }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">{label}</label>
+      <label className="block text-xs font-bold text-white uppercase tracking-wider mb-1.5">{label}</label>
       <div className="relative">
         <select
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full appearance-none bg-white border border-gray-200 text-gray-900 text-sm rounded-lg px-3 py-2.5 pr-8 focus:outline-none focus:border-brand-500 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+          className="w-full appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2.5 pr-8 focus:outline-none focus:ring-2 focus:ring-white transition-colors disabled:opacity-40 disabled:cursor-not-allowed font-medium shadow-sm"
         >
           <option value="">Todos</option>
           {options.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
-        <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+        <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
       </div>
     </div>
   )
@@ -131,12 +131,12 @@ function CounterField({
 }) {
   return (
     <div>
-      <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">{label}</label>
+      <label className="block text-xs font-bold text-white uppercase tracking-wider mb-2">{label}</label>
       <div className="flex gap-1.5 flex-wrap">
         <button
           type="button"
           onClick={() => onChange('')}
-          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${value === '' ? 'bg-brand-600 border-brand-600 text-gray-900' : 'bg-white border-gray-200 text-gray-500 hover:border-brand-500 hover:text-gray-900'}`}
+          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${value === '' ? 'bg-white border-white text-brand-700 shadow-sm font-extrabold' : 'bg-brand-700/60 border-brand-500/50 text-white hover:bg-brand-500 hover:border-white'}`}
         >
           Qualquer
         </button>
@@ -145,7 +145,7 @@ function CounterField({
             key={n}
             type="button"
             onClick={() => onChange(value === String(n) ? '' : String(n))}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${value === String(n) ? 'bg-brand-600 border-brand-600 text-gray-900' : 'bg-white border-gray-200 text-gray-500 hover:border-brand-500 hover:text-gray-900'}`}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${value === String(n) ? 'bg-white border-white text-brand-700 shadow-sm font-extrabold' : 'bg-brand-700/60 border-brand-500/50 text-white hover:bg-brand-500 hover:border-white'}`}
           >
             {n}{n === max ? '+' : ''}
           </button>
@@ -182,7 +182,7 @@ function FilterPanel({
       {/* Busca e Código */}
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Buscar</label>
+          <label className="block text-xs font-bold text-white uppercase tracking-wider mb-1.5">Buscar</label>
           <div className="relative">
             <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
             <input
@@ -190,13 +190,13 @@ function FilterPanel({
               placeholder="Título, cidade ou bairro..."
               value={pending.search}
               onChange={(e) => onChange('search', e.target.value)}
-              className="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-lg pl-9 pr-8 py-2.5 focus:outline-none focus:border-brand-500 placeholder-gray-400 transition-colors"
+              className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg pl-9 pr-8 py-2.5 focus:outline-none focus:ring-2 focus:ring-white placeholder-gray-400 font-medium transition-colors shadow-sm"
             />
             {pending.search && (
               <button
                 type="button"
                 onClick={() => onChange('search', '')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors"
               >
                 <X size={14} />
               </button>
@@ -205,19 +205,19 @@ function FilterPanel({
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Código do Imóvel</label>
+          <label className="block text-xs font-bold text-white uppercase tracking-wider mb-1.5">Código do Imóvel</label>
           <input
             type="text"
             placeholder="Ex: 1234"
             value={pending.codigo}
             onChange={(e) => onChange('codigo', e.target.value)}
-            className="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-brand-500 placeholder-gray-400 transition-colors"
+            className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-white placeholder-gray-400 font-medium transition-colors shadow-sm"
           />
         </div>
       </div>
 
       {/* Classificação */}
-      <div className="border-t border-gray-100 pt-5 space-y-4">
+      <div className="border-t border-brand-500/40 pt-5 space-y-4">
         <SelectField
           label="Finalidade"
           value={pending.finalidade}
@@ -239,8 +239,8 @@ function FilterPanel({
       </div>
 
       {/* Localização */}
-      <div className="border-t border-gray-100 pt-5">
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Localização</p>
+      <div className="border-t border-brand-500/40 pt-5">
+        <p className="text-xs font-bold text-white uppercase tracking-wider mb-4">Localização</p>
         <div className="space-y-3">
           <SelectField
             label="Estado"
@@ -266,67 +266,66 @@ function FilterPanel({
       </div>
 
       {/* Características */}
-      <div className="border-t border-gray-100 pt-5 space-y-4">
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Características</p>
+      <div className="border-t border-brand-500/40 pt-5 space-y-4">
+        <p className="text-xs font-bold text-white uppercase tracking-wider">Características</p>
         <CounterField label="Quartos (mínimo)" value={pending.bedrooms} onChange={(v) => onChange('bedrooms', v)} />
         <CounterField label="Banheiros (mínimo)" value={pending.bathrooms} max={4} onChange={(v) => onChange('bathrooms', v)} />
         <CounterField label="Vagas de Garagem (mínimo)" value={pending.garageSpots} max={4} onChange={(v) => onChange('garageSpots', v)} />
       </div>
 
       {/* Preço */}
-      <div className="border-t border-gray-100 pt-5">
-        <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-4">Faixa de Preço (R$)</p>
+      <div className="border-t border-brand-500/40 pt-5">
+        <p className="text-xs font-bold text-white uppercase tracking-wider mb-4">Faixa de Preço (R$)</p>
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Mínimo</label>
+            <label className="block text-xs text-red-100 font-bold mb-1">Mínimo</label>
             <input
               type="number"
               placeholder="0"
               value={pending.priceMin}
               onChange={(e) => onChange('priceMin', e.target.value)}
-              className="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-brand-500 placeholder-gray-400 transition-colors"
+              className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-white placeholder-gray-400 font-medium transition-colors shadow-sm"
             />
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Máximo</label>
+            <label className="block text-xs text-red-100 font-bold mb-1">Máximo</label>
             <input
               type="number"
               placeholder="Sem limite"
               value={pending.priceMax}
               onChange={(e) => onChange('priceMax', e.target.value)}
-              className="w-full bg-white border border-gray-200 text-gray-900 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:border-brand-500 placeholder-gray-400 transition-colors"
+              className="w-full bg-white border border-gray-300 text-gray-900 text-sm rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-white placeholder-gray-400 font-medium transition-colors shadow-sm"
             />
           </div>
         </div>
       </div>
 
       {/* Botões Aplicar / Limpar */}
-      <div className="border-t border-gray-100 pt-5">
+      <div className="border-t border-brand-500/40 pt-5">
         <button
           type="button"
           onClick={onApply}
-          className="w-full relative overflow-hidden group bg-brand-600 hover:bg-brand-700 text-gray-900 text-sm font-semibold tracking-wide py-3 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-brand-600/40"
+          className="w-full relative overflow-hidden group bg-white hover:bg-gray-100 text-brand-700 text-sm font-bold tracking-wide py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
         >
-          <span className="flex items-center justify-center gap-2">
-            <CheckCircle2 size={14} className="opacity-80" />
-            Aplicar
-            <span className="text-brand-100 font-normal text-xs">
-              ({resultCount} resultado{resultCount !== 1 ? 's' : ''})
-            </span>
+          <CheckCircle2 size={16} className="text-brand-600" />
+          Aplicar Filtros
+          <span className="bg-brand-100 text-brand-700 font-bold text-xs px-2 py-0.5 rounded-full ml-1">
+            {resultCount}
           </span>
         </button>
         <button
           type="button"
           onClick={onClear}
-          className="mt-2 w-full text-xs font-medium text-gray-500 hover:text-gray-700 transition-colors py-2 flex items-center justify-center gap-1.5 tracking-wide"
+          className="mt-2 w-full text-xs font-semibold text-red-100 hover:text-white transition-colors py-2 flex items-center justify-center gap-1.5 tracking-wide"
         >
-          <X size={12} className="opacity-70" />
+          <X size={12} className="opacity-80" />
           Limpar filtros
         </button>
       </div>
     </div>
   )
 }
+
 
 // Ícone de suíte
 function SuiteIcon({ size = 15, className = '' }: { size?: number; className?: string }) {
@@ -595,12 +594,12 @@ export default function ImoveisClient({ initialProperties }: { initialProperties
 
             {/* ── Sidebar desktop ──────────────────────────────────── */}
             <aside className="hidden lg:block w-72 shrink-0 sticky top-28">
-              <div className="bg-white border border-gray-100 rounded-2xl p-6">
-                <div className="flex items-center gap-2 mb-6">
-                  <SlidersHorizontal size={16} className="text-brand-500" />
-                  <h2 className="text-gray-900 font-bold text-sm uppercase tracking-wider">Filtros</h2>
+              <div className="bg-brand-600 border border-brand-700 rounded-2xl p-6 shadow-xl text-white">
+                <div className="flex items-center gap-2 mb-6 pb-4 border-b border-brand-500/40">
+                  <SlidersHorizontal size={18} className="text-white" />
+                  <h2 className="text-white font-extrabold text-sm uppercase tracking-wider">Filtros</h2>
                   {activeChips.length > 0 && (
-                    <span className="bg-brand-600 text-gray-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ml-auto">
+                    <span className="bg-white text-brand-700 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center ml-auto shadow-sm">
                       {activeChips.length}
                     </span>
                   )}
@@ -623,7 +622,7 @@ export default function ImoveisClient({ initialProperties }: { initialProperties
                     <SlidersHorizontal size={15} />
                     Filtros
                     {activeChips.length > 0 && (
-                      <span className="bg-brand-600 text-gray-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                      <span className="bg-brand-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
                         {activeChips.length}
                       </span>
                     )}
@@ -713,17 +712,17 @@ export default function ImoveisClient({ initialProperties }: { initialProperties
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="absolute right-0 top-0 h-full w-80 max-w-[90vw] bg-white border-l border-gray-100 overflow-y-auto p-6 shadow-2xl flex flex-col">
-            <div className="flex items-center justify-between mb-6 shrink-0">
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[90vw] bg-brand-600 border-l border-brand-700 overflow-y-auto p-6 shadow-2xl flex flex-col text-white">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-brand-500/40 shrink-0">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal size={16} className="text-brand-500" />
-                <h2 className="text-gray-900 font-bold text-sm uppercase tracking-wider">Filtros</h2>
+                <SlidersHorizontal size={18} className="text-white" />
+                <h2 className="text-white font-extrabold text-sm uppercase tracking-wider">Filtros</h2>
               </div>
-              <button onClick={() => setMobileOpen(false)} className="text-gray-500 hover:text-gray-900 transition-colors">
+              <button onClick={() => setMobileOpen(false)} className="text-red-100 hover:text-white transition-colors">
                 <X size={20} />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto pr-1">
               <FilterPanel {...filterPanelProps} />
             </div>
           </div>

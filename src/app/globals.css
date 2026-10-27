@@ -21,6 +21,35 @@
   }
 }
 
+/* ─── Contorno visível nos campos de formulário (site público + admin) ─────────
+   Os campos usavam bordas muito claras (gray-100/200/300) e ficavam quase
+   invisíveis sobre fundo branco. A regra abaixo escurece o contorno apenas
+   enquanto o campo não está focado, preservando o destaque de foco existente. */
+input[class*="border-gray-"]:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(:focus),
+select[class*="border-gray-"]:not(:focus),
+textarea[class*="border-gray-"]:not(:focus),
+input[class*="border-slate-"]:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(:focus),
+select[class*="border-slate-"]:not(:focus),
+textarea[class*="border-slate-"]:not(:focus) {
+  border-color: #9ca3af; /* gray-400 */
+}
+
+input[class*="border-gray-"]:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(:focus):hover,
+select[class*="border-gray-"]:not(:focus):hover,
+textarea[class*="border-gray-"]:not(:focus):hover,
+input[class*="border-slate-"]:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not(:focus):hover,
+select[class*="border-slate-"]:not(:focus):hover,
+textarea[class*="border-slate-"]:not(:focus):hover {
+  border-color: #6b7280; /* gray-500 */
+}
+
+input[class*="border-gray-"]:focus,
+select[class*="border-gray-"]:focus,
+textarea[class*="border-gray-"]:focus {
+  border-color: #dc2626; /* brand-600 */
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
 @keyframes progress-shrink {
   from { transform: scaleX(1); }
   to   { transform: scaleX(0); }
