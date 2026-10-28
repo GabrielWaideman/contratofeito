@@ -185,6 +185,34 @@ Nesta sessão, realizamos o diagnóstico completo do ambiente online na Vercel, 
    - Botão "Aplicar Filtros" destacado em branco com texto vermelho e contagem dinâmica de resultados.
 
 **Próximos Passos (Para a próxima sessão):**
-- [ ] Testar o painel administrativo em produção na Vercel com os novos usuários Master.
 - [ ] Cadastrar novos imóveis e testar uploads de fotos para o bucket do Supabase.
 - [ ] Revisar metatags de compartilhamento em redes sociais (OpenGraph).
+
+---
+### Sessão de 27/10/2026 (Identidade de Contato, Segurança, Painel Admin e Analytics de Precisão)
+
+Nesta sessão, atualizamos os dados oficiais de contato da imobiliária em todos os pontos do site, adicionamos atalhos no Painel Administrativo, otimizamos o fluxo de autenticação e reestruturamos o sistema de métricas de acesso para precisão real:
+
+1. **Atualização Completa dos Dados Oficiais de Contato:**
+   - **Endereço:** Atualizado para `R. Deputado Castro de Carvalho, 207 - Álvares Florence - SP`.
+   - **Telefones:** Inseridos os números oficiais `(17) 99722-5062` e `(17) 99762-9089`, ambos com links acionáveis `tel:`.
+   - **E-mail:** Atualizado para `emersonantoniodemendonca@yahoo.com.br`, com ajuste de grid e `whitespace-nowrap` no footer para manter alinhado em linha única sem quebras.
+   - **WhatsApp Principal (`17997225062`):** Conectado universalmente no botão flutuante, no botão do footer, nos botões da página de detalhes do imóvel e no botão "Fale Conosco" da barra de navegação (desktop e mobile).
+   - **Redes Sociais:** Links oficiais mapeados e ativos para Instagram, Facebook, TikTok e YouTube.
+   - **Links Úteis do Rodapé:** Conexão direta de "Comprar Imóvel" (`/imoveis`), "Sobre Nós" (`/sobre`) e "Solicitar Avaliação" (`#` para futura expansão).
+
+2. **UX do Botão Flutuante e Acesso ao Cadeado:**
+   - Ajustada a elevação do botão flutuante no desktop (`md:bottom-24`) para não cobrir o ícone de cadeado de acesso restrito ao painel no rodapé da página.
+
+3. **Painel Admin & Autenticação Segura:**
+   - **Botão "Voltar ao Site":** Adicionado na barra lateral do CMS, permitindo retornar à landing page (`/`) com um clique.
+   - **Nome de Usuário Dinâmico:** A barra lateral do painel agora exibe o nome real do usuário conectado (ex: `GABRIEL W`) em vez do texto genérico "Admin", transmitido de forma segura via payload da sessão do servidor.
+   - **Feedback no Login:** Indicador de carregamento contínuo ("Entrando...") e estado desabilitado no formulário para evitar múltiplos cliques ou a impressão de delay na navegação.
+   - **Segurança Preservada:** Mantido o fator de custo criptográfico padrão máximo (`SALT_ROUNDS = 12`) com Bcrypt, com auto-rehash transparente para integridade de acessos.
+
+4. **Reestruturação Completa do Sistema de Analytics:**
+   - **Modelagem (`PageView`):** Adicionadas as colunas `visitorId` (UUID anônimo persistido no cliente) e `isBot` via `prisma db push`.
+   - **Filtro Anti-Robôs e Deduplicação:** Rota `/api/track` atualizada com bloqueio de crawlers/bots e janela de deduplicação de 30 minutos por rota/visitante.
+   - **Proteção do Ambiente de Desenvolvimento:** Rastreamento desativado em ambiente local para não poluir os dados reais do banco de produção.
+   - **Fuso Horário de Brasília (UTC-3):** Cálculos de agrupamento diário, semanal e mensal ajustados para o horário oficial brasileiro.
+   - **Gráficos e Indicadores:** Resolução da renderização das barras (conversão de alturas percentuais para pixels absolutos), visualização de total de visitantes únicos e visualizações totais (`pageViews`), e limpeza da base de testes legada.

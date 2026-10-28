@@ -16,6 +16,11 @@ export async function verifyPassword(plain: string, hash: string): Promise<boole
   return bcrypt.compare(plain, hash)
 }
 
+// Hashes com custo menor que o atual são regravados no próximo login bem-sucedido
+export function needsRehash(hash: string): boolean {
+  return bcrypt.getRounds(hash) < SALT_ROUNDS
+}
+
 // ─── JWT ──────────────────────────────────────────────────────────────────────
 export interface JwtPayload {
   userId: number

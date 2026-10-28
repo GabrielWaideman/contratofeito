@@ -8,13 +8,17 @@ import {
 } from 'lucide-react'
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
-type BarPoint = { label: string; date?: string; count: number }
+type BarPoint = { label: string; date?: string; count: number; views?: number }
 
 type AnalyticsData = {
   totalViews: number
   todayViews: number
   weekViews: number
   monthViews: number
+  totalPageViews?: number
+  todayPageViews?: number
+  weekPageViews?: number
+  monthPageViews?: number
   years: number[]
   daily: BarPoint[]
   weekly: BarPoint[]
@@ -24,33 +28,42 @@ type AnalyticsData = {
 type FilterType = 'dia' | 'semana' | 'mes'
 
 // ─── Bar Chart Component ──────────────────────────────────────────────────────
+// Alturas em pixels (e não em %) para não depender da altura do elemento pai.
+const LABEL_AREA = 34 // espaço reservado para o rótulo e o número acima da barra
+
 function BarChart({ data, height = 140 }: { data: BarPoint[]; height?: number }) {
   const max = Math.max(...data.map(d => d.count), 1)
+  const barArea = height - LABEL_AREA
 
   return (
     <div className="flex items-end gap-1.5 w-full" style={{ height }}>
       {data.map((bar, i) => {
-        const pct = max > 0 ? (bar.count / max) * 100 : 0
+        const barHeight = bar.count > 0 ? Math.max(Math.round((bar.count / max) * barArea), 4) : 2
         const isToday = i === data.length - 1
         return (
-          <div key={i} className="flex-1 flex flex-col items-center gap-1 group relative">
+          <div key={i} className="flex-1 min-w-0 flex flex-col items-center justify-end gap-1 group relative h-full">
             {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
+            <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
               <div className="bg-gray-900 text-white text-xs font-bold px-2 py-1 rounded-lg whitespace-nowrap shadow-lg">
-                {bar.count} acesso{bar.count !== 1 ? 's' : ''}
+                {bar.count} visitante{bar.count !== 1 ? 's' : ''}
+                {typeof bar.views === 'number' && (
+                  <span className="font-normal text-gray-300 ml-1">· {bar.views} visualizaç{bar.views !== 1 ? 'ões' : 'ão'}</span>
+                )}
                 {bar.date && <span className="font-normal text-gray-400 ml-1">({bar.date})</span>}
               </div>
               <div className="w-2 h-2 bg-gray-900 rotate-45 mx-auto -mt-1" />
             </div>
+            {/* Número acima da barra */}
+            <span className="text-[10px] font-bold text-gray-500 leading-none">{bar.count > 0 ? bar.count : ''}</span>
             {/* Barra */}
             <div
               className={`w-full rounded-t-md transition-all duration-500 ${
-                isToday ? 'bg-brand-600' : 'bg-brand-600/30 group-hover:bg-brand-600/60'
+                isToday ? 'bg-brand-600' : 'bg-brand-600/40 group-hover:bg-brand-600/70'
               }`}
-              style={{ height: `${Math.max(pct, bar.count > 0 ? 4 : 0)}%` }}
+              style={{ height: barHeight }}
             />
             {/* Label */}
-            <span className="text-[9px] text-gray-400 font-medium truncate max-w-full px-0.5 text-center">
+            <span className="text-[9px] text-gray-400 font-medium truncate max-w-full px-0.5 text-center leading-none mt-0.5">
               {bar.label}
             </span>
           </div>
@@ -164,7 +177,7 @@ export default function AdminDashboard() {
             </div>
             <div>
               <h2 className="font-black text-gray-900 text-base">Acessos ao site</h2>
-              <p className="text-gray-400 text-xs">Visitantes únicos por página</p>
+              <p className="text-gray-400 text-xs">Visitantes únicos do site (sem robôs) · horário de Brasília</p>
             </div>
           </div>
 
@@ -202,11 +215,11 @@ export default function AdminDashboard() {
         {/* Mini stat cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-gray-100">
           {[
-            { label: 'Total geral',   value: analytics?.totalViews,  icon: <Activity size={15} />,  color: 'text-brand-600'  },
-            { label: 'Hoje',          value: analytics?.todayViews,  icon: <Calendar size={15} />,  color: 'text-green-600'  },
-            { label: 'Esta semana',   value: analytics?.weekViews,   icon: <BarChart2 size={15} />, color: 'text-blue-600'   },
-            { label: 'Este mês',      value: analytics?.monthViews,  icon: <Users size={15} />,     color: 'text-purple-600' },
-          ].map(({ label, value, icon, color }) => (
+            { label: 'Total geral',   value: analytics?.totalViews,  pv: analytics?.totalPageViews, icon: <Activity size={15} />,  color: 'text-brand-600'  },
+            { label: 'Hoje',          value: analytics?.todayViews,  pv: analytics?.todayPageViews, icon: <Calendar size={15} />,  color: 'text-green-600'  },
+            { label: 'Esta semana',   value: analytics?.weekViews,   pv: analytics?.weekPageViews,  icon: <BarChart2 size={15} />, color: 'text-blue-600'   },
+            { label: 'Este mês',      value: analytics?.monthViews,  pv: analytics?.monthPageViews, icon: <Users size={15} />,     color: 'text-purple-600' },
+          ].map(({ label, value, pv, icon, color }) => (
             <div key={label} className="bg-white px-5 py-4">
               <div className={`flex items-center gap-1.5 mb-1 ${color}`}>
                 {icon}
@@ -214,6 +227,9 @@ export default function AdminDashboard() {
               </div>
               <p className="text-2xl font-black text-gray-900">
                 {analyticsLoading ? '—' : (value ?? 0).toLocaleString('pt-BR')}
+              </p>
+              <p className="text-[11px] text-gray-400 mt-0.5">
+                {analyticsLoading ? ' ' : `${(pv ?? 0).toLocaleString('pt-BR')} visualizaç${pv === 1 ? 'ão' : 'ões'}`}
               </p>
             </div>
           ))}
@@ -236,7 +252,7 @@ export default function AdminDashboard() {
             <>
               <div className="flex items-center justify-between mb-4">
                 <p className="text-xs text-gray-400">
-                  Total no período: <span className="font-bold text-gray-700">{totalChart.toLocaleString('pt-BR')}</span> acesso{totalChart !== 1 ? 's' : ''}
+                  Total no período: <span className="font-bold text-gray-700">{totalChart.toLocaleString('pt-BR')}</span> visita{totalChart !== 1 ? 's' : ''}
                 </p>
                 <p className="text-xs text-gray-300">Passe o mouse sobre as barras</p>
               </div>

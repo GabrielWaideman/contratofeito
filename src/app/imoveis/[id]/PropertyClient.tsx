@@ -224,7 +224,7 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
       {/* Linha de botões de contato */}
       <div className="px-6 md:px-8 py-5 flex flex-col sm:flex-row gap-3">
         <a
-          href={`https://wa.me/5517999999999?text=${whatsappMsg}`}
+          href={`https://wa.me/5517997225062?text=${whatsappMsg}`}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold text-sm py-3.5 px-7 rounded-xl shadow-sm hover:shadow-md hover:shadow-green-200 transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap"
@@ -235,7 +235,7 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
           Falar no WhatsApp
         </a>
         <a
-          href="tel:+5517999999999"
+          href="tel:+5517997225062"
           className="inline-flex items-center justify-center gap-2 bg-white border border-gray-200 hover:border-brand-500 text-gray-700 hover:text-brand-700 font-bold text-sm py-3.5 px-7 rounded-xl transition-all duration-200 hover:-translate-y-0.5 whitespace-nowrap shadow-sm"
         >
           <Phone size={15} className="text-brand-600" />

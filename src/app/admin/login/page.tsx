@@ -29,11 +29,11 @@ export default function LoginPage() {
         throw new Error(data.error || 'Erro ao fazer login')
       }
 
-      router.push('/admin')
+      // Mantém o estado de carregamento ativo até o painel abrir (não reseta em caso de sucesso)
+      router.replace('/admin')
       router.refresh()
     } catch (err: any) {
       setError(err.message)
-    } finally {
       setLoading(false)
     }
   }
@@ -82,10 +82,13 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md disabled:opacity-70 flex items-center justify-center"
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md disabled:opacity-70 flex items-center justify-center gap-3"
           >
             {loading ? (
-              <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <>
+                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                Entrando...
+              </>
             ) : (
               'Entrar no Painel'
             )}

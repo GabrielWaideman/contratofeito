@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prismaClient'
 import { loginSchema } from '@/lib/validations'
-import { verifyPassword, signToken, buildSessionCookie, checkRateLimit } from '@/lib/auth'
+import { verifyPassword, hashPassword, needsRehash, signToken, buildSessionCookie, checkRateLimit } from '@/lib/auth'
 
 export async function POST(request: Request) {
   try {
@@ -42,10 +42,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Credenciais inválidas.' }, { status: 401 })
     }
 
-    // 6. Atualizar lastLoginAt
+    // 6. Atualizar lastLoginAt (e restaurar hash para o custo atual, se estiver mais fraco)
+    const newHash = needsRehash(user.passwordHash) ? await hashPassword(password) : null
     await prisma.adminUser.update({
       where: { id: user.id },
-      data: { lastLoginAt: new Date() },
+      data: { lastLoginAt: new Date(), ...(newHash ? { passwordHash: newHash } : {}) },
     })
 
     // 7. Gerar Token e Cookie

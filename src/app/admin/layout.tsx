@@ -28,7 +28,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <AdminClientLayout>
+    <AdminClientLayout username={payload.username} role={payload.role}>
       {children}
     </AdminClientLayout>
   )

@@ -83,10 +83,13 @@ model AdminUser {
 model PageView {
   id          Int      @id @default(autoincrement())
   path        String   @db.VarChar(191)        // 191 = limite seguro p/ UTF-8 + índice MySQL
+  visitorId   String?  @db.VarChar(64)         // ID anônimo aleatório gerado no navegador (não identifica a pessoa)
+  isBot       Boolean  @default(false)         // true = robô/crawler (excluído das estatísticas)
   visitedAt   DateTime @default(now())
 
   @@index([visitedAt])
   @@index([path])
+  @@index([visitorId, path, visitedAt])
 }
 
 // ─── Página Sobre Nós ─────────────────────────────────────────────────────────

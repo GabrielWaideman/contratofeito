@@ -4,28 +4,34 @@ import { getSessionFromRequest } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
-// ─── Helpers de data ──────────────────────────────────────────────────────────
+// ─── Fuso horário ─────────────────────────────────────────────────────────────
+// O servidor (Vercel) roda em UTC. Para que "hoje", "semana" e "mês" sigam o dia
+// do Brasil (Brasília, UTC-3, sem horário de verão), deslocamos os horários em -3h
+// e lemos os campos com os getters UTC.
+const BRT_OFFSET_MS = -3 * 60 * 60 * 1000
+const DAY_MS = 24 * 60 * 60 * 1000
 
-function startOfDay(d: Date) {
-  return new Date(d.getFullYear(), d.getMonth(), d.getDate())
-}
-
-function startOfWeek(d: Date) {
-  const day = d.getDay() // 0=dom, 1=seg...
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1) // segunda-feira
-  return new Date(d.getFullYear(), d.getMonth(), diff)
-}
-
-function startOfMonth(d: Date) {
-  return new Date(d.getFullYear(), d.getMonth(), 1)
-}
-
-function addDays(d: Date, n: number) {
-  return new Date(d.getTime() + n * 86400000)
-}
-
-const PT_DAYS  = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
+const PT_DAYS   = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 const PT_MONTHS = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+
+type Row = { day: number; year: number; month: number; visitorId: string }
+type Point = { label: string; date?: string; count: number; views: number }
+
+const dayNumberOf = (ms: number) => Math.floor((ms + BRT_OFFSET_MS) / DAY_MS)
+const weekdayOf   = (dayNum: number) => (dayNum + 4) % 7            // 0 = Dom (dia 0 da época era quinta)
+const mondayOf    = (dayNum: number) => dayNum - ((weekdayOf(dayNum) + 6) % 7)
+const pad         = (n: number) => n.toString().padStart(2, '0')
+const fmtDate     = (dayNum: number) => {
+  const d = new Date(dayNum * DAY_MS)
+  return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}`
+}
+
+/** count = visitantes únicos | views = total de visualizações */
+function summarize(rows: Row[]): { count: number; views: number } {
+  const ids = new Set<string>()
+  for (const r of rows) ids.add(r.visitorId)
+  return { count: ids.size, views: rows.length }
+}
 
 // GET — Admin: retorna dados de analytics agregados
 export async function GET(request: Request) {
@@ -33,70 +39,82 @@ export async function GET(request: Request) {
     const session = getSessionFromRequest(request)
     if (!session) return NextResponse.json({ error: 'Não autorizado' }, { status: 401 })
 
-    // Lê todos os page views (para sites pequenos isso é viável)
-    const allViews = await prisma.pageView.findMany({
-      select: { visitedAt: true },
-      orderBy: { visitedAt: 'asc' },
+    // Somente acessos de visitantes identificados e que não são robôs
+    const raw = await prisma.pageView.findMany({
+      where: { isBot: false, visitorId: { not: null } },
+      select: { visitedAt: true, visitorId: true },
     })
 
-    const now = new Date()
+    const rows: Row[] = raw.map(v => {
+      const shifted = new Date(v.visitedAt.getTime() + BRT_OFFSET_MS)
+      return {
+        day:   Math.floor(shifted.getTime() / DAY_MS),
+        year:  shifted.getUTCFullYear(),
+        month: shifted.getUTCMonth(),
+        visitorId: v.visitorId as string,
+      }
+    })
 
-    // ─── Totais rápidos ────────────────────────────────────────────────────────
-    const todayStart = startOfDay(now)
-    const weekStart  = startOfWeek(now)
-    const monthStart = startOfMonth(now)
+    const nowMs     = Date.now()
+    const today     = dayNumberOf(nowMs)
+    const thisWeek  = mondayOf(today)
+    const nowShift  = new Date(nowMs + BRT_OFFSET_MS)
+    const thisYear  = nowShift.getUTCFullYear()
+    const thisMonth = nowShift.getUTCMonth()
 
-    const todayViews  = allViews.filter(v => v.visitedAt >= todayStart).length
-    const weekViews   = allViews.filter(v => v.visitedAt >= weekStart).length
-    const monthViews  = allViews.filter(v => v.visitedAt >= monthStart).length
-    const totalViews  = allViews.length
+    // ─── Totais rápidos (visitantes únicos) ───────────────────────────────────
+    const total = summarize(rows)
+    const todayS = summarize(rows.filter(r => r.day === today))
+    const weekS  = summarize(rows.filter(r => r.day >= thisWeek && r.day <= today))
+    const monthS = summarize(rows.filter(r => r.year === thisYear && r.month === thisMonth))
 
     // ─── Anos disponíveis ──────────────────────────────────────────────────────
-    const yearsSet = new Set(allViews.map(v => v.visitedAt.getFullYear()))
-    yearsSet.add(now.getFullYear()) // Garante o ano atual mesmo sem dados
+    const yearsSet = new Set(rows.map(r => r.year))
+    yearsSet.add(thisYear)
     const years = Array.from(yearsSet).sort((a, b) => b - a)
 
     // ─── Últimos 7 dias ────────────────────────────────────────────────────────
-    const daily: { label: string; date: string; count: number }[] = []
+    const daily: Point[] = []
     for (let i = 6; i >= 0; i--) {
-      const day   = startOfDay(addDays(now, -i))
-      const next  = addDays(day, 1)
-      const count = allViews.filter(v => v.visitedAt >= day && v.visitedAt < next).length
+      const d = today - i
       daily.push({
-        label: PT_DAYS[day.getDay()],
-        date:  `${day.getDate().toString().padStart(2,'0')}/${(day.getMonth()+1).toString().padStart(2,'0')}`,
-        count,
+        label: PT_DAYS[weekdayOf(d)],
+        date:  fmtDate(d),
+        ...summarize(rows.filter(r => r.day === d)),
       })
     }
 
-    // ─── Últimas 8 semanas ─────────────────────────────────────────────────────
-    const weekly: { label: string; count: number }[] = []
+    // ─── Últimas 8 semanas (segunda a domingo) ─────────────────────────────────
+    const weekly: Point[] = []
     for (let i = 7; i >= 0; i--) {
-      const wStart = startOfWeek(addDays(now, -i * 7))
-      const wEnd   = addDays(wStart, 7)
-      const count  = allViews.filter(v => v.visitedAt >= wStart && v.visitedAt < wEnd).length
+      const ws = thisWeek - i * 7
       weekly.push({
-        label: `${wStart.getDate().toString().padStart(2,'0')}/${(wStart.getMonth()+1).toString().padStart(2,'0')}`,
-        count,
+        label: fmtDate(ws),
+        date:  `${fmtDate(ws)} a ${fmtDate(ws + 6)}`,
+        ...summarize(rows.filter(r => r.day >= ws && r.day < ws + 7)),
       })
     }
 
     // ─── Meses por ano ─────────────────────────────────────────────────────────
-    const monthly: Record<number, { label: string; count: number }[]> = {}
+    const monthly: Record<number, Point[]> = {}
     for (const year of years) {
-      monthly[year] = PT_MONTHS.map((label, month) => {
-        const mStart = new Date(year, month, 1)
-        const mEnd   = new Date(year, month + 1, 1)
-        const count  = allViews.filter(v => v.visitedAt >= mStart && v.visitedAt < mEnd).length
-        return { label, count }
-      })
+      monthly[year] = PT_MONTHS.map((label, month) => ({
+        label,
+        date: `${label}/${year}`,
+        ...summarize(rows.filter(r => r.year === year && r.month === month)),
+      }))
     }
 
     return NextResponse.json({
-      totalViews,
-      todayViews,
-      weekViews,
-      monthViews,
+      totalViews:  total.count,
+      todayViews:  todayS.count,
+      weekViews:   weekS.count,
+      monthViews:  monthS.count,
+      // Visualizações de página (um mesmo visitante pode ver várias páginas)
+      totalPageViews: total.views,
+      todayPageViews: todayS.views,
+      weekPageViews:  weekS.views,
+      monthPageViews: monthS.views,
       years,
       daily,
       weekly,

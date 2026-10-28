@@ -48,7 +48,12 @@ export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }
               {link.name}
             </Link>
           ))}
-          <a href="#contato" className="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3 rounded-md font-bold text-sm transition-all shadow-md hover:shadow-lg uppercase tracking-wider">
+          <a 
+            href="https://wa.me/5517997225062" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="bg-brand-600 hover:bg-brand-700 text-white px-8 py-3 rounded-md font-bold text-sm transition-all shadow-md hover:shadow-lg uppercase tracking-wider"
+          >
             Fale Conosco
           </a>
         </nav>
@@ -76,7 +81,9 @@ export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }
             </Link>
           ))}
           <a 
-            href="#contato" 
+            href="https://wa.me/5517997225062" 
+            target="_blank" 
+            rel="noopener noreferrer" 
             onClick={() => setIsMobileMenuOpen(false)}
             className="bg-brand-600 text-white text-center py-3 rounded-lg font-medium mt-2"
           >

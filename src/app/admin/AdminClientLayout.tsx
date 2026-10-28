@@ -1,31 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info, Users } from 'lucide-react'
+import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info, Users, ArrowLeft } from 'lucide-react'
 
-export default function AdminClientLayout({ children }: { children: React.ReactNode }) {
+interface AdminClientLayoutProps {
+  children: React.ReactNode
+  username: string
+  role: string
+}
+
+export default function AdminClientLayout({ children, username, role: userRole }: AdminClientLayoutProps) {
   const pathname = usePathname()
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [userRole, setUserRole] = useState<string | null>(null)
 
   // Se estiver na página de login, não renderiza a sidebar
   if (pathname === '/admin/login') {
     return <>{children}</>
   }
-
-  // Buscar role do usuário logado
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    fetch('/api/admin/me')
-      .then(r => r.json())
-      .then(data => {
-        if (data.role) setUserRole(data.role)
-      })
-      .catch(() => {})
-  }, [])
 
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
@@ -66,8 +60,8 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
             <div className="bg-white rounded-lg p-1.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform shrink-0 border border-gray-100">
               <img src="/logo.png" alt="Contrato Feito" className="h-8 w-auto object-contain" />
             </div>
-            <div>
-              <h2 className="font-bold text-lg leading-tight">Admin</h2>
+            <div className="min-w-0">
+              <h2 className="font-bold text-lg leading-tight truncate" title={username}>{username}</h2>
               <p className="text-gray-400 text-xs font-medium">Contrato Feito</p>
             </div>
           </Link>
@@ -94,7 +88,15 @@ export default function AdminClientLayout({ children }: { children: React.ReactN
           })}
         </nav>
 
-        <div className="p-4 border-t border-gray-800">
+        <div className="p-4 border-t border-gray-800 space-y-1">
+          <Link
+            href="/"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-300 hover:text-white hover:bg-gray-800 transition-all font-semibold text-sm"
+          >
+            <ArrowLeft size={20} />
+            Voltar ao Site
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-400 hover:text-red-400 hover:bg-red-400/10 transition-all font-semibold text-sm"
