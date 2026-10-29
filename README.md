@@ -70,7 +70,7 @@ Toda a fundação técnica estrutural de banco de dados, upload de imagem, deplo
 **Próximos Ajustes Sugeridos e Pontos de Continuação:**
 
 - [ ] **Testar o painel minuciosamente:** Cadastrar, editar e excluir imagens e imóveis reais da imobiliária no site em produção para popular as vitrines e garantir a confiança do fluxo.
-- [ ] **Ajustes de SEO e Redes Sociais (OpenGraph):** Adicionar imagens de prévia e meta-tags descritivas para que, quando o link do site for compartilhado no WhatsApp/Facebook, exiba um banner bonito da imobiliária.
+- [x] **Ajustes de SEO e Redes Sociais (OpenGraph):** Adicionar imagens de prévia e meta-tags dinâmicas/ricas para que links compartilhados no WhatsApp, Facebook e Instagram exibam o card oficial ou a foto e dados reais do imóvel.
 - [ ] **Configuração do Domínio Personalizado:** Comprar/apontar o domínio (ex: `contratofeito.com.br`) lá nas configurações "Domains" da Vercel, retirando o `.vercel.app`.
 - [ ] **Finalizar Depoimentos Dinâmicos:** Conectar o frontend do grid de Depoimentos ao Banco de Dados MySQL (Prisma), da mesma forma que fizemos com os Imóveis.
 - [ ] **Página "Sobre" (Detalhes da Empresa):** Validar se os textos sobre a história da empresa na landing page estão adequados ou se exigem reescrita e edição de *copywriting*.
@@ -216,3 +216,36 @@ Nesta sessão, atualizamos os dados oficiais de contato da imobiliária em todos
    - **Proteção do Ambiente de Desenvolvimento:** Rastreamento desativado em ambiente local para não poluir os dados reais do banco de produção.
    - **Fuso Horário de Brasília (UTC-3):** Cálculos de agrupamento diário, semanal e mensal ajustados para o horário oficial brasileiro.
    - **Gráficos e Indicadores:** Resolução da renderização das barras (conversão de alturas percentuais para pixels absolutos), visualização de total de visitantes únicos e visualizações totais (`pageViews`), e limpeza da base de testes legada.
+219: 
+220: ---
+221: ### Sessão de 28/10/2026 (OpenGraph, SEO Social Dinâmico e Blindagem de Indexação)
+222: 
+223: Nesta sessão, implementamos todo o ecossistema de metatags ricas e OpenGraph para compartilhamento de links da plataforma em redes sociais (WhatsApp, Facebook, Instagram, LinkedIn e Twitter/X), além de metatags de proteção para o painel restrito:
+224: 
+225: 1. **Módulo Centralizado de SEO (`src/lib/seo.ts`):**
+226:    - Resolução automática e inteligente de URL canônica e domínio base (`metadataBase`), suportando `NEXT_PUBLIC_SITE_URL`, `VERCEL_PROJECT_PRODUCTION_URL`, `VERCEL_URL` e domínio oficial de produção.
+227:    - Função utilitária `toAbsoluteUrl` para garantir que qualquer imagem (seja do Supabase Storage ou uploads locais) seja sempre servida como URL absoluta (`https://...`), atendendo à exigência estrita dos robôs do WhatsApp e Meta Crawler.
+228:    - Construtor dinâmico de descrições e títulos para imóveis, formatando preços em padrão contábil brasileiro (`R$`), localização (bairro/cidade/UF), dormitórios, suítes, vagas, área privativa e destaques/diferenciais.
+229: 
+230: 2. **Metatags Globais e Banner Oficial (`/og-image.jpg`):**
+231:    - Criação e integração do banner oficial em alta definição (1200x630, proporção 16:9) no padrão escuro premium da marca, retratando arquitetura moderna e paisagem rural/urbana.
+232:    - Configuração no `layout.tsx` de metatags completas de OpenGraph (`og:title`, `og:description`, `og:image`, `og:image:width`, `og:image:height`, `og:locale: pt_BR`, `og:site_name`, `og:type: website`) e Twitter Card (`summary_large_image`).
+233: 
+234: 3. **Metatags Dinâmicas por Imóvel (`/imoveis/[id]`):**
+235:    - Implementação de `generateMetadata` na página de detalhes do imóvel.
+236:    - Ao compartilhar o link de um imóvel no WhatsApp ou Facebook, a pré-visualização carrega instantaneamente:
+237:      - A primeira foto real do imóvel (com dimensões 1200x630 e tag alt correspondente).
+238:      - Título com nome do imóvel e valor formatado.
+239:      - Descrição resumida com cômodos, metragem, localização e diferenciais exclusivos.
+240: 
+241: 4. **Páginas Institucionais e Catálogo (`/` e `/imoveis` e `/sobre`):**
+242:    - `/`: Metatags personalizadas com canonical URL e banner institucional.
+243:    - `/imoveis`: Metatags focadas em catálogo de compra e locação de imóveis urbanos e rurais.
+244:    - `/sobre`: Refatoração da página para Server Component (`SobreClient.tsx` + `page.tsx`) com metatags institucionais sobre história, missão e atuação regional da imobiliária.
+245: 
+246: 5. **Blindagem de Segurança no Painel (`/admin`):**
+247:    - Injeção de diretivas `robots: { index: false, follow: false, nocache: true }` no layout do Admin, impedindo que motores de busca (Google, Bing) e robôs sociais indexem telas restritas e rotas administrativas.
+248: 
+249: 6. **Validação e Build:**
+250:    - Testes de renderização de tags via requisições HTTP locais confirmando a geração correta das tags `og:*` e `twitter:*` em todas as rotas.
+251:    - Build compilado com sucesso (`next build`), validando integridade de tipos e geração estática/dinâmica sem nenhum erro.

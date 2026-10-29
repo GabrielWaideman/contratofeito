@@ -33,7 +33,7 @@ export default function Footer() {
               <li><Link href="/imoveis" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Comprar Imóvel</Link></li>
               <li><Link href="/sobre" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Sobre Nós</Link></li>
               <li><Link href="#" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Solicitar Avaliação</Link></li>
-              <li><Link href="#" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Política de Privacidade</Link></li>
+              <li><Link href="/politicas-de-privacidade" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Políticas de Uso e Privacidade</Link></li>
             </ul>
           </div>
 

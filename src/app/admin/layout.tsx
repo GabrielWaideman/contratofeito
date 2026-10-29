@@ -1,7 +1,21 @@
+import type { Metadata } from 'next'
 import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { verifyToken } from '@/lib/auth'
 import AdminClientLayout from './AdminClientLayout'
+
+export const metadata: Metadata = {
+  title: 'Painel Administrativo | Contrato Feito',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+}
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const headerList = headers()
