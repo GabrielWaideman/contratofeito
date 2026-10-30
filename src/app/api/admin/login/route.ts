@@ -51,11 +51,19 @@ export async function POST(request: Request) {
 
     // 7. Gerar Token e Cookie
     const token = signToken({ userId: user.id, username: user.username, role: user.role })
-    const cookie = buildSessionCookie(token)
+    const isProduction = process.env.NODE_ENV === 'production'
 
     // 8. Responder com cookie HTTP-Only
     const response = NextResponse.json({ success: true })
-    response.headers.set('Set-Cookie', cookie)
+    response.cookies.set({
+      name: 'cf_admin_token',
+      value: token,
+      httpOnly: true,
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 8 * 60 * 60,
+      secure: isProduction,
+    })
 
     return response
   } catch (error) {

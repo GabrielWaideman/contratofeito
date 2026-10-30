@@ -47,7 +47,7 @@ export function buildSessionCookie(token: string): string {
   return [
     `${COOKIE_NAME}=${token}`,
     `HttpOnly`,
-    `SameSite=Strict`,
+    `SameSite=Lax`,
     `Path=/`,
     `Max-Age=${maxAge}`,
     isProduction ? 'Secure' : '',
@@ -55,7 +55,7 @@ export function buildSessionCookie(token: string): string {
 }
 
 export function buildClearCookie(): string {
-  return `${COOKIE_NAME}=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0`
+  return `${COOKIE_NAME}=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0`
 }
 
 // ─── Session (Server Component) ───────────────────────────────────────────────

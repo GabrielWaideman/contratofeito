@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getSessionFromRequest } from '@/lib/auth'
 import { supabase } from '@/lib/supabaseClient'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   try {
     const session = getSessionFromRequest(request)
@@ -18,6 +20,14 @@ export async function POST(request: Request) {
 
     if (!file.type.startsWith('image/')) {
       return NextResponse.json({ error: 'Apenas imagens são permitidas.' }, { status: 400 })
+    }
+
+    const MAX_FILE_SIZE = 15 * 1024 * 1024
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: 'A imagem é muito grande. O limite máximo é de 15MB.' },
+        { status: 413 }
+      )
     }
 
     const bytes = await file.arrayBuffer()

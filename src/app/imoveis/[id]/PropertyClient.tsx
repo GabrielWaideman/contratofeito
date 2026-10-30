@@ -174,9 +174,11 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
                   <Star size={9} fill="currentColor" /> Destaque
                 </span>
               )}
-              <span className="text-[11px] font-medium px-2.5 py-1 rounded-full bg-gray-50 text-gray-400 border border-gray-100">
-                Cód. #{String(property.id).padStart(4, '0')}
-              </span>
+              {property.code && (
+                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200 font-mono">
+                  Cód. {property.code.replace(/^#/, '')}
+                </span>
+              )}
             </div>
 
             <h1 className="text-gray-900 font-extrabold text-2xl md:text-3xl leading-snug tracking-tight mb-2">
@@ -359,8 +361,11 @@ export default function PropertyClient({
 }) {
   const [activePhoto, setActivePhoto] = useState(0)
   
+  const formattedCode = property.code ? property.code.replace(/^#/, '') : null
+  const codeSuffix = formattedCode ? ` (Cód. ${formattedCode})` : ''
+
   const whatsappMsg = encodeURIComponent(
-    `Olá! Tenho interesse no imóvel "${property.title}" (Cód. ${property.id}) que vi no site.`
+    `Olá! Tenho interesse no imóvel "${property.title}"${codeSuffix} que vi no site.`
   )
 
   return (

@@ -58,11 +58,16 @@ export default async function PropertySection() {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
 
-                  {/* Badge Destaque (tipo RURAL/URBANO removido da visão do cliente) */}
-                  <div className="absolute top-4 left-4 flex gap-2">
+                  {/* Badges */}
+                  <div className="absolute top-4 left-4 flex flex-wrap gap-2 items-center">
                     {property.isFeatured && (
                       <span className="px-3 py-1 rounded-md bg-gold-500 text-dark-950 text-xs font-bold uppercase shadow-md flex items-center gap-1">
                         <Star size={10} fill="currentColor" /> Destaque
+                      </span>
+                    )}
+                    {property.code && (
+                      <span className="px-3 py-1 rounded-md bg-black/60 backdrop-blur-sm text-white text-xs font-bold font-mono">
+                        {property.code.replace(/^#/, '')}
                       </span>
                     )}
                   </div>

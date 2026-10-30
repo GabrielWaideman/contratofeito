@@ -1,18 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Lock } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default function LoginPage() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (loading) return
     setError('')
     setLoading(true)
 
@@ -20,7 +20,7 @@ export default function LoginPage() {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: username.trim(), password }),
       })
 
       const data = await res.json()
@@ -29,9 +29,8 @@ export default function LoginPage() {
         throw new Error(data.error || 'Erro ao fazer login')
       }
 
-      // Mantém o estado de carregamento ativo até o painel abrir (não reseta em caso de sucesso)
-      router.replace('/admin')
-      router.refresh()
+      // Navegação direta com hard navigation para carregar imediatamente a sessão e o layout do painel
+      window.location.href = '/admin'
     } catch (err: any) {
       setError(err.message)
       setLoading(false)
@@ -82,7 +81,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md disabled:opacity-70 flex items-center justify-center gap-3"
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-md disabled:opacity-70 flex items-center justify-center gap-3 cursor-pointer"
           >
             {loading ? (
               <>
@@ -93,6 +92,16 @@ export default function LoginPage() {
               'Entrar no Painel'
             )}
           </button>
+
+          <div className="pt-2 border-t border-gray-100">
+            <Link
+              href="/"
+              className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold py-3.5 rounded-xl transition-all flex items-center justify-center gap-2 text-sm border border-gray-200 shadow-sm"
+            >
+              <ArrowLeft size={18} className="text-gray-500" />
+              Voltar ao Site
+            </Link>
+          </div>
         </form>
       </div>
     </div>

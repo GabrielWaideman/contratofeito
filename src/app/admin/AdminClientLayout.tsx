@@ -23,8 +23,7 @@ export default function AdminClientLayout({ children, username, role: userRole }
 
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
-    router.push('/admin/login')
-    router.refresh()
+    window.location.href = '/admin/login'
   }
 
   const menuItems = [

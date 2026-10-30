@@ -98,7 +98,7 @@ export default function PoliticasClient() {
                 Políticas de Uso <span className="text-brand-500">e Privacidade</span>
               </h1>
 
-              <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8">
+              <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8 text-justify">
                 Documento oficial da <strong className="text-white font-semibold">Contrato Feito Negócios Imobiliários</strong> que estabelece as regras de navegação, termos de serviço e o nosso rigoroso compromisso com a proteção e o tratamento de seus dados pessoais.
               </p>
 
@@ -347,7 +347,7 @@ export default function PoliticasClient() {
                     <HelpCircle size={14} className="text-brand-600" />
                     Dúvidas sobre seus dados?
                   </div>
-                  <p className="text-slate-500 leading-relaxed mb-3 text-[11px]">
+                  <p className="text-slate-500 leading-relaxed mb-3 text-[11px] text-justify">
                     Entre em contato diretamente com nossa equipe para exercer seus direitos como titular.
                   </p>
                   <a
@@ -379,7 +379,7 @@ export default function PoliticasClient() {
                       Termos de Uso
                     </h2>
                     
-                    <div id="termos-intro" className="prose prose-slate max-w-none text-slate-600 text-sm leading-relaxed space-y-3">
+                    <div id="termos-intro" className="prose prose-slate max-w-none text-slate-600 text-sm leading-relaxed space-y-3 text-justify">
                       <p className="font-semibold text-slate-900">
                         Bem-vindo ao CONTRATO FEITO NEGÓCIOS IMOBILIÁRIOS.
                       </p>
@@ -396,7 +396,7 @@ export default function PoliticasClient() {
                         e futuramente em{' '}
                         <span className="font-medium text-slate-800">www.contratofeito.com</span>) ou utilizam suas funcionalidades, neste caso, “Você”.
                       </p>
-                      <div className="p-4 bg-brand-50 border-l-4 border-brand-500 rounded-r-xl text-slate-800 text-xs sm:text-sm">
+                      <div className="p-4 bg-brand-50 border-l-4 border-brand-500 rounded-r-xl text-slate-800 text-xs sm:text-sm text-justify">
                         Como condição para acesso e uso das funcionalidades do Site, Você declara que fez a leitura completa e atenta das regras deste documento, estando plenamente ciente e de acordo com elas.
                       </div>
                     </div>
@@ -408,7 +408,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">1.</span> FUNCIONALIDADES DO SITE
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">1.1. Uso do Site:</strong> As informações e funções disponibilizadas a Você no Site são voltadas para pessoas jurídicas e pessoas físicas a partir de 18 (dezoito) anos de idade.
                         </p>
@@ -418,7 +418,7 @@ export default function PoliticasClient() {
                         <p>
                           <strong className="text-slate-800">1.3. Apresentação do Site:</strong> O Site e suas funcionalidades são apresentados a Você na maneira como estão disponíveis no momento do acesso, mas podem passar por constantes aprimoramentos e atualizações sem a necessidade de prévio aviso, razão pela qual os layouts podem variar.
                         </p>
-                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs sm:text-sm text-slate-700">
+                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs sm:text-sm text-slate-700 text-justify">
                           <strong className="text-slate-900 block mb-1">1.3.1. Compromisso de Qualidade e Usabilidade:</strong>
                           Neste caso, nos comprometemos a preservar a funcionalidade do Site com esforços razoáveis, utilizando Layout que respeita a usabilidade e navegabilidade, sempre que possível, bem como exibir as funcionalidades de maneira clara, completa, precisa e suficiente, de modo que exista uma correta percepção do que está sendo praticado, e proteger, por meio do estado da técnica disponível, os dados coletados pelas funcionalidades disponibilizadas.
                         </div>
@@ -432,7 +432,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">2.</span> USO DO SITE POR VOCÊ
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">2.1. Acesso ao Site:</strong> O acesso ao Site será efetuado através do uso da internet, não sendo permitido o acesso por nenhum outro meio diverso não autorizado por meio destes Termos.
                         </p>
@@ -451,7 +451,7 @@ export default function PoliticasClient() {
                               <span className="w-6 h-6 rounded-lg bg-brand-100 text-brand-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                                 {item.letter}
                               </span>
-                              <span className="text-xs sm:text-sm text-slate-700 font-medium">{item.text}</span>
+                              <span className="text-xs sm:text-sm text-slate-700 font-medium text-justify">{item.text}</span>
                             </li>
                           ))}
                         </ul>
@@ -465,7 +465,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">3.</span> CONTEÚDO, DADOS SUBMETIDOS E PROPRIEDADE INTELECTUAL
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">3.1. Propriedade Intelectual:</strong> Ao acessar o Site, Você declara que irá respeitar todos os direitos de propriedade intelectual, incluindo, mas não se limitando, aos programas de computador, direitos autorais e direitos de propriedade industrial sobre as marcas, patentes, nomes de domínio, denominação social e desenhos industriais, eventualmente depositados ou registrados em nosso nome, bem como de todos os direitos referentes a terceiros que porventura estejam, ou estiveram, de alguma forma, disponíveis no Site, sendo que a sua infração poderá ensejar o pagamento de indenização por perdas e danos judicialmente apurados.
                         </p>
@@ -494,7 +494,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">4.</span> ISENÇÃO E LIMITAÇÕES DE RESPONSABILIDADE
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">4.1. Disponibilidade do Site:</strong> Envidaremos nossos esforços para a manutenção da disponibilidade contínua e permanente do Site. No entanto, pode ocorrer, eventualmente, alguma indisponibilidade temporária decorrente de manutenção necessária ou mesmo gerada por motivo de força maior, como desastres naturais, falhas nos sistemas de comunicação e acesso à Internet, ataques cibernéticos invasivos, ou quaisquer fatos de terceiros que fogem da nossa esfera de vigilância e responsabilidade.
                         </p>
@@ -505,26 +505,26 @@ export default function PoliticasClient() {
                           <strong className="text-slate-800">4.1.2. Manutenção Programada:</strong> Eventuais procedimentos de manutenção que acarretem a indisponibilidade do Site por longos períodos serão informados por meio dos canais oficiais.
                         </p>
                         
-                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5 text-justify">
                           <p className="font-bold text-slate-900 mb-3 text-xs sm:text-sm">
                             4.1.3. Sem prejuízo de outras condições destes Termos, não nos responsabilizamos:
                           </p>
                           <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
                             <li className="flex items-start gap-2">
                               <span className="text-brand-500 font-bold">•</span>
-                              <span><strong>a)</strong> Por quaisquer problemas, bugs, glitches ou funcionamentos indevidos que ocorrerem nos seus dispositivos e equipamentos;</span>
+                              <span className="text-justify"><strong>a)</strong> Por quaisquer problemas, bugs, glitches ou funcionamentos indevidos que ocorrerem nos seus dispositivos e equipamentos;</span>
                             </li>
                             <li className="flex items-start gap-2">
                               <span className="text-brand-500 font-bold">•</span>
-                              <span><strong>b)</strong> Por qualquer dano direto ou indireto ocasionado por eventos de terceiros, a exemplo, mas não se limitando a ataque de hackers, falhas no sistema, no servidor ou na conexão à internet, inclusive por ações de softwares que possam, de algum modo, danificar ativos físicos ou lógicos em decorrência do acesso, utilização ou navegação no Site;</span>
+                              <span className="text-justify"><strong>b)</strong> Por qualquer dano direto ou indireto ocasionado por eventos de terceiros, a exemplo, mas não se limitando a ataque de hackers, falhas no sistema, no servidor ou na conexão à internet, inclusive por ações de softwares que possam, de algum modo, danificar ativos físicos ou lógicos em decorrência do acesso, utilização ou navegação no Site;</span>
                             </li>
                             <li className="flex items-start gap-2">
                               <span className="text-brand-500 font-bold">•</span>
-                              <span><strong>c)</strong> Pela navegação em quaisquer links externos disponibilizados no Site, sendo seu dever, a leitura dos Termos de Uso e Política de Privacidade do serviço acessado e agir conforme o determinado; e</span>
+                              <span className="text-justify"><strong>c)</strong> Pela navegação em quaisquer links externos disponibilizados no Site, sendo seu dever, a leitura dos Termos de Uso e Política de Privacidade do serviço acessado e agir conforme o determinado; e</span>
                             </li>
                             <li className="flex items-start gap-2">
                               <span className="text-brand-500 font-bold">•</span>
-                              <span><strong>d)</strong> Por verificar, controlar, aprovar ou garantir a adequação ou exatidão das informações ou dados disponibilizados em tais links para serviços de terceiros, não sendo, portanto, responsáveis por prejuízos, perdas ou danos ocorridos pela visita de tais sites, cabendo ao interessado verificar a confiabilidade das informações e dados ali exibidos antes de tomar alguma decisão ou praticar algum ato.</span>
+                              <span className="text-justify"><strong>d)</strong> Por verificar, controlar, aprovar ou garantir a adequação ou exatidão das informações ou dados disponibilizados em tais links para serviços de terceiros, não sendo, portanto, responsáveis por prejuízos, perdas ou danos ocorridos pela visita de tais sites, cabendo ao interessado verificar a confiabilidade das informações e dados ali exibidos antes de tomar alguma decisão ou praticar algum ato.</span>
                             </li>
                           </ul>
                         </div>
@@ -538,7 +538,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">5.</span> RECOMENDAÇÕES DE SEGURANÇA
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">5.1. Acesso ao Site:</strong> Sempre que acessar o Site, verifique se de fato está no ambiente que Nós disponibilizamos, ações de hackers podem, em uma tentativa de roubar seus dados, replicar um site ou áreas deste.
                         </p>
@@ -548,7 +548,7 @@ export default function PoliticasClient() {
                               <Lock size={16} className="text-emerald-600" />
                               5.1.1. Verificação do Cadeado SSL
                             </div>
-                            <p className="text-xs text-emerald-800 leading-relaxed">
+                            <p className="text-xs text-emerald-800 leading-relaxed text-justify">
                               Para verificar a integridade e veracidade do Site, clique no cadeado presente na barra de endereço do navegador, verificando os certificados presentes e informados.
                             </p>
                           </div>
@@ -558,7 +558,7 @@ export default function PoliticasClient() {
                               <AlertTriangle size={16} className="text-amber-600" />
                               5.1.2. Alerta de Insegurança
                             </div>
-                            <p className="text-xs text-amber-800 leading-relaxed">
+                            <p className="text-xs text-amber-800 leading-relaxed text-justify">
                               Caso o navegador não apresente os certificados e/ou retorne com a mensagem de que o acesso não é seguro, interrompa imediatamente o uso do Site e comunique a Imobiliária para que as devidas providências sejam tomadas.
                             </p>
                           </div>
@@ -573,7 +573,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">6.</span> PENALIDADES
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">6.1. Sanções Aplicáveis:</strong> O descumprimento de qualquer cláusula destes Termos, poderá gerar: (i) suspensão temporária do Site para seu login; (ii) bloqueio e exclusão de sua Conta do Site e/ou (iii) responsabilização nas esferas cível e penal.
                         </p>
@@ -590,7 +590,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">7.</span> OUTRAS DISPOSIÇÕES
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">7.1. Canais de Atendimento:</strong> Você poderá utilizar os Canais de Atendimento da Imobiliária disponibilizados no Site toda vez que presenciar ou verificar algum conteúdo impróprio no Site, seja ele notadamente ilícito ou contrário às regras de uso estipuladas nestes Termos.
                         </p>
@@ -615,7 +615,7 @@ export default function PoliticasClient() {
                         <p>
                           <strong className="text-slate-800">7.7. Data e hora oficial:</strong> O Site tem como base a data e horários oficiais de Brasília (UTC/GMT -03:00).
                         </p>
-                        <div className="p-4 bg-slate-900 text-white rounded-2xl">
+                        <div className="p-4 bg-slate-900 text-white rounded-2xl text-justify">
                           <strong className="text-brand-400 block mb-1 text-xs uppercase tracking-wider">
                             7.8. Lei Aplicável e Foro de Eleição
                           </strong>
@@ -645,7 +645,7 @@ export default function PoliticasClient() {
                             <span className="font-bold text-slate-900 block mb-1 text-brand-700">
                               {item.term}
                             </span>
-                            <span className="text-slate-600 text-xs leading-relaxed">
+                            <span className="text-slate-600 text-xs leading-relaxed text-justify block">
                               {item.desc}
                             </span>
                           </div>
@@ -677,14 +677,14 @@ export default function PoliticasClient() {
                       Em conformidade com a Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018) e com o Marco Civil da Internet (Lei nº 12.965/2014).
                     </p>
 
-                    <div id="priv-1" className="prose prose-slate max-w-none text-slate-600 text-sm leading-relaxed space-y-4">
+                    <div id="priv-1" className="prose prose-slate max-w-none text-slate-600 text-sm leading-relaxed space-y-4 text-justify">
                       <h4 className="text-base font-bold text-slate-900 uppercase tracking-tight">
                         1. Introdução
                       </h4>
                       <p>
                         A presente Política tem por finalidade demonstrar o nosso compromisso com a privacidade e proteção dos seus Dados, além de estabelecer as regras sobre o Tratamento dos seus Dados Pessoais, dentro do escopo dos serviços e funcionalidades do presente site (“Site”), de acordo com as leis em vigor, com transparência e clareza junto a Você e ao mercado em geral.
                       </p>
-                      <div className="p-4 bg-brand-50 border-l-4 border-brand-500 rounded-r-xl text-slate-800 text-xs sm:text-sm">
+                      <div className="p-4 bg-brand-50 border-l-4 border-brand-500 rounded-r-xl text-slate-800 text-xs sm:text-sm text-justify">
                         Como condição para acesso e uso das funcionalidades exclusivas no Site, Você declara que fez a leitura completa e atenta desta Política, estando plenamente ciente, conferindo, assim, sua livre e expressa concordância com os termos aqui estipulados, incluindo a coleta dos Dados aqui mencionados, bem como sua utilização para os fins abaixo especificados. Caso Você não esteja de acordo com as disposições desta Política, Você deverá descontinuar o seu acesso ou uso do Site.
                       </div>
                     </div>
@@ -702,7 +702,7 @@ export default function PoliticasClient() {
                             <Building2 size={16} className="text-brand-600" />
                             Imobiliária (Contrato Feito)
                           </div>
-                          <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">
+                          <p className="text-slate-600 leading-relaxed text-xs sm:text-sm text-justify">
                             Prestadora dos serviços, desenvolvedora do CRM próprio e única responsável pelo controle e tratamento dos dados pessoais dos Usuários coletados por meio do Site (atuando como <strong>Controladora e Operadora</strong>).
                           </p>
                         </div>
@@ -712,7 +712,7 @@ export default function PoliticasClient() {
                             <UserCheck size={16} className="text-brand-600" />
                             Usuário
                           </div>
-                          <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">
+                          <p className="text-slate-600 leading-relaxed text-xs sm:text-sm text-justify">
                             Indivíduos relacionados diretamente com a Imobiliária e que acessam o Site (“Você”) com interesse nos serviços ofertados pela Imobiliária.
                           </p>
                         </div>
@@ -726,7 +726,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">3.</span> SOBRE OS DADOS COLETADOS
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">3.1. Como a Imobiliária coleta os Dados:</strong> Os Dados, incluindo Dados Pessoais, poderão ser coletados quando Você os submete ou quando Você interage com o Site, o que inclui:
                         </p>
@@ -743,7 +743,7 @@ export default function PoliticasClient() {
                               <span className="font-semibold block text-slate-900 mb-1">Informações Coletadas:</span>
                               Nome completo, E-mail, Telefone/celular.
                             </div>
-                            <div className="text-xs text-slate-600 bg-slate-100/70 p-3 rounded-xl border border-slate-200/60">
+                            <div className="text-xs text-slate-600 bg-slate-100/70 p-3 rounded-xl border border-slate-200/60 text-justify">
                               <span className="font-bold text-slate-800 block mb-1">Finalidades do Tratamento:</span>
                               <ul className="list-disc pl-4 space-y-1">
                                 <li>Identificar e autenticar Você;</li>
@@ -763,7 +763,7 @@ export default function PoliticasClient() {
                               <span className="font-semibold block text-slate-900 mb-1">Informações Coletadas:</span>
                               Endereço IP e Porta Lógica de Origem, Dispositivo (versão do sistema operacional), Geolocalização, Registros de data e horário de cada ação que Você realizar, Quais telas você acessou, ID da sessão, Cookies.
                             </div>
-                            <div className="text-xs text-slate-600 bg-slate-100/70 p-3 rounded-xl border border-slate-200/60">
+                            <div className="text-xs text-slate-600 bg-slate-100/70 p-3 rounded-xl border border-slate-200/60 text-justify">
                               <span className="font-bold text-slate-800 block mb-1">Finalidades do Tratamento:</span>
                               <ul className="list-disc pl-4 space-y-1">
                                 <li>Identificar e autenticar Você;</li>
@@ -796,7 +796,7 @@ export default function PoliticasClient() {
                         {/* Cookies Box */}
                         <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-start gap-3">
                           <Cookie size={20} className="text-brand-600 shrink-0 mt-0.5" />
-                          <div className="text-xs sm:text-sm text-slate-700">
+                          <div className="text-xs sm:text-sm text-slate-700 text-justify">
                             <strong className="text-slate-900 block mb-1">3.5. Tecnologias empregadas (Cookies):</strong>
                             O Site utiliza Cookies, cabendo a Você configurar o seu navegador de Internet caso deseje bloqueá-los. Nesta hipótese, algumas funcionalidades que oferecemos poderão ser limitadas.
                             <span className="block mt-1 text-slate-500">
@@ -807,7 +807,7 @@ export default function PoliticasClient() {
 
                         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-3">
                           <CheckCircle2 size={18} className="text-emerald-600 shrink-0" />
-                          <p className="text-xs sm:text-sm text-emerald-900 font-medium">
+                          <p className="text-xs sm:text-sm text-emerald-900 font-medium text-justify">
                             <strong className="font-bold">3.6. Decisões Automatizadas:</strong> O Site não utiliza nenhum tipo de decisão unicamente automatizada que impacte Você.
                           </p>
                         </div>
@@ -821,7 +821,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">4.</span> COMO A IMOBILIÁRIA PODE COMPARTILHAR DADOS E INFORMAÇÕES
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p className="font-semibold text-slate-800">
                           4.1. Hipóteses de compartilhamento dos Dados. Os Dados coletados e as atividades registradas podem ser compartilhados pela imobiliária:
                         </p>
@@ -831,7 +831,7 @@ export default function PoliticasClient() {
                               01
                             </span>
                             <strong className="text-slate-900 block mb-1 text-xs sm:text-sm">Autoridades Competentes</strong>
-                            <p className="text-xs text-slate-600 leading-relaxed">
+                            <p className="text-xs text-slate-600 leading-relaxed text-justify">
                               Com autoridades judiciais, administrativas ou governamentais competentes, sempre que houver determinação legal, requerimento, requisição ou ordem judicial;
                             </p>
                           </div>
@@ -841,7 +841,7 @@ export default function PoliticasClient() {
                               02
                             </span>
                             <strong className="text-slate-900 block mb-1 text-xs sm:text-sm">Operações Societárias</strong>
-                            <p className="text-xs text-slate-600 leading-relaxed">
+                            <p className="text-xs text-slate-600 leading-relaxed text-justify">
                               De forma automática, em caso de movimentações societárias, como fusão, aquisição e incorporação; e
                             </p>
                           </div>
@@ -851,7 +851,7 @@ export default function PoliticasClient() {
                               03
                             </span>
                             <strong className="text-slate-900 block mb-1 text-xs sm:text-sm">Hipóteses Específicas</strong>
-                            <p className="text-xs text-slate-600 leading-relaxed">
+                            <p className="text-xs text-slate-600 leading-relaxed text-justify">
                               Para hipóteses específicas que, quando aplicáveis, serão informadas diretamente pela Imobiliária.
                             </p>
                           </div>
@@ -866,7 +866,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">5.</span> COMO SEUS DADOS SÃO PROTEGIDOS E COMO VOCÊ TAMBÉM PODERÁ PROTEGÊ-LOS
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">5.1. Compartilhamento de senhas:</strong> Você também é responsável pelo sigilo de seus Dados Pessoais e deve ter sempre ciência de que o compartilhamento de senhas e dados de acesso viola esta Política e pode comprometer a segurança dos seus Dados e do Site.
                         </p>
@@ -879,7 +879,7 @@ export default function PoliticasClient() {
                         <p>
                           <strong className="text-slate-800">5.4. Links externos:</strong> Quando Você utilizar o Site, Você poderá ser conduzido, via link a outros portais ou plataformas, que poderão coletar suas informações e ter sua própria Política de Tratamento de Dados.
                         </p>
-                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs sm:text-sm text-slate-700 space-y-2">
+                        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs sm:text-sm text-slate-700 space-y-2 text-justify">
                           <p>
                             <strong className="text-slate-900">5.4.1. Responsabilidade sobre sites terceiros:</strong> Caberá a Você ler as Políticas de Privacidade e Tratamento de Dados de tais portais ou plataformas fora do Site, sendo de sua responsabilidade aceitá-la ou rejeitá-la. A Imobiliária não é responsável pelas Políticas de Privacidade e Tratamento de Dados de terceiros e nem pelo conteúdo de quaisquer websites ou serviços ligados a ambientes que não sejam o do Site.
                           </p>
@@ -900,13 +900,13 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">6.</span> COMO OS SEUS DADOS PESSOAIS SÃO ARMAZENADOS E O REGISTRO DE ATIVIDADES
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">6.1. Definição do Armazenamento:</strong> Os Dados Pessoais coletados e os registros de atividades são armazenados conforme definido pela Imobiliária. Caso tenha alguma dúvida, entre em contato diretamente com a Imobiliária.
                         </p>
                         <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-start gap-3">
                           <Server size={20} className="text-brand-600 shrink-0 mt-0.5" />
-                          <p className="text-xs sm:text-sm text-slate-700">
+                          <p className="text-xs sm:text-sm text-slate-700 text-justify">
                             <strong className="text-slate-900 block mb-1">6.2. Infraestrutura e Cloud Computing:</strong>
                             Os Dados coletados serão armazenados no banco de dados da Imobiliária, em servidores localizados no Brasil, bem como em ambiente de uso de recursos ou servidores na nuvem (<em>cloud computing</em>), o que poderá exigir uma transferência e/ou processamento destes Dados fora do Brasil, sempre observando níveis adequados de segurança da informação.
                           </p>
@@ -921,7 +921,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">7.</span> QUAIS SÃO OS SEUS DIREITOS E COMO EXERCÊ-LOS (LGPD)
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">7.1. Seus Direitos Básicos:</strong> Você poderá solicitar à Imobiliária a confirmação da existência de tratamento de Dados Pessoais, além da exibição ou retificação de seus Dados Pessoais.
                         </p>
@@ -933,7 +933,7 @@ export default function PoliticasClient() {
                               <Eye size={16} />
                             </div>
                             <strong className="text-slate-900 text-xs sm:text-sm block mb-1">Limitação</strong>
-                            <p className="text-[11px] text-slate-600 leading-relaxed">
+                            <p className="text-[11px] text-slate-600 leading-relaxed text-justify">
                               Requerer a limitação do uso de seus Dados Pessoais tratados pela Imobiliária.
                             </p>
                           </div>
@@ -943,7 +943,7 @@ export default function PoliticasClient() {
                               <Scale size={16} />
                             </div>
                             <strong className="text-slate-900 text-xs sm:text-sm block mb-1">Oposição e Revogação</strong>
-                            <p className="text-[11px] text-slate-600 leading-relaxed">
+                            <p className="text-[11px] text-slate-600 leading-relaxed text-justify">
                               Manifestar sua oposição e/ou revogar o consentimento outorgado anteriormente.
                             </p>
                           </div>
@@ -953,13 +953,13 @@ export default function PoliticasClient() {
                               <Lock size={16} />
                             </div>
                             <strong className="text-slate-900 text-xs sm:text-sm block mb-1">Exclusão dos Dados</strong>
-                            <p className="text-[11px] text-slate-600 leading-relaxed">
+                            <p className="text-[11px] text-slate-600 leading-relaxed text-justify">
                               Solicitar a exclusão dos seus Dados Pessoais que tenham sido coletados.
                             </p>
                           </div>
                         </div>
 
-                        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs sm:text-sm text-amber-900 leading-relaxed">
+                        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs sm:text-sm text-amber-900 leading-relaxed text-justify">
                           <strong className="block mb-1.5 font-bold flex items-center gap-1.5">
                             <Info size={16} className="text-amber-700" />
                             7.2.1. Hipóteses Legais de Retenção de Dados (Art. 16 da LGPD):
@@ -984,7 +984,7 @@ export default function PoliticasClient() {
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">8.</span> INFORMAÇÕES SOBRE ESSA POLÍTICA
                       </h3>
-                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
+                      <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
                           <strong className="text-slate-800">8.1. Alteração do teor e atualização:</strong> Você reconhece o nosso direito de alterar o teor desta Política a qualquer momento, conforme a finalidade ou necessidade, tal qual para adequação e conformidade legal de disposição de lei ou norma que tenha força jurídica equivalente, cabendo a Você verificá-la sempre que efetuar o acesso ao Site ou utilizar nossos serviços.
                         </p>
@@ -995,7 +995,7 @@ export default function PoliticasClient() {
                           <strong className="text-slate-800">8.3. Canais de Atendimento:</strong> Em caso de qualquer dúvida com relação ao Tratamento de seus Dados Pessoais, você poderá entrar em contato diretamente com a Imobiliária.
                         </p>
                         
-                        <div className="p-4 bg-slate-900 text-white rounded-2xl space-y-2">
+                        <div className="p-4 bg-slate-900 text-white rounded-2xl space-y-2 text-justify">
                           <strong className="text-brand-400 block text-xs uppercase tracking-wider">
                             8.4. Lei Aplicável e Foro de Eleição
                           </strong>
@@ -1038,7 +1038,7 @@ export default function PoliticasClient() {
                             <span className="font-bold text-slate-900 block mb-1 text-brand-700">
                               {item.term}
                             </span>
-                            <span className="text-slate-600 text-xs leading-relaxed">
+                            <span className="text-slate-600 text-xs leading-relaxed text-justify block">
                               {item.desc}
                             </span>
                           </div>
@@ -1059,7 +1059,7 @@ export default function PoliticasClient() {
                   <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight mb-3">
                     Ficou com alguma dúvida ou precisa exercer seus direitos?
                   </h3>
-                  <p className="text-brand-100 text-xs sm:text-sm leading-relaxed mb-6">
+                  <p className="text-brand-100 text-xs sm:text-sm leading-relaxed mb-6 text-justify">
                     A Contrato Feito preza pela lisura e pelo respeito integral à legislação. Estamos à disposição para esclarecer qualquer aspecto das nossas políticas e do tratamento de dados.
                   </p>
 

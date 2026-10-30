@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { PropertyInput, propertySchema } from '@/lib/validations'
 import { Save, AlertCircle, X, Plus, Upload, Trash2, Loader2 } from 'lucide-react'
+import { compressImage } from '@/lib/imageCompression'
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -228,6 +229,8 @@ export default function PropertyForm({ initialData }: Props) {
     try {
       const parsedData = {
         ...formData,
+        code:        formData.code?.trim() ? formData.code.trim() : null,
+        videoUrl:    formData.videoUrl?.trim() ? formData.videoUrl.trim() : null,
         price:       Number(formData.price),
         bedrooms:    Number(formData.bedrooms),
         suites:      Number(formData.suites),
@@ -235,6 +238,7 @@ export default function PropertyForm({ initialData }: Props) {
         garageSpots: Number(formData.garageSpots),
         area:        Number(formData.area),
         builtArea:   formData.builtArea ? Number(formData.builtArea) : null,
+        builtAreaUnit: formData.builtArea ? (formData.builtAreaUnit || 'm²') : null,
       }
 
       const result = propertySchema.safeParse(parsedData)
@@ -254,8 +258,13 @@ export default function PropertyForm({ initialData }: Props) {
       })
 
       if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.error || 'Erro ao salvar imóvel')
+        let errJson: any = null
+        try {
+          errJson = await res.json()
+        } catch {
+          // fallback
+        }
+        throw new Error(errJson?.error || `Erro ao salvar imóvel (Status ${res.status})`)
       }
 
       router.push('/admin/imoveis')
@@ -290,13 +299,35 @@ export default function PropertyForm({ initialData }: Props) {
 
   const [uploadingCover,   setUploadingCover]   = useState(false)
   const [uploadingGallery, setUploadingGallery] = useState(false)
+  const [galleryProgress,  setGalleryProgress]  = useState<{ current: number; total: number } | null>(null)
 
-  const uploadFile = async (file: File) => {
+  const uploadFile = async (rawFile: File): Promise<string> => {
+    // 1. Otimiza e comprime a foto no navegador antes de enviar
+    const file = await compressImage(rawFile)
+
     const data = new FormData()
     data.append('file', file)
-    const res  = await fetch('/api/admin/upload', { method: 'POST', body: data })
-    const json = await res.json()
-    if (!res.ok) throw new Error(json.error || 'Erro no upload')
+
+    const res = await fetch('/api/admin/upload', { method: 'POST', body: data })
+
+    let json: any = null
+    try {
+      json = await res.json()
+    } catch {
+      // Se não for JSON (por exemplo, página de erro HTML 413 do servidor)
+    }
+
+    if (!res.ok) {
+      if (res.status === 413) {
+        throw new Error(`A imagem "${rawFile.name}" é muito pesada para o servidor. Tente uma foto menor.`)
+      }
+      throw new Error(json?.error || `Erro no upload da imagem "${rawFile.name}" (Status ${res.status})`)
+    }
+
+    if (!json?.url) {
+      throw new Error('URL da imagem não retornada pelo servidor.')
+    }
+
     return json.url
   }
 
@@ -312,6 +343,7 @@ export default function PropertyForm({ initialData }: Props) {
       setError(err instanceof Error ? err.message : 'Erro no upload')
     } finally {
       setUploadingCover(false)
+      e.target.value = ''
     }
   }
 
@@ -320,16 +352,22 @@ export default function PropertyForm({ initialData }: Props) {
     if (!files || files.length === 0) return
     setUploadingGallery(true)
     setError(null)
+    setGalleryProgress({ current: 0, total: files.length })
+
     try {
       const urls: string[] = []
       for (let i = 0; i < files.length; i++) {
-        urls.push(await uploadFile(files[i]))
+        setGalleryProgress({ current: i + 1, total: files.length })
+        const url = await uploadFile(files[i])
+        urls.push(url)
       }
       setFormData(prev => ({ ...prev, images: [...prev.images, ...urls] }))
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Erro no upload')
     } finally {
       setUploadingGallery(false)
+      setGalleryProgress(null)
+      e.target.value = ''
     }
   }
 
@@ -490,11 +528,11 @@ export default function PropertyForm({ initialData }: Props) {
               <div>
                 <label className="block text-sm font-bold text-gray-700 mb-2">URL do Vídeo (Opcional)</label>
                 <input
-                  type="url"
+                  type="text"
                   value={formData.videoUrl || ''}
                   onChange={e => setFormData({ ...formData, videoUrl: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 focus:border-brand-500 outline-none transition-all"
-                  placeholder="Link do YouTube, TikTok ou Instagram..."
+                  placeholder="Ex: https://www.youtube.com/watch?v=... (opcional)"
                 />
               </div>
             </div>
@@ -547,8 +585,8 @@ export default function PropertyForm({ initialData }: Props) {
                 <label className="block text-sm font-bold text-gray-700 mb-2">Foto de Capa (Principal)</label>
                 <label className="flex-1 cursor-pointer">
                   <div className={`w-full px-4 py-3 rounded-xl border-2 border-dashed transition-all text-center flex items-center justify-center gap-2 ${uploadingCover ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-gray-300 hover:border-brand-500 hover:bg-gray-50 text-gray-600'}`}>
-                    <Upload size={20} />
-                    <span className="font-medium">{uploadingCover ? 'Enviando...' : 'Selecionar Imagem do Computador'}</span>
+                    {uploadingCover ? <Loader2 size={20} className="animate-spin text-brand-600" /> : <Upload size={20} />}
+                    <span className="font-medium">{uploadingCover ? 'Otimizando e enviando capa...' : 'Selecionar Imagem do Computador'}</span>
                   </div>
                   <input type="file" accept="image/*" onChange={handleCoverUpload} disabled={uploadingCover} className="hidden" />
                 </label>
@@ -563,8 +601,12 @@ export default function PropertyForm({ initialData }: Props) {
                 <label className="block text-sm font-bold text-gray-700 mb-2">Galeria de Fotos Adicionais</label>
                 <label className="cursor-pointer">
                   <div className={`w-full px-4 py-3 rounded-xl border-2 border-dashed transition-all text-center flex items-center justify-center gap-2 ${uploadingGallery ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-gray-300 hover:border-brand-500 hover:bg-gray-50 text-gray-600'}`}>
-                    <Upload size={20} />
-                    <span className="font-medium">{uploadingGallery ? 'Enviando Imagens...' : 'Selecionar Múltiplas Imagens (Galeria)'}</span>
+                    {uploadingGallery ? <Loader2 size={20} className="animate-spin text-brand-600" /> : <Upload size={20} />}
+                    <span className="font-medium">
+                      {uploadingGallery
+                        ? `Otimizando e enviando fotos (${galleryProgress?.current || 0}/${galleryProgress?.total || 0})...`
+                        : 'Selecionar Múltiplas Imagens (Galeria)'}
+                    </span>
                   </div>
                   <input type="file" accept="image/*" multiple onChange={handleGalleryUpload} disabled={uploadingGallery} className="hidden" />
                 </label>

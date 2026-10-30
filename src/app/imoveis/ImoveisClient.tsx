@@ -54,14 +54,20 @@ function unique<T>(arr: T[]): T[] {
 
 function applyFilters(list: Property[], f: Filters, sort: SortOption): Property[] {
   let result = list.filter((p) => {
-    if (f.codigo && p.id.toString() !== f.codigo && p.code?.toLowerCase() !== f.codigo.toLowerCase()) return false
+    if (f.codigo) {
+      const qCode = f.codigo.toLowerCase().replace('#', '').trim()
+      const pCode = (p.code || '').toLowerCase().replace('#', '').trim()
+      if (!pCode.includes(qCode)) return false
+    }
 
-    const search = f.search.toLowerCase()
+    const search = f.search.toLowerCase().trim()
+    const pCode = (p.code || '').toLowerCase().trim()
     if (
       search &&
       !p.title.toLowerCase().includes(search) &&
       !p.city.toLowerCase().includes(search) &&
-      !p.neighborhood.toLowerCase().includes(search)
+      !p.neighborhood.toLowerCase().includes(search) &&
+      !pCode.includes(search)
     ) return false
     if (f.type && p.type !== f.type) return false
     if (f.category && p.category !== f.category) return false
@@ -392,14 +398,19 @@ function PropertyCard({ property, view }: { property: Property; view: 'grid' | '
               alt={property.title}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            {/* Badge Destaque apenas */}
-            {property.isFeatured && (
-              <div className="absolute top-3 left-3">
+            {/* Badges */}
+            <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 items-center">
+              {property.isFeatured && (
                 <span className="px-2.5 py-1 rounded bg-gold-500 text-dark-950 text-xs font-bold uppercase shadow-md flex items-center gap-1">
                   <Star size={10} fill="currentColor" /> Destaque
                 </span>
-              </div>
-            )}
+              )}
+              {property.code && (
+                <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-sm text-white text-xs font-bold font-mono">
+                  {property.code.replace(/^#/, '')}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Conteúdo */}
@@ -445,14 +456,19 @@ function PropertyCard({ property, view }: { property: Property; view: 'grid' | '
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 
-          {/* Badge Destaque apenas */}
-          {property.isFeatured && (
-            <div className="absolute top-3 left-3">
+          {/* Badges */}
+          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 items-center">
+            {property.isFeatured && (
               <span className="px-2.5 py-1 rounded bg-gold-500 text-dark-950 text-xs font-bold uppercase shadow-md flex items-center gap-1">
                 <Star size={10} fill="currentColor" /> Destaque
               </span>
-            </div>
-          )}
+            )}
+            {property.code && (
+              <span className="px-2.5 py-1 rounded bg-black/60 backdrop-blur-sm text-white text-xs font-bold font-mono">
+                {property.code.replace(/^#/, '')}
+              </span>
+            )}
+          </div>
 
           {/* Preço */}
           <div className="absolute bottom-3 right-3 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg shadow-lg border-b-2 border-brand-600">

@@ -31,7 +31,9 @@ export default function EditPropertyPage({ params }: { params: { id: string } })
         </Link>
         <div>
           <h1 className="text-3xl font-black text-gray-900 tracking-tight">Editar Imóvel</h1>
-          <p className="text-gray-500 mt-1">Cód. #{String(data.id).padStart(4, '0')}</p>
+          <p className="text-gray-500 mt-1 font-mono text-sm">
+            {data.code ? `Cód. ${data.code.replace(/^#/, '')}` : 'Sem código definido'}
+          </p>
         </div>
       </div>
 

@@ -7,8 +7,20 @@ export const loginSchema = z.object({
 
 export const propertySchema = z.object({
   title: z.string().min(5, 'Título deve ter pelo menos 5 caracteres').max(255).trim(),
-  code: z.string().max(50, 'Código muito longo').optional().nullable().transform(val => val?.trim() === '' ? null : val),
-  videoUrl: z.string().url('URL de vídeo inválida').max(500, 'URL muito longa').optional().nullable().transform(val => val?.trim() === '' ? null : val),
+  code: z
+    .string()
+    .max(50, 'Código muito longo')
+    .optional()
+    .nullable()
+    .transform(val => (!val || val.trim() === '' ? null : val.trim())),
+  videoUrl: z
+    .union([
+      z.string().trim().url('URL de vídeo inválida (deve começar com http:// ou https://)').max(500, 'URL muito longa'),
+      z.literal(''),
+      z.null(),
+      z.undefined(),
+    ])
+    .transform(val => (!val || val.trim() === '' ? null : val.trim())),
   description: z.string().min(10, 'Descrição muito curta').trim(),
   type: z.string().min(1, 'Tipo obrigatório').max(100),
   category: z.string().min(1, 'Categoria obrigatória').max(100),
@@ -24,7 +36,12 @@ export const propertySchema = z.object({
   area: z.coerce.number().positive('Área deve ser maior que zero'),
   areaUnit: z.enum(['m²', 'ha', 'alq']),
   builtArea: z.coerce.number().nonnegative().optional().nullable(),
-  builtAreaUnit: z.enum(['m²', 'ha', 'alq']).optional().nullable(),
+  builtAreaUnit: z
+    .enum(['m²', 'ha', 'alq'])
+    .optional()
+    .nullable()
+    .or(z.literal(''))
+    .transform(val => (!val || val === '' ? null : val)),
   imageUrl: z.string().min(1, 'A imagem de capa é obrigatória').max(500),
   images: z.array(z.string().min(1, 'Caminho da imagem inválido')).default([]),
   features: z.array(z.string().trim()).default([]),

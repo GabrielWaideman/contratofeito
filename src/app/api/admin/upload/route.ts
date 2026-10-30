@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getSessionFromRequest } from '@/lib/auth'
 import { supabase } from '@/lib/supabaseClient'
 
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
   try {
     // 1. Verificar autenticação
@@ -23,7 +25,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Apenas imagens são permitidas.' }, { status: 400 })
     }
 
-    // 4. Preparar buffer e nome de arquivo
+    // 4. Validar tamanho máximo de arquivo (15MB)
+    const MAX_FILE_SIZE = 15 * 1024 * 1024
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: 'A imagem é muito grande. O limite máximo é de 15MB.' },
+        { status: 413 }
+      )
+    }
+
+    // 5. Preparar buffer e nome de arquivo
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
 
@@ -32,7 +43,7 @@ export async function POST(request: Request) {
     const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_')
     const filename = `${uniqueSuffix}-${cleanName}`
 
-    // 5. Upload para o Supabase Storage (Bucket "imoveis")
+    // 6. Upload para o Supabase Storage (Bucket "imoveis")
     const { data, error } = await supabase
       .storage
       .from('imoveis')
@@ -43,10 +54,10 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error('Supabase upload erro:', error)
-      return NextResponse.json({ error: 'Erro ao fazer upload da imagem no Supabase.' }, { status: 500 })
+      return NextResponse.json({ error: `Erro no Supabase: ${error.message || 'Falha no upload'}` }, { status: 500 })
     }
 
-    // 6. Pegar a URL pública gerada pelo Supabase
+    // 7. Pegar a URL pública gerada pelo Supabase
     const { data: publicUrlData } = supabase
       .storage
       .from('imoveis')
@@ -54,7 +65,7 @@ export async function POST(request: Request) {
 
     const publicUrl = publicUrlData.publicUrl
 
-    // 7. Retornar a URL pública do arquivo
+    // 8. Retornar a URL pública do arquivo
     return NextResponse.json({ url: publicUrl }, { status: 201 })
   } catch (error: any) {
     console.error('Upload erro:', error)

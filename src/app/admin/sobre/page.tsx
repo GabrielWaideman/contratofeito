@@ -20,6 +20,7 @@ import {
   Plus,
   X,
 } from 'lucide-react'
+import { compressImage } from '@/lib/imageCompression'
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 type ValueItem = { title: string; text: string }
@@ -172,16 +173,30 @@ function ImageUploader({
   const [error, setError] = useState('')
 
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const rawFile = e.target.files?.[0]
+    if (!rawFile) return
     setUploading(true)
     setError('')
     try {
+      const file = await compressImage(rawFile)
       const fd = new FormData()
       fd.append('file', file)
       const res = await fetch('/api/admin/about/upload', { method: 'POST', body: fd })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Erro no upload')
+      
+      let data: any = null
+      try {
+        data = await res.json()
+      } catch {
+        // Se não for JSON
+      }
+
+      if (!res.ok) {
+        if (res.status === 413) {
+          throw new Error('A imagem é muito pesada (máximo 15MB). Tente uma imagem mais leve.')
+        }
+        throw new Error(data?.error || `Erro no upload (Status ${res.status})`)
+      }
+
       onChange(data.url)
     } catch (err: unknown) {
       const e = err as Error

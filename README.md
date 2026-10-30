@@ -216,36 +216,67 @@ Nesta sessão, atualizamos os dados oficiais de contato da imobiliária em todos
    - **Proteção do Ambiente de Desenvolvimento:** Rastreamento desativado em ambiente local para não poluir os dados reais do banco de produção.
    - **Fuso Horário de Brasília (UTC-3):** Cálculos de agrupamento diário, semanal e mensal ajustados para o horário oficial brasileiro.
    - **Gráficos e Indicadores:** Resolução da renderização das barras (conversão de alturas percentuais para pixels absolutos), visualização de total de visitantes únicos e visualizações totais (`pageViews`), e limpeza da base de testes legada.
-219: 
-220: ---
-221: ### Sessão de 28/10/2026 (OpenGraph, SEO Social Dinâmico e Blindagem de Indexação)
-222: 
-223: Nesta sessão, implementamos todo o ecossistema de metatags ricas e OpenGraph para compartilhamento de links da plataforma em redes sociais (WhatsApp, Facebook, Instagram, LinkedIn e Twitter/X), além de metatags de proteção para o painel restrito:
-224: 
-225: 1. **Módulo Centralizado de SEO (`src/lib/seo.ts`):**
-226:    - Resolução automática e inteligente de URL canônica e domínio base (`metadataBase`), suportando `NEXT_PUBLIC_SITE_URL`, `VERCEL_PROJECT_PRODUCTION_URL`, `VERCEL_URL` e domínio oficial de produção.
-227:    - Função utilitária `toAbsoluteUrl` para garantir que qualquer imagem (seja do Supabase Storage ou uploads locais) seja sempre servida como URL absoluta (`https://...`), atendendo à exigência estrita dos robôs do WhatsApp e Meta Crawler.
-228:    - Construtor dinâmico de descrições e títulos para imóveis, formatando preços em padrão contábil brasileiro (`R$`), localização (bairro/cidade/UF), dormitórios, suítes, vagas, área privativa e destaques/diferenciais.
-229: 
-230: 2. **Metatags Globais e Banner Oficial (`/og-image.jpg`):**
-231:    - Criação e integração do banner oficial em alta definição (1200x630, proporção 16:9) no padrão escuro premium da marca, retratando arquitetura moderna e paisagem rural/urbana.
-232:    - Configuração no `layout.tsx` de metatags completas de OpenGraph (`og:title`, `og:description`, `og:image`, `og:image:width`, `og:image:height`, `og:locale: pt_BR`, `og:site_name`, `og:type: website`) e Twitter Card (`summary_large_image`).
-233: 
-234: 3. **Metatags Dinâmicas por Imóvel (`/imoveis/[id]`):**
-235:    - Implementação de `generateMetadata` na página de detalhes do imóvel.
-236:    - Ao compartilhar o link de um imóvel no WhatsApp ou Facebook, a pré-visualização carrega instantaneamente:
-237:      - A primeira foto real do imóvel (com dimensões 1200x630 e tag alt correspondente).
-238:      - Título com nome do imóvel e valor formatado.
-239:      - Descrição resumida com cômodos, metragem, localização e diferenciais exclusivos.
-240: 
-241: 4. **Páginas Institucionais e Catálogo (`/` e `/imoveis` e `/sobre`):**
-242:    - `/`: Metatags personalizadas com canonical URL e banner institucional.
-243:    - `/imoveis`: Metatags focadas em catálogo de compra e locação de imóveis urbanos e rurais.
-244:    - `/sobre`: Refatoração da página para Server Component (`SobreClient.tsx` + `page.tsx`) com metatags institucionais sobre história, missão e atuação regional da imobiliária.
-245: 
-246: 5. **Blindagem de Segurança no Painel (`/admin`):**
-247:    - Injeção de diretivas `robots: { index: false, follow: false, nocache: true }` no layout do Admin, impedindo que motores de busca (Google, Bing) e robôs sociais indexem telas restritas e rotas administrativas.
-248: 
-249: 6. **Validação e Build:**
-250:    - Testes de renderização de tags via requisições HTTP locais confirmando a geração correta das tags `og:*` e `twitter:*` em todas as rotas.
-251:    - Build compilado com sucesso (`next build`), validando integridade de tipos e geração estática/dinâmica sem nenhum erro.
+---
+### Sessão de 28/10/2026 (OpenGraph, SEO Social Dinâmico e Blindagem de Indexação)
+
+Nesta sessão, implementamos todo o ecossistema de metatags ricas e OpenGraph para compartilhamento de links da plataforma em redes sociais (WhatsApp, Facebook, Instagram, LinkedIn e Twitter/X), além de metatags de proteção para o painel restrito:
+
+1. **Módulo Centralizado de SEO (`src/lib/seo.ts`):**
+   - Resolução automática e inteligente de URL canônica e domínio base (`metadataBase`), suportando `NEXT_PUBLIC_SITE_URL`, `VERCEL_PROJECT_PRODUCTION_URL`, `VERCEL_URL` e domínio oficial de produção.
+   - Função utilitária `toAbsoluteUrl` para garantir que qualquer imagem (seja do Supabase Storage ou uploads locais) seja sempre servida como URL absoluta (`https://...`), atendendo à exigência estrita dos robôs do WhatsApp e Meta Crawler.
+   - Construtor dinâmico de descrições e títulos para imóveis, formatando preços em padrão contábil brasileiro (`R$`), localização (bairro/cidade/UF), dormitórios, suítes, vagas, área privativa e destaques/diferenciais.
+
+2. **Metatags Globais e Banner Oficial (`/og-image.jpg`):**
+   - Criação e integração do banner oficial em alta definição (1200x630, proporção 16:9) no padrão escuro premium da marca, retratando arquitetura moderna e paisagem rural/urbana.
+   - Configuração no `layout.tsx` de metatags completas de OpenGraph (`og:title`, `og:description`, `og:image`, `og:image:width`, `og:image:height`, `og:locale: pt_BR`, `og:site_name`, `og:type: website`) e Twitter Card (`summary_large_image`).
+
+3. **Metatags Dinâmicas por Imóvel (`/imoveis/[id]`):**
+   - Implementação de `generateMetadata` na página de detalhes do imóvel.
+   - Ao compartilhar o link de um imóvel no WhatsApp ou Facebook, a pré-visualização carrega instantaneamente:
+     - A primeira foto real do imóvel (com dimensões 1200x630 e tag alt correspondente).
+     - Título com nome do imóvel e valor formatado.
+     - Descrição resumida com cômodos, metragem, localização e diferenciais exclusivos.
+
+4. **Páginas Institucionais e Catálogo (`/` e `/imoveis` e `/sobre`):**
+   - `/`: Metatags personalizadas com canonical URL e banner institucional.
+   - `/imoveis`: Metatags focadas em catálogo de compra e locação de imóveis urbanos e rurais.
+   - `/sobre`: Refatoração da página para Server Component (`SobreClient.tsx` + `page.tsx`) com metatags institucionais sobre história, missão e atuação regional da imobiliária.
+
+5. **Blindagem de Segurança no Painel (`/admin`):**
+   - Injeção de diretivas `robots: { index: false, follow: false, nocache: true }` no layout do Admin, impedindo que motores de busca (Google, Bing) e robôs sociais indexem telas restritas e rotas administrativas.
+
+6. **Validação e Build:**
+   - Testes de renderização de tags via requisições HTTP locais confirmando a geração correta das tags `og:*` e `twitter:*` em todas as rotas.
+   - Build compilado com sucesso (`next build`), validando integridade de tipos e geração estática/dinâmica sem nenhum erro.
+
+---
+### Sessão de 30/10/2026 (Políticas de Privacidade, Correção de Autenticação, Compressão de Imagens e Padronização de Códigos)
+
+Nesta sessão, realizamos uma série de melhorias essenciais de usabilidade, conformidade jurídica (LGPD), performance de uploads e consistência na apresentação dos imóveis:
+
+1. **Página Oficial de Políticas de Uso e Privacidade (`/politicas-de-privacidade`):**
+   - Implementação da página completa com base no documento legal oficial da **Contrato Feito Negócios Imobiliários** (CRECI-SP 246817F).
+   - Divisão estruturada em duas partes principais:
+     - **Parte I (Termos de Uso):** 8 artigos cobrindo elegibilidade, usabilidade, propriedade intelectual, isenção de responsabilidade, segurança (SSL/cadeado), penalidades, glossário e foro (Álvares Florence - SP).
+     - **Parte II (Política de Privacidade & LGPD):** 9 artigos cobrindo definições de Controladora/Operadora, inventário detalhado de dados coletados (cadastrais e digitais via Marco Civil), hipóteses de compartilhamento, direitos dos titulares com base no Art. 16 da LGPD e medidas de segurança.
+   - **Recursos Interativos & UX:** Seletor de visualização (Visão Geral / Termos / Privacidade), busca interativa em tempo real com destaque e badge de contagem de cláusulas, sumário lateral sticky para navegação rápida, cópia rápida de link de compartilhamento e folha de estilos para impressão limpa (`@media print`).
+   - **Tipografia:** Aplicação de texto Justificado (`text-justify`) em todas as cláusulas, parágrafos, listas e definições para leitura harmoniosa e profissional.
+   - **Integração no Rodapé:** Link direto no componente `Footer.tsx` para fácil acesso em todas as páginas do site.
+
+2. **Fluxo de Login e Autenticação no Painel Administrativo (`/admin/login`):**
+   - **Fim do Loop de Login:** Substituição da navegação suave (`router.replace` + `router.refresh`) por hard navigation (`window.location.href = '/admin'`), eliminando o problema em que o usuário precisava teclar Enter duas vezes e ficava preso em "Entrando...".
+   - **Cookies de Sessão Compatíveis:** Atualizado o cookie de sessão para `SameSite=Lax` com path global (`/`), assegurando leitura confiável em layouts de servidor do Next.js.
+   - **Botão "Voltar ao Site":** Inclusão de botão dedicado no rodapé do cartão de login para facilitar o retorno à página principal.
+
+3. **Módulo de Compressão Inteligente de Imagens (`src/lib/imageCompression.ts`):**
+   - **Resolução do Erro HTTP 413 (Payload Too Large):** Eliminação do erro `Unexpected token 'R', "Request En"... is not valid JSON` que impedia o envio de imagens de alta resolução tiradas direto de câmeras e celulares modernos.
+   - **Compressão Client-Side com HTML5 Canvas:** Redimensionamento inteligente automático para limite máximo de 1920px (largura/altura) e qualidade JPEG de 0.82 antes do envio pela rede, reduzindo fotos pesadas (10-15MB) para arquivos leves de 300KB a 600KB sem perda perceptível de nitidez.
+   - **Tratamento Robusto nas APIs:** Tratamento de resposta com fallbacks e limites de payload estendidos nas rotas `/api/admin/upload` e `/api/admin/about/upload`.
+
+4. **Correção no Link de Vídeo (Opcional):**
+   - Refatoração do schema Zod em `src/lib/validations.ts` com união resiliente (`string().url()`, `literal('')`, `null` e `undefined` convertidos para `null`), permitindo cadastrar ou editar imóveis sem a obrigatoriedade de preencher um link de vídeo.
+   - Campo no formulário ajustado para `type="text"` no `PropertyForm.tsx` para evitar travas nativas de HTML5.
+
+5. **Controle e Exibição do Código Manual do Imóvel:**
+   - O código apresentado ao usuário final, na vitrine de imóveis e na mensagem padrão de WhatsApp agora reflete exclusivamente o código administrativo cadastrado pelo corretor (ex: `CS0018`), ocultando o ID numérico sequencial interno do banco de dados.
+   - Remoção do caractere `#` em todos os pontos do sistema (detalhes do imóvel, listagem pública, tabela do admin e formulário de edição), padronizando a exibição como `Cód. CS0018`.

@@ -28,7 +28,6 @@ export default function PropertiesListPage() {
 
   const filtered = properties.filter(p => 
     p.title.toLowerCase().includes(search.toLowerCase()) || 
-    String(p.id).includes(search) ||
     (p.code && p.code.toLowerCase().includes(search.toLowerCase()))
   )
 
@@ -83,8 +82,8 @@ export default function PropertiesListPage() {
               ) : (
                 filtered.map(p => (
                   <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4 font-mono text-xs text-gray-500">
-                      {p.code ? p.code : `#${String(p.id).padStart(4, '0')}`}
+                    <td className="px-6 py-4 font-mono text-xs font-bold text-gray-700">
+                      {p.code ? p.code.replace(/^#/, '') : '—'}
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
