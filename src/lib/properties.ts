@@ -5,8 +5,9 @@ export type Property = {
   code?: string | null
   videoUrl?: string | null
   title: string
-  type: 'RURAL' | 'URBANO'
-  category: 'Venda' | 'Locação'
+  type: 'RURAL' | 'URBANO' | string
+  category: 'Venda' | 'Locação' | string
+  purpose?: string
   city: string
   neighborhood: string
   state: string
@@ -16,14 +17,18 @@ export type Property = {
   suites: number
   garageSpots: number
   area: number
-  areaUnit: 'm²' | 'ha' | 'alq'
-  builtArea?: number          // área construída (opcional)
-  builtAreaUnit?: 'm²' | 'ha' | 'alq'
+  areaUnit: 'm²' | 'ha' | 'alq' | string
+  builtArea?: number | null   // área construída (opcional)
+  builtAreaUnit?: 'm²' | 'ha' | 'alq' | string | null
   imageUrl: string
   images: string[]
   isFeatured: boolean
+  isPublished?: boolean
+  acceptsExchange?: boolean
   description: string
   features: string[]
+  createdAt?: string | Date
+  updatedAt?: string | Date
 }
 
 export const PROPERTIES: Property[] = [

@@ -38,8 +38,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function ImoveisPage() {
+export default async function ImoveisPage({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>
+}) {
   const properties = await getAllProperties()
   
-  return <ImoveisClient initialProperties={properties} />
+  return <ImoveisClient initialProperties={properties} initialSearchParams={searchParams} />
 }

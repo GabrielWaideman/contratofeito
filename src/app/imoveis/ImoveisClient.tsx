@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -52,35 +52,147 @@ function unique<T>(arr: T[]): T[] {
   return Array.from(new Set(arr))
 }
 
+function normalizeText(str: string): string {
+  return (str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+}
+
+function parsePriceValue(raw: string): number | null {
+  if (!raw || !raw.trim()) return null
+  // Remove "R$", espaços e parte decimal (,00) se houver
+  const withoutCents = raw.trim().replace(/,\d{1,2}$/, '')
+  const digits = withoutCents.replace(/\D/g, '')
+  if (!digits) return null
+  const num = Number(digits)
+  return isNaN(num) ? null : num
+}
+
+function getParamString(val: string | string[] | undefined): string {
+  if (Array.isArray(val)) return val[0] || ''
+  return val || ''
+}
+
+function buildFiltersFromSearchParams(
+  params?: Record<string, string | string[] | undefined>
+): Filters {
+  if (!params) return defaultFilters
+  const rawMin = getParamString(params.priceMin)
+  const rawMax = getParamString(params.priceMax)
+  const parsedMin = parsePriceValue(rawMin)
+  const parsedMax = parsePriceValue(rawMax)
+
+  return {
+    search: getParamString(params.search),
+    codigo: getParamString(params.codigo),
+    finalidade: getParamString(params.finalidade) || getParamString(params.purpose),
+    type: getParamString(params.type),
+    category: getParamString(params.category),
+    state: getParamString(params.state),
+    city: getParamString(params.city),
+    neighborhood: getParamString(params.neighborhood),
+    bedrooms: getParamString(params.bedrooms).replace(/\D/g, ''),
+    bathrooms: getParamString(params.bathrooms).replace(/\D/g, ''),
+    garageSpots: getParamString(params.garageSpots).replace(/\D/g, ''),
+    priceMin: parsedMin !== null ? String(parsedMin) : '',
+    priceMax: parsedMax !== null ? String(parsedMax) : '',
+  }
+}
+
 function applyFilters(list: Property[], f: Filters, sort: SortOption): Property[] {
   let result = list.filter((p) => {
     if (f.codigo) {
-      const qCode = f.codigo.toLowerCase().replace('#', '').trim()
-      const pCode = (p.code || '').toLowerCase().replace('#', '').trim()
-      if (!pCode.includes(qCode)) return false
+      const qCode = f.codigo.toLowerCase().replace(/^#/, '').trim()
+      const pCode = (p.code || '').toLowerCase().replace(/^#/, '').trim()
+      if (!pCode.includes(qCode) && String(p.id) !== qCode) return false
     }
 
-    const search = f.search.toLowerCase().trim()
-    const pCode = (p.code || '').toLowerCase().trim()
+    const search = normalizeText(f.search)
+    const pCode = normalizeText(p.code || '')
     if (
       search &&
-      !p.title.toLowerCase().includes(search) &&
-      !p.city.toLowerCase().includes(search) &&
-      !p.neighborhood.toLowerCase().includes(search) &&
+      !normalizeText(p.title).includes(search) &&
+      !normalizeText(p.city).includes(search) &&
+      !normalizeText(p.neighborhood).includes(search) &&
       !pCode.includes(search)
     ) return false
-    if (f.type && p.type !== f.type) return false
-    if (f.category && p.category !== f.category) return false
-    if (f.state && p.state !== f.state) return false
-    if (f.city && p.city !== f.city) return false
-    if (f.neighborhood && p.neighborhood !== f.neighborhood) return false
+
+    if (f.finalidade) {
+      const normFin = normalizeText(f.finalidade)
+      const normPurpose = normalizeText(p.purpose || 'Residencial')
+      const normType = normalizeText(p.type || '')
+      const normNeigh = normalizeText(p.neighborhood || '')
+      if (normFin === 'rural') {
+        if (normPurpose !== 'rural' && normType !== 'rural' && !normNeigh.includes('rural')) {
+          return false
+        }
+      } else if (normPurpose !== normFin) {
+        return false
+      }
+    }
+
+    if (f.type) {
+      const normFilterType = normalizeText(f.type)
+      const normPropType = normalizeText(p.type || '')
+      const normTitle = normalizeText(p.title || '')
+
+      if (normFilterType === 'chacara/sitio' || normFilterType === 'chacara' || normFilterType === 'sitio') {
+        const matchesChacara =
+          normPropType.includes('chacara') ||
+          normPropType.includes('sitio') ||
+          normTitle.includes('chacara') ||
+          normTitle.includes('sitio')
+        if (!matchesChacara) return false
+      } else if (normFilterType === 'urbano') {
+        const matchesUrbano =
+          normPropType === 'urbano' ||
+          ['casa', 'apartamento', 'terreno', 'comercial'].includes(normPropType)
+        if (!matchesUrbano) return false
+      } else if (normFilterType === 'rural') {
+        const matchesRural =
+          normPropType === 'rural' ||
+          ['chacara', 'fazenda', 'sitio', 'chacara/sitio'].includes(normPropType) ||
+          normalizeText(p.purpose || '') === 'rural'
+        if (!matchesRural) return false
+      } else {
+        const matchesType =
+          normPropType === normFilterType ||
+          normTitle.includes(normFilterType)
+        if (!matchesType) return false
+      }
+    }
+
+    if (f.category) {
+      const normCat = normalizeText(f.category)
+      const normPropCat = normalizeText(p.category || '')
+      if (normCat === 'permuta') {
+        if (normPropCat !== 'permuta' && !p.acceptsExchange) return false
+      } else if (normPropCat !== normCat) {
+        return false
+      }
+    }
+
+    if (f.state && normalizeText(p.state) !== normalizeText(f.state)) return false
+    if (f.city && normalizeText(p.city) !== normalizeText(f.city)) return false
+
+    if (f.neighborhood) {
+      const normFilterNeigh = normalizeText(f.neighborhood)
+      const normPropNeigh = normalizeText(p.neighborhood)
+      const isRuralEquiv =
+        (normFilterNeigh === 'zona rural' || normFilterNeigh === 'rural') &&
+        (normPropNeigh === 'zona rural' || normPropNeigh === 'rural')
+      if (normPropNeigh !== normFilterNeigh && !isRuralEquiv) return false
+    }
+
     if (f.bedrooms && p.bedrooms < Number(f.bedrooms)) return false
     if (f.bathrooms && p.bathrooms < Number(f.bathrooms)) return false
     if (f.garageSpots && p.garageSpots < Number(f.garageSpots)) return false
-    const pMin = f.priceMin === '' ? null : Number(f.priceMin.replace(/\D/g, ''))
-    const pMax = f.priceMax === '' ? null : Number(f.priceMax.replace(/\D/g, ''))
-    if (pMin !== null && !isNaN(pMin) && p.price < pMin) return false
-    if (pMax !== null && !isNaN(pMax) && p.price > pMax) return false
+    const pMin = parsePriceValue(f.priceMin)
+    const pMax = parsePriceValue(f.priceMax)
+    if (pMin !== null && p.price < pMin) return false
+    if (pMax !== null && p.price > pMax) return false
     return true
   })
 
@@ -168,6 +280,9 @@ function FilterPanel({
   onChange,
   onApply,
   onClear,
+  purposeOptions,
+  typeOptions,
+  categoryOptions,
   allStates,
   allCities,
   allNeighborhoods,
@@ -177,6 +292,9 @@ function FilterPanel({
   onChange: (key: keyof Filters, value: string) => void
   onApply: () => void
   onClear: () => void
+  purposeOptions: string[]
+  typeOptions: string[]
+  categoryOptions: string[]
   allStates: string[]
   allCities: string[]
   allNeighborhoods: string[]
@@ -227,19 +345,19 @@ function FilterPanel({
         <SelectField
           label="Finalidade"
           value={pending.finalidade}
-          options={['Residencial', 'Comercial', 'Rural']}
+          options={purposeOptions}
           onChange={(v) => onChange('finalidade', v)}
         />
         <SelectField
           label="Tipo de Imóvel"
           value={pending.type}
-          options={['URBANO', 'RURAL']}
+          options={typeOptions}
           onChange={(v) => onChange('type', v)}
         />
         <SelectField
           label="Modalidade"
           value={pending.category}
-          options={['Venda', 'Locação']}
+          options={categoryOptions}
           onChange={(v) => onChange('category', v)}
         />
       </div>
@@ -258,14 +376,12 @@ function FilterPanel({
             label="Cidade"
             value={pending.city}
             options={allCities}
-            disabled={!pending.state}
             onChange={(v) => onChange('city', v)}
           />
           <SelectField
             label="Bairro / Zona"
             value={pending.neighborhood}
             options={allNeighborhoods}
-            disabled={!pending.city}
             onChange={(v) => onChange('neighborhood', v)}
           />
         </div>
@@ -506,14 +622,55 @@ function PropertyCard({ property, view }: { property: Property; view: 'grid' | '
 
 // ─── Página Principal ─────────────────────────────────────────────────────────
 
-export default function ImoveisClient({ initialProperties }: { initialProperties: Property[] }) {
+export default function ImoveisClient({
+  initialProperties,
+  initialSearchParams,
+}: {
+  initialProperties: Property[]
+  initialSearchParams?: Record<string, string | string[] | undefined>
+}) {
+  const initialFilters = useMemo(
+    () => buildFiltersFromSearchParams(initialSearchParams),
+    [initialSearchParams]
+  )
+
   // pending = o que o usuário está configurando na sidebar
-  const [pending, setPending] = useState<Filters>(defaultFilters)
+  const [pending, setPending] = useState<Filters>(initialFilters)
   // applied = o que foi efetivamente aplicado (usado para filtrar resultados)
-  const [applied, setApplied] = useState<Filters>(defaultFilters)
+  const [applied, setApplied] = useState<Filters>(initialFilters)
   const [sort, setSort] = useState<SortOption>('relevance')
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const [dynamicOptions, setDynamicOptions] = useState<{
+    purpose: string[]
+    type: string[]
+    category: string[]
+  }>({
+    purpose: ['Residencial', 'Comercial', 'Rural'],
+    type: ['Casa', 'Apartamento', 'Terreno', 'Chácara/Sítio', 'Fazenda'],
+    category: ['Venda', 'Locação', 'Permuta'],
+  })
+
+  useEffect(() => {
+    setPending(initialFilters)
+    setApplied(initialFilters)
+  }, [initialFilters])
+
+  useEffect(() => {
+    fetch('/api/property-options')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.purpose && data?.type && data?.category) {
+          setDynamicOptions({
+            purpose: unique(data.purpose.map((o: { value: string }) => o.value)),
+            type: unique(data.type.map((o: { value: string }) => o.value)),
+            category: unique(data.category.map((o: { value: string }) => o.value)),
+          })
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   const handleChange = (key: keyof Filters, value: string) => {
     setPending((prev) => {
@@ -535,20 +692,30 @@ export default function ImoveisClient({ initialProperties }: { initialProperties
   }
 
   // Listas derivadas dos filtros PENDENTES (para os selects de cascata reagirem enquanto o usuário configura)
-  const allStates = useMemo(() => unique(initialProperties.map((p) => p.state)).sort(), [initialProperties])
-  const allCities = useMemo(
-    () => unique(initialProperties.filter((p) => !pending.state || p.state === pending.state).map((p) => p.city)).sort(),
-    [pending.state, initialProperties]
-  )
-  const allNeighborhoods = useMemo(
-    () => unique(
-      initialProperties.filter((p) =>
-        (!pending.state || p.state === pending.state) &&
-        (!pending.city || p.city === pending.city)
-      ).map((p) => p.neighborhood)
-    ).sort(),
-    [pending.state, pending.city, initialProperties]
-  )
+  const allStates = useMemo(() => unique(initialProperties.map((p) => p.state).filter(Boolean)).sort(), [initialProperties])
+  const allCities = useMemo(() => {
+    const base = ['Álvares Florence', 'Votuporanga']
+    const fromProps = initialProperties
+      .filter((p) => !pending.state || p.state === pending.state)
+      .map((p) => p.city)
+      .filter(Boolean)
+    const extra = pending.city ? [pending.city] : []
+    return unique([...base, ...fromProps, ...extra]).sort((a, b) => a.localeCompare(b, 'pt-BR'))
+  }, [pending.state, pending.city, initialProperties])
+
+  const allNeighborhoods = useMemo(() => {
+    const fromProps = initialProperties
+      .filter(
+        (p) =>
+          (!pending.state || p.state === pending.state) &&
+          (!pending.city || normalizeText(p.city) === normalizeText(pending.city))
+      )
+      .map((p) => p.neighborhood)
+      .filter(Boolean)
+    const base = pending.city ? [] : ['Centro', 'Zona Rural', 'Jardim das Flores']
+    const extra = pending.neighborhood ? [pending.neighborhood] : []
+    return unique([...base, ...fromProps, ...extra]).sort((a, b) => a.localeCompare(b, 'pt-BR'))
+  }, [pending.state, pending.city, pending.neighborhood, initialProperties])
 
   // Preview count (baseado nos pending, para o botão "Aplicar · X resultados")
   const previewResults = useMemo(() => applyFilters(initialProperties, pending, sort), [pending, sort, initialProperties])
@@ -559,14 +726,23 @@ export default function ImoveisClient({ initialProperties }: { initialProperties
   // Chips de filtros ativos
   const activeChips = useMemo(() => {
     const labels: Record<string, string> = {
-      search: 'Busca', type: 'Tipo', category: 'Modalidade',
-      state: 'Estado', city: 'Cidade', neighborhood: 'Bairro',
-      bedrooms: 'Quartos', bathrooms: 'Banheiros', garageSpots: 'Vagas',
-      priceMin: 'Mín R$', priceMax: 'Máx R$',
+      search: 'Busca',
+      codigo: 'Código',
+      finalidade: 'Finalidade',
+      type: 'Tipo',
+      category: 'Modalidade',
+      state: 'Estado',
+      city: 'Cidade',
+      neighborhood: 'Bairro',
+      bedrooms: 'Quartos',
+      bathrooms: 'Banheiros',
+      garageSpots: 'Vagas',
+      priceMin: 'Mín R$',
+      priceMax: 'Máx R$',
     }
     return Object.entries(applied).filter(([, v]) => v !== '').map(([k, v]) => ({
       key: k as keyof Filters,
-      label: `${labels[k]}: ${['bedrooms', 'bathrooms', 'garageSpots'].includes(k) ? v + '+' : v}`,
+      label: `${labels[k] || k}: ${['bedrooms', 'bathrooms', 'garageSpots'].includes(k) ? v + '+' : v}`,
     }))
   }, [applied])
 
@@ -581,6 +757,9 @@ export default function ImoveisClient({ initialProperties }: { initialProperties
     onChange: handleChange,
     onApply: handleApply,
     onClear: handleClear,
+    purposeOptions: dynamicOptions.purpose,
+    typeOptions: dynamicOptions.type,
+    categoryOptions: dynamicOptions.category,
     allStates,
     allCities,
     allNeighborhoods,

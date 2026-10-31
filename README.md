@@ -280,3 +280,24 @@ Nesta sessão, realizamos uma série de melhorias essenciais de usabilidade, con
 5. **Controle e Exibição do Código Manual do Imóvel:**
    - O código apresentado ao usuário final, na vitrine de imóveis e na mensagem padrão de WhatsApp agora reflete exclusivamente o código administrativo cadastrado pelo corretor (ex: `CS0018`), ocultando o ID numérico sequencial interno do banco de dados.
    - Remoção do caractere `#` em todos os pontos do sistema (detalhes do imóvel, listagem pública, tabela do admin e formulário de edição), padronizando a exibição como `Cód. CS0018`.
+
+---
+### Sessão de 31/10/2026 (Filtro de Busca na Home, Responsividade Mobile, Imóveis em Destaque e Ajuste Visual em Sobre Nós)
+
+Nesta sessão, implementamos o funcionamento completo da busca de imóveis a partir da página inicial, refinamos a experiência mobile e ajustamos o banner institucional:
+
+1. **Ajuste Suave de Iluminação no Banner de `/sobre` (`src/app/sobre/SobreClient.tsx`):**
+   - Substituição do degradê escuro original na seção Hero da página **Sobre Nós** por um degradê claro suave e localizado à esquerda, destacando os textos e estatísticas sem ofuscar a vista aérea do mapa da cidade ao fundo.
+
+2. **Funcionalidade Completa do Filtro de Busca na Página Inicial (`src/components/FilterBar.tsx`, `src/app/imoveis/page.tsx`, `src/app/imoveis/ImoveisClient.tsx`):**
+   - Todos os campos do `FilterBar` (`Modalidade`, `Finalidade`, `Tipo`, `Cidade`, `Bairro`, `Código do Imóvel`, `Quartos`, `Banheiros`, `Valor mínimo` e `Valor máximo`) passaram a ser controlados por estado e populados dinamicamente com as cidades e bairros reais dos imóveis cadastrados.
+   - Ao clicar em **Buscar** (ou pressionar `Enter`), o usuário é redirecionado para `/imoveis` com os parâmetros de busca na URL, aplicando imediatamente os filtros na listagem e sincronizando a barra lateral do catálogo.
+   - Aprimoramento da função `applyFilters` em `ImoveisClient.tsx` para suportar filtragem precisa por `Finalidade`, `Tipo de Imóvel` (compatível com tipos específicos e registros legados), `Modalidade` (incluindo *Permuta*), `Código`, `Cidade`, `Bairro` e `Faixa de Preço`.
+
+3. **Filtro Retrátil para Mobile na Página Inicial (`src/components/FilterBar.tsx`):**
+   - Em telas mobile (`< 768px`), os filtros iniciam recolhidos dentro de um botão compacto (**Buscar e Filtrar Imóveis**), evitando poluir a primeira dobra da tela do celular e expandindo todas as opções apenas quando acionado pelo usuário. No desktop (`>= 768px`), o painel completo permanece visível por padrão.
+
+4. **Exibição Exclusiva de Imóveis em Destaque e Alinhamento Responsivo (`src/components/PropertySection.tsx`):**
+   - Correção do alinhamento do cabeçalho **"Nosso Portfólio — Imóveis em Destaque"** em telas mobile (`items-start md:items-end` e tipografia escalável), garantindo formatação limpa em qualquer resolução.
+   - A seção inicial passou a exibir exclusivamente os imóveis marcados como **Imóvel em Destaque** (`isFeatured: true`) no painel administrativo, além de ativar a filtragem rápida pelas abas **Todos**, **Venda** e **Locação**.
+

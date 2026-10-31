@@ -1,7 +1,8 @@
 import React from 'react'
 import FilterBar from './FilterBar'
+import type { Property } from '@/lib/properties'
 
-export default function Hero() {
+export default function Hero({ properties = [] }: { properties?: Property[] }) {
   return (
     <>
     <section className="relative w-full h-[80vh] min-h-[500px] flex items-center justify-center overflow-hidden pt-20">
@@ -40,7 +41,7 @@ export default function Hero() {
       </div>
     </section>
     
-    <FilterBar />
+    <FilterBar properties={properties} />
     </>
   )
 }

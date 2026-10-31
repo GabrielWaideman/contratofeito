@@ -1,7 +1,9 @@
-import React from 'react'
+'use client'
+
+import React, { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { MapPin, Bed, Bath, Car, Square, Star } from 'lucide-react'
-import { getAllProperties } from '@/lib/properties'
+import type { Property } from '@/lib/properties'
 
 // Ícone de suíte (cama com coração — representa quarto premium)
 function SuiteIcon({ size = 18 }: { size?: number }) {
@@ -19,32 +21,55 @@ function SuiteIcon({ size = 18 }: { size?: number }) {
   )
 }
 
-export default async function PropertySection() {
-  const properties = await getAllProperties()
+export default function PropertySection({ properties = [] }: { properties?: Property[] }) {
+  const [selectedCategory, setSelectedCategory] = useState<'Todos' | 'Venda' | 'Locação'>('Todos')
+
+  const featuredProperties = useMemo(() => {
+    return properties.filter((p) => {
+      if (!p.isFeatured) return false
+      if (selectedCategory !== 'Todos' && p.category !== selectedCategory) return false
+      return true
+    })
+  }, [properties, selectedCategory])
 
   return (
-    <section id="imoveis" className="py-24 bg-white relative">
-      <div className="container mx-auto px-4 md:px-8 mt-12 md:mt-24">
+    <section id="imoveis" className="py-16 md:py-24 bg-white relative">
+      <div className="container mx-auto px-4 md:px-8 mt-8 md:mt-24">
 
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div className="max-w-2xl">
-            <h2 className="text-brand-600 font-bold tracking-widest text-sm uppercase mb-3 border-l-4 border-brand-600 pl-3">Nosso Portfólio</h2>
-            <h3 className="text-3xl md:text-5xl font-extrabold text-dark-900 leading-tight uppercase tracking-tight">Imóveis em Destaque</h3>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-12 gap-4 md:gap-6">
+          <div className="w-full md:w-auto max-w-2xl">
+            <h2 className="text-brand-600 font-bold tracking-widest text-xs sm:text-sm uppercase mb-2 md:mb-3 border-l-4 border-brand-600 pl-3">
+              Nosso Portfólio
+            </h2>
+            <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-dark-900 leading-tight uppercase tracking-tight">
+              Imóveis em Destaque
+            </h3>
           </div>
 
-          <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
-            <button className="px-6 py-2 bg-brand-600 text-white rounded-md font-bold uppercase text-sm shadow-md">Todos</button>
-            <button className="px-6 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md font-bold uppercase text-sm transition-colors">Venda</button>
-            <button className="px-6 py-2 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md font-bold uppercase text-sm transition-colors">Locação</button>
+          <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
+            {(['Todos', 'Venda', 'Locação'] as const).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setSelectedCategory(tab)}
+                className={`px-5 sm:px-6 py-2 rounded-md font-bold uppercase text-xs sm:text-sm transition-colors cursor-pointer ${
+                  selectedCategory === tab
+                    ? 'bg-brand-600 text-white shadow-md'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Grid de cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.length === 0 ? (
-            <p className="text-slate-500 col-span-full">Nenhum imóvel encontrado.</p>
+          {featuredProperties.length === 0 ? (
+            <p className="text-slate-500 col-span-full">Nenhum imóvel em destaque encontrado.</p>
           ) : (
-            properties.map((property) => (
+            featuredProperties.map((property) => (
               <Link
                 key={property.id}
                 href={`/imoveis/${property.id}`}

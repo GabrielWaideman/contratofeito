@@ -83,9 +83,9 @@ export default function SobreClient() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-dark-950 flex flex-col items-center justify-center text-white">
-        <Header theme="dark" />
-        <p className="text-slate-400 text-base mt-32 px-4 text-center">Conteúdo em construção. Volte em breve.</p>
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center text-slate-900">
+        <Header />
+        <p className="text-slate-500 text-base mt-32 px-4 text-center">Conteúdo em construção. Volte em breve.</p>
       </div>
     )
   }
@@ -102,10 +102,10 @@ export default function SobreClient() {
 
   return (
     <div className="min-h-screen bg-dark-950 overflow-x-hidden">
-      <Header theme="dark" />
+      <Header />
 
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-[55vh] sm:min-h-[65vh] flex items-center py-10 pt-28 sm:pt-32 overflow-hidden">
+      <section className="relative min-h-[55vh] sm:min-h-[65vh] flex items-center py-10 pt-28 sm:pt-32 overflow-hidden bg-white">
         {/* Background */}
         <div className="absolute inset-0 z-0">
           {data.bannerImageUrl ? (
@@ -117,53 +117,40 @@ export default function SobreClient() {
               priority
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-dark-950 via-dark-900 to-dark-950" />
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-white to-slate-100" />
           )}
-          {/* Overlay mais denso no mobile para legibilidade */}
-          <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/70 to-dark-900/40" />
-          {/* Blobs */}
-          <div className="absolute top-16 right-0 sm:right-1/4 w-[200px] sm:w-[500px] h-[200px] sm:h-[500px] bg-brand-600/15 rounded-full blur-[70px] sm:blur-[120px]" />
-          <div className="absolute bottom-8 left-0 sm:left-1/4 w-[160px] sm:w-[400px] h-[160px] sm:h-[400px] bg-gold-500/10 rounded-full blur-[50px] sm:blur-[100px]" />
+          {/* Claridade suave apenas na lateral esquerda para destacar os escritos mantendo o mapa da cidade visível */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.52)_35%,rgba(255,255,255,0.12)_58%,transparent_75%)]" />
         </div>
 
-        {/* Decorative grid */}
-        <div
-          className="absolute inset-0 z-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              'linear-gradient(to right, #dc2626 1px, transparent 1px), linear-gradient(to bottom, #dc2626 1px, transparent 1px)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-
         <div className="container mx-auto px-5 md:px-8 relative z-10 w-full">
-          <div className="max-w-4xl">
+          <div className="max-w-3xl">
             {/* Badge */}
-            <div className="inline-flex items-center gap-1.5 bg-brand-600/20 border border-brand-600/30 text-white text-[9px] sm:text-xs font-bold uppercase tracking-widest px-2.5 sm:px-4 py-1 sm:py-2 rounded-full mb-3 sm:mb-6">
-              <Building2 size={11} className="text-brand-500" />
+            <div className="inline-flex items-center gap-1.5 bg-white/85 backdrop-blur-sm border border-brand-200 text-brand-700 text-[9px] sm:text-xs font-bold uppercase tracking-widest px-2.5 sm:px-4 py-1 sm:py-2 rounded-full mb-3 sm:mb-6 shadow-sm">
+              <Building2 size={11} className="text-brand-600" />
               Contrato Feito Imobiliária Digital
             </div>
 
             {/* Título */}
-            <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight uppercase mb-3 sm:mb-6">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold text-slate-900 leading-tight tracking-tight uppercase mb-3 sm:mb-6 drop-shadow-[0_2px_10px_rgba(255,255,255,0.9)]">
               {data.heroTitle}
             </h1>
 
-            {/* Subtítulo — visível no mobile mas menor */}
-            <p className="text-sm sm:text-lg md:text-xl text-slate-300 max-w-2xl leading-relaxed mb-1 sm:mb-0">
+            {/* Subtítulo */}
+            <p className="text-sm sm:text-lg md:text-xl text-slate-800 max-w-xl leading-relaxed mb-1 sm:mb-0 font-semibold drop-shadow-[0_1px_8px_rgba(255,255,255,0.95)]">
               {data.heroSubtitle}
             </p>
 
             {/* Stats bar */}
-            <div className="flex gap-5 sm:gap-8 mt-5 sm:mt-12 pt-4 sm:pt-8 border-t border-white/10">
+            <div className="flex gap-5 sm:gap-8 mt-5 sm:mt-12 pt-4 sm:pt-8 border-t border-slate-400/50 max-w-md">
               {[
                 { value: '10+', label: 'Anos de Mercado' },
                 { value: '100%', label: 'Digital' },
                 { value: data.agentCreci.replace(/CRECI\s*(SP)?\s*/i, ''), label: 'CRECI' },
               ].map((stat) => (
-                <div key={stat.label}>
-                  <div className="text-xl sm:text-3xl font-black text-brand-500 leading-none">{stat.value}</div>
-                  <div className="text-[10px] sm:text-sm text-slate-400 font-medium mt-0.5">{stat.label}</div>
+                <div key={stat.label} className="drop-shadow-[0_1px_6px_rgba(255,255,255,0.95)]">
+                  <div className="text-xl sm:text-3xl font-black text-brand-600 leading-none">{stat.value}</div>
+                  <div className="text-[10px] sm:text-sm text-slate-800 font-bold mt-0.5">{stat.label}</div>
                 </div>
               ))}
             </div>
