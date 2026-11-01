@@ -19,6 +19,10 @@ export async function GET(request: Request) {
     // Como as imagens/features estão como String (JSON) no DB, precisamos parsear
     const formattedProperties = properties.map(p => ({
       ...p,
+      price: Number(p.price),
+      saleValue: p.saleValue !== null && p.saleValue !== undefined ? Number(p.saleValue) : null,
+      commissionReceivable: p.commissionReceivable !== null && p.commissionReceivable !== undefined ? Number(p.commissionReceivable) : null,
+      commissionReceived: p.commissionReceived !== null && p.commissionReceived !== undefined ? Number(p.commissionReceived) : null,
       images: JSON.parse(p.images as string),
       features: JSON.parse(p.features as string),
     }))

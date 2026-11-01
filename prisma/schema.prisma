@@ -36,6 +36,18 @@ model Property {
   isFeatured    Boolean  @default(false)
   isPublished   Boolean  @default(false)
   acceptsExchange Boolean @default(false)
+
+  // Controle de Venda / Fechamento Contábil
+  isSold               Boolean   @default(false)
+  soldAt               DateTime?
+  sellerName           String?   @db.VarChar(200)
+  buyerName            String?   @db.VarChar(200)
+  saleValue            Decimal?  @db.Decimal(14, 2)
+  commissionReceivable Decimal?  @db.Decimal(14, 2)
+  commissionReceived   Decimal?  @db.Decimal(14, 2)
+  hadExchange          Boolean   @default(false)
+  saleNotes            String?   @db.Text
+
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -43,6 +55,7 @@ model Property {
   @@index([category])
   @@index([type])
   @@index([isPublished])
+  @@index([isSold])
 }
 
 // ─── Depoimentos ──────────────────────────────────────────────────────────────
@@ -124,4 +137,33 @@ model AboutPage {
   agentBio        String?  @db.Text
 
   updatedAt       DateTime @updatedAt
+}
+
+// ─── Solicitações de Avaliação Imobiliária ───────────────────────────────────
+model EvaluationRequest {
+  id                Int      @id @default(autoincrement())
+  modality          String   @db.VarChar(60)
+  name              String   @db.VarChar(150)
+  phone             String   @db.VarChar(30)
+  relation          String   @db.VarChar(60)
+  purpose           String   @db.VarChar(80)
+  category          String   @db.VarChar(80)
+  city              String   @db.VarChar(100)
+  neighborhood      String   @db.VarChar(100)
+  address           String   @db.VarChar(255)
+  totalArea         String?  @db.VarChar(60)
+  builtArea         String?  @db.VarChar(60)
+  bedrooms          String?  @db.VarChar(20)
+  bathrooms         String?  @db.VarChar(20)
+  garageSpots       String?  @db.VarChar(20)
+  conservation      String   @db.VarChar(80)
+  documentStatus    String?  @db.VarChar(120)
+  needsPtam         String?  @db.VarChar(40)
+  notes             String?  @db.Text
+  formattedMessage  String   @db.Text
+  status            String   @default("PENDENTE") @db.VarChar(30)
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([status])
 }

@@ -351,7 +351,7 @@ export default function PoliticasClient() {
                     Entre em contato diretamente com nossa equipe para exercer seus direitos como titular.
                   </p>
                   <a
-                    href="mailto:emersonantoniodemendonca@yahoo.com.br"
+                    href="mailto:negocioscontratofeito@gmail.com"
                     className="block text-center bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-3 rounded-lg text-xs transition-colors shadow-sm"
                   >
                     Falar com a Imobiliária
@@ -1092,10 +1092,10 @@ export default function PoliticasClient() {
                       <div>
                         <span className="block font-bold text-white">E-mail Oficial</span>
                         <a
-                          href="mailto:emersonantoniodemendonca@yahoo.com.br"
+                          href="mailto:negocioscontratofeito@gmail.com"
                           className="text-brand-100 hover:text-white transition-colors break-all"
                         >
-                          emersonantoniodemendonca@yahoo.com.br
+                          negocioscontratofeito@gmail.com
                         </a>
                       </div>
                     </div>

@@ -258,9 +258,22 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
 // ─── Carrossel de Sugestões ────────────────────────────────────────────────────
 function SuggestionsCarousel({ properties }: { properties: Property[] }) {
   const [index, setIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
-  const visibleCount = 3
+  const visibleCount = isMobile ? 1 : 3
   const maxIndex = Math.max(0, properties.length - visibleCount)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  useEffect(() => {
+    if (index > maxIndex) setIndex(maxIndex)
+  }, [maxIndex, index])
 
   const resetTimer = () => {
     if (intervalRef.current) clearInterval(intervalRef.current)
@@ -274,6 +287,10 @@ function SuggestionsCarousel({ properties }: { properties: Property[] }) {
 
   const priceFormat = (p: number) =>
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(p)
+
+  const translateStyle = isMobile
+    ? `translateX(calc(-${index} * (100% + 20px)))`
+    : `translateX(calc(-${index} * ((100% - 40px) / 3 + 20px)))`
 
   return (
     <div>
@@ -303,10 +320,10 @@ function SuggestionsCarousel({ properties }: { properties: Property[] }) {
       <div className="overflow-hidden">
         <div
           className="flex gap-5 transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(calc(-${index} * (100% / ${visibleCount} + 8px)))` }}
+          style={{ transform: translateStyle }}
         >
           {properties.map((p) => (
-            <div key={p.id} className="shrink-0 w-full md:w-[calc(33.333%-14px)]">
+            <div key={p.id} className="shrink-0 w-full md:w-[calc((100%-40px)/3)]">
               <Link href={`/imoveis/${p.id}`} className="block group h-full">
                 <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200 transition-all duration-300 hover:-translate-y-1.5 h-full flex flex-col">
                   <div className="relative h-48 overflow-hidden">
@@ -429,7 +446,7 @@ export default function PropertyClient({
               <span className="w-1 h-6 rounded-full bg-brand-600 inline-block" />
               Sobre este imóvel
             </h2>
-            <p className="text-gray-500 leading-loose text-base">{property.description}</p>
+            <p className="text-gray-500 leading-loose text-base whitespace-pre-line">{property.description}</p>
           </section>
 
           {/* ── Diferenciais ── */}

@@ -25,6 +25,15 @@ export type Property = {
   isFeatured: boolean
   isPublished?: boolean
   acceptsExchange?: boolean
+  isSold?: boolean
+  soldAt?: string | Date | null
+  sellerName?: string | null
+  buyerName?: string | null
+  saleValue?: number | null
+  commissionReceivable?: number | null
+  commissionReceived?: number | null
+  hadExchange?: boolean
+  saleNotes?: string | null
   description: string
   features: string[]
   createdAt?: string | Date
@@ -499,7 +508,7 @@ import { prisma } from './prismaClient'
 
 export async function getAllProperties(filters?: any): Promise<Property[]> {
   try {
-    const whereClause: any = { isPublished: true }
+    const whereClause: any = { isPublished: true, isSold: false }
     
     // Add filters logic here later if needed
     
@@ -548,6 +557,7 @@ export async function getSuggestedProperties(currentId: number, limit = 6): Prom
     const dbProps = await prisma.property.findMany({
       where: { 
         isPublished: true,
+        isSold: false,
         id: { not: currentId }
       },
       take: limit,

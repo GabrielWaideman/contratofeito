@@ -32,7 +32,7 @@ export default function Footer() {
             <ul className="flex flex-col gap-4">
               <li><Link href="/imoveis" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Comprar Imóvel</Link></li>
               <li><Link href="/sobre" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Sobre Nós</Link></li>
-              <li><Link href="#" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Solicitar Avaliação</Link></li>
+              <li><Link href="/avaliacoes" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Solicitar Avaliação</Link></li>
               <li><Link href="/politicas-de-privacidade" className="text-slate-400 hover:text-brand-400 transition-colors text-sm">Políticas de Uso e Privacidade</Link></li>
             </ul>
           </div>
@@ -61,8 +61,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-brand-500 shrink-0" />
-                <a href="mailto:emersonantoniodemendonca@yahoo.com.br" className="text-slate-400 hover:text-brand-400 transition-colors text-sm whitespace-nowrap">
-                  emersonantoniodemendonca@yahoo.com.br
+                <a href="mailto:negocioscontratofeito@gmail.com" className="text-slate-400 hover:text-brand-400 transition-colors text-sm whitespace-nowrap">
+                  negocioscontratofeito@gmail.com
                 </a>
               </li>
             </ul>

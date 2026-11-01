@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
-import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info, Users, ArrowLeft } from 'lucide-react'
+import { LayoutDashboard, Home, PlusSquare, LogOut, Menu, X, MessageSquare, Info, Users, ArrowLeft, ClipboardList } from 'lucide-react'
 
 interface AdminClientLayoutProps {
   children: React.ReactNode
@@ -30,6 +30,7 @@ export default function AdminClientLayout({ children, username, role: userRole }
     { href: '/admin', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
     { href: '/admin/imoveis', icon: <Home size={20} />, label: 'Imóveis' },
     { href: '/admin/imoveis/novo', icon: <PlusSquare size={20} />, label: 'Novo Imóvel' },
+    { href: '/admin/avaliacoes', icon: <ClipboardList size={20} />, label: 'Avaliações' },
     { href: '/admin/depoimentos', icon: <MessageSquare size={20} />, label: 'Depoimentos' },
     { href: '/admin/sobre', icon: <Info size={20} />, label: 'Sobre Nós' },
     // Só exibir para MASTER

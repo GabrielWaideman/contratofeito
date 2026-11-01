@@ -19,6 +19,10 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
     const formattedProperty = {
       ...property,
+      price: Number(property.price),
+      saleValue: property.saleValue !== null && property.saleValue !== undefined ? Number(property.saleValue) : null,
+      commissionReceivable: property.commissionReceivable !== null && property.commissionReceivable !== undefined ? Number(property.commissionReceivable) : null,
+      commissionReceived: property.commissionReceived !== null && property.commissionReceived !== undefined ? Number(property.commissionReceived) : null,
       images: JSON.parse(property.images as string),
       features: JSON.parse(property.features as string),
     }

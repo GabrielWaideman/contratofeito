@@ -4,8 +4,11 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import {
   Home, Star, EyeOff, TrendingUp, Bell, MessageSquare,
-  BarChart2, Activity, Users, Calendar,
+  BarChart2, Activity, Users, Calendar, BadgeDollarSign, Wallet, CheckCircle2,
 } from 'lucide-react'
+
+const formatBRL = (val: number) =>
+  new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(val || 0)
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 type BarPoint = { label: string; date?: string; count: number; views?: number }
@@ -75,7 +78,15 @@ function BarChart({ data, height = 140 }: { data: BarPoint[]; height?: number })
 
 // ─── Dashboard Page ───────────────────────────────────────────────────────────
 export default function AdminDashboard() {
-  const [stats, setStats]           = useState({ total: 0, featured: 0, drafts: 0 })
+  const [stats, setStats] = useState({
+    total: 0,
+    featured: 0,
+    drafts: 0,
+    sold: 0,
+    totalSaleValue: 0,
+    totalCommissionReceivable: 0,
+    totalCommissionReceived: 0,
+  })
   const [pendingReviews, setPendingReviews] = useState(0)
   const [loading, setLoading]       = useState(true)
   const [reviewsLoading, setReviewsLoading] = useState(true)
@@ -92,10 +103,15 @@ export default function AdminDashboard() {
       .then(r => r.json())
       .then(data => {
         if (Array.isArray(data)) {
+          const soldProps = data.filter(p => p.isSold)
           setStats({
             total:    data.length,
-            featured: data.filter(p => p.isFeatured).length,
-            drafts:   data.filter(p => !p.isPublished).length,
+            featured: data.filter(p => p.isFeatured && !p.isSold).length,
+            drafts:   data.filter(p => !p.isPublished && !p.isSold).length,
+            sold:     soldProps.length,
+            totalSaleValue: soldProps.reduce((acc, p) => acc + (Number(p.saleValue) || 0), 0),
+            totalCommissionReceivable: soldProps.reduce((acc, p) => acc + (Number(p.commissionReceivable) || 0), 0),
+            totalCommissionReceived: soldProps.reduce((acc, p) => acc + (Number(p.commissionReceived) || 0), 0),
           })
         }
         setLoading(false)
@@ -134,9 +150,61 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-black text-gray-900 tracking-tight">Dashboard</h1>
-        <p className="text-gray-500 mt-1">Visão geral do site e catálogo de imóveis.</p>
+      {/* ─── Cabeçalho + Ações rápidas compactas ───────────────────────────────── */}
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black text-gray-900 tracking-tight">Dashboard</h1>
+          <p className="text-gray-500 mt-1">Visão geral do site e catálogo de imóveis.</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full xl:w-auto">
+          {/* Card compacto: Publicar novo imóvel */}
+          <div className="bg-brand-600 text-white rounded-xl px-4 py-3 shadow-md flex items-center justify-between gap-4 relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 text-white/10 pointer-events-none">
+              <TrendingUp size={72} />
+            </div>
+            <div className="relative z-10 min-w-0">
+              <h2 className="text-sm font-black leading-tight">Publicar novo imóvel</h2>
+              <p className="text-brand-100 text-[11px] font-medium mt-0.5 truncate">Mantenha o catálogo atualizado.</p>
+            </div>
+            <Link
+              href="/admin/imoveis/novo"
+              className="relative z-10 shrink-0 bg-white text-brand-600 hover:bg-gray-50 font-bold py-2 px-3.5 rounded-lg shadow-sm hover:shadow transition-all text-xs whitespace-nowrap"
+            >
+              Adicionar Imóvel
+            </Link>
+          </div>
+
+          {/* Card compacto: Depoimentos */}
+          <div className="bg-gray-900 text-white rounded-xl px-4 py-3 shadow-md flex items-center justify-between gap-4 relative overflow-hidden">
+            <div className="absolute -right-4 -top-4 text-white/5 pointer-events-none">
+              <MessageSquare size={72} />
+            </div>
+            <div className="relative z-10 min-w-0">
+              <h2 className="text-sm font-black leading-tight flex items-center gap-1.5">
+                Depoimentos
+                {!reviewsLoading && pendingReviews > 0 && (
+                  <span className="inline-flex items-center justify-center px-1.5 h-4 rounded-full bg-red-500 text-white text-[10px] font-black">
+                    {pendingReviews > 9 ? '9+' : pendingReviews}
+                  </span>
+                )}
+              </h2>
+              <p className="text-gray-400 text-[11px] font-medium mt-0.5 truncate">
+                {reviewsLoading
+                  ? 'Carregando...'
+                  : pendingReviews > 0
+                  ? `${pendingReviews} ${pendingReviews === 1 ? 'pendente' : 'pendentes'}`
+                  : 'Nenhum depoimento pendente.'}
+              </p>
+            </div>
+            <Link
+              href="/admin/depoimentos"
+              className="relative z-10 shrink-0 bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-3.5 rounded-lg transition-all text-xs whitespace-nowrap"
+            >
+              Gerenciar Depoimentos
+            </Link>
+          </div>
+        </div>
       </div>
 
       {/* ─── Alerta de pendentes ────────────────────────────────────────────────── */}
@@ -295,39 +363,57 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* ─── Ações rápidas ──────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <div className="bg-brand-600 text-white rounded-2xl p-8 shadow-lg flex flex-col justify-between gap-6 relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 text-white/10"><TrendingUp size={160} /></div>
-          <div className="relative z-10">
-            <h2 className="text-xl font-black mb-1">Publicar novo imóvel</h2>
-            <p className="text-brand-100 text-sm font-medium">Mantenha o catálogo sempre atualizado.</p>
+      {/* ─── Somatória Contábil de Vendas e Corretagens ────────────────────────── */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+          <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center shrink-0">
+            <BadgeDollarSign size={28} />
           </div>
-          <Link href="/admin/imoveis/novo" className="relative z-10 bg-white text-brand-600 hover:bg-gray-50 font-bold py-3 px-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center text-sm">
-            Adicionar Imóvel
-          </Link>
-        </div>
-
-        <div className="bg-gray-900 text-white rounded-2xl p-8 shadow-lg flex flex-col justify-between gap-6 relative overflow-hidden">
-          <div className="absolute -right-8 -top-8 text-white/5"><MessageSquare size={160} /></div>
-          <div className="relative z-10">
-            <h2 className="text-xl font-black mb-1 flex items-center gap-2">
-              Depoimentos
-              {!reviewsLoading && pendingReviews > 0 && (
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-black">
-                  {pendingReviews > 9 ? '9+' : pendingReviews}
-                </span>
-              )}
-            </h2>
-            <p className="text-gray-400 text-sm font-medium">
-              {reviewsLoading ? 'Carregando...' : pendingReviews > 0
-                ? `${pendingReviews} ${pendingReviews === 1 ? 'pendente' : 'pendentes'} aguardando revisão.`
-                : 'Nenhum depoimento pendente.'}
+          <div className="min-w-0">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+              Valor de Venda (Vendidos)
+            </p>
+            <p className="text-2xl font-black text-gray-900 leading-tight mt-1 truncate">
+              {loading ? '...' : formatBRL(stats.totalSaleValue)}
+            </p>
+            <p className="text-xs text-emerald-600 font-semibold mt-0.5">
+              {loading ? ' ' : `${stats.sold} imóvel${stats.sold !== 1 ? 'is' : ''} vendido${stats.sold !== 1 ? 's' : ''}`}
             </p>
           </div>
-          <Link href="/admin/depoimentos" className="relative z-10 bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-xl transition-all text-center text-sm">
-            Gerenciar Depoimentos
-          </Link>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+          <div className="w-14 h-14 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center shrink-0">
+            <Wallet size={28} />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+              Valor Estimado de Corretagens
+            </p>
+            <p className="text-2xl font-black text-amber-600 leading-tight mt-1 truncate">
+              {loading ? '...' : formatBRL(stats.totalCommissionReceivable)}
+            </p>
+            <p className="text-xs text-gray-400 font-medium mt-0.5">
+              Total de corretagens a receber
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+          <div className="w-14 h-14 bg-green-50 text-green-600 rounded-xl flex items-center justify-center shrink-0">
+            <CheckCircle2 size={28} />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+              Valor Recebido de Corretagens
+            </p>
+            <p className="text-2xl font-black text-green-600 leading-tight mt-1 truncate">
+              {loading ? '...' : formatBRL(stats.totalCommissionReceived)}
+            </p>
+            <p className="text-xs text-gray-400 font-medium mt-0.5">
+              Total de corretagens já recebidas
+            </p>
+          </div>
         </div>
       </div>
     </div>

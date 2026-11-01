@@ -1,4 +1,5 @@
 import React from 'react'
+import { Video } from 'lucide-react'
 import FilterBar from './FilterBar'
 import type { Property } from '@/lib/properties'
 
@@ -39,6 +40,17 @@ export default function Hero({ properties = [] }: { properties?: Property[] }) {
           </p>
         </div>
       </div>
+
+      {/* Selo discreto de atribuição de direitos autorais do vídeo aéreo */}
+      <a
+        href="https://youtu.be/H6VJML0cyVI?si=AuItAticiKZLhLOc"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-10 right-2.5 md:bottom-[72px] md:right-4 z-20 inline-flex items-center gap-1.5 rounded-full px-[10px] py-[4px] text-[11px] leading-tight text-white/70 no-underline bg-black/45 backdrop-blur-[4px] opacity-65 hover:opacity-100 hover:text-white hover:bg-black/75 transition-all duration-200 ease-in-out"
+      >
+        <Video size={12} className="shrink-0" />
+        <span>Imagens aéreas: Cidades do Brasil TV (YouTube)</span>
+      </a>
     </section>
     
     <FilterBar properties={properties} />

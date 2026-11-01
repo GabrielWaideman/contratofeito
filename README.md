@@ -196,7 +196,7 @@ Nesta sessão, atualizamos os dados oficiais de contato da imobiliária em todos
 1. **Atualização Completa dos Dados Oficiais de Contato:**
    - **Endereço:** Atualizado para `R. Deputado Castro de Carvalho, 207 - Álvares Florence - SP`.
    - **Telefones:** Inseridos os números oficiais `(17) 99722-5062` e `(17) 99762-9089`, ambos com links acionáveis `tel:`.
-   - **E-mail:** Atualizado para `emersonantoniodemendonca@yahoo.com.br`, com ajuste de grid e `whitespace-nowrap` no footer para manter alinhado em linha única sem quebras.
+   - **E-mail:** Atualizado para `negocioscontratofeito@gmail.com`, com ajuste de grid e `whitespace-nowrap` no footer para manter alinhado em linha única sem quebras.
    - **WhatsApp Principal (`17997225062`):** Conectado universalmente no botão flutuante, no botão do footer, nos botões da página de detalhes do imóvel e no botão "Fale Conosco" da barra de navegação (desktop e mobile).
    - **Redes Sociais:** Links oficiais mapeados e ativos para Instagram, Facebook, TikTok e YouTube.
    - **Links Úteis do Rodapé:** Conexão direta de "Comprar Imóvel" (`/imoveis`), "Sobre Nós" (`/sobre`) e "Solicitar Avaliação" (`#` para futura expansão).
@@ -300,4 +300,32 @@ Nesta sessão, implementamos o funcionamento completo da busca de imóveis a par
 4. **Exibição Exclusiva de Imóveis em Destaque e Alinhamento Responsivo (`src/components/PropertySection.tsx`):**
    - Correção do alinhamento do cabeçalho **"Nosso Portfólio — Imóveis em Destaque"** em telas mobile (`items-start md:items-end` e tipografia escalável), garantindo formatação limpa em qualquer resolução.
    - A seção inicial passou a exibir exclusivamente os imóveis marcados como **Imóvel em Destaque** (`isFeatured: true`) no painel administrativo, além de ativar a filtragem rápida pelas abas **Todos**, **Venda** e **Locação**.
+
+---
+### Sessão de 01/11/2026 (Fechamento de Vendas, Métricas Financeiras no Dashboard, Página de Avaliações com Captura de Leads e Ajustes de UI)
+
+Nesta sessão, implementamos o controle contábil de imóveis vendidos, reorganizamos o Dashboard administrativo com indicadores financeiros, criamos a página completa de Solicitação de Avaliação Imobiliária integrada ao WhatsApp e ao Painel Admin, e aplicamos melhorias de usabilidade e atribuição:
+
+1. **Formatação de Descrição e Carrossel Mobile na Página do Imóvel (`src/app/imoveis/[id]/PropertyClient.tsx`):**
+   - Adicionada a classe `whitespace-pre-line` na seção *"Sobre este imóvel"*, preservando fielmente as quebras de linha e parágrafos digitados no painel administrativo.
+   - Refatoração do carrossel *"Você também pode gostar"* (`SuggestionsCarousel`) com detecção responsiva (`max-width: 767px`), deslizando `100%` da largura de 1 card por vez no celular e 3 cards no desktop.
+
+2. **Controle de Imóveis Vendidos e Fechamento Contábil (`prisma/schema.prisma`, `src/app/admin/imoveis/page.tsx`, `src/app/api/admin/properties/[id]/sale/route.ts`, `src/lib/properties.ts`):**
+   - Adicionadas as colunas `isSold`, `soldAt`, `sellerName`, `buyerName`, `saleValue`, `commissionReceivable`, `commissionReceived`, `hadExchange` e `saleNotes` ao modelo `Property` no MySQL.
+   - Novo botão de ação **Marcar Vendido / Vendido** na listagem de imóveis do Admin (`/admin/imoveis`), abrindo modal completo para preenchimento de Nome do Vendedor, Nome do Comprador, Valor Contábil da Venda, Corretagem a Receber, Corretagem Recebida, Permuta (Sim/Não) e Observações, com opção de editar os dados ou reverter a venda.
+   - Ocultação automática dos imóveis marcados como vendidos (`isSold: false`) na vitrine pública e nos carrosséis de sugestões, mantendo o histórico contábil preservado no painel.
+
+3. **Reorganização do Dashboard e Somatórias Financeiras (`src/app/admin/page.tsx`):**
+   - Atalhos compactos de **Publicar novo imóvel** e **Depoimentos** reposicionados no cabeçalho superior à direita do título *"Dashboard"*.
+   - Adicionados 3 novos cartões financeiros abaixo dos indicadores de quantidade de imóveis: **Valor de Venda (Vendidos)**, **Valor Estimado de Corretagens** e **Valor Recebido de Corretagens**.
+
+4. **Página de Solicitação de Avaliação Imobiliária e Captura Automática no Admin (`src/app/avaliacoes/page.tsx`, `src/app/avaliacoes/AvaliacoesClient.tsx`, `src/app/admin/avaliacoes/page.tsx`, `src/app/api/evaluations/route.ts`):**
+   - Criação da página pública `/avaliacoes` vinculada ao menu **Avaliações** no `Header` e **Solicitar Avaliação** no `Footer`.
+   - Seletor interativo de modalidade (**Avaliação Simples (Mercadológica)** e **Avaliação Completa e Documental**), formulário em 4 seções com máscara de telefone, campos condicionais de situação documental/PTAM e montagem automática da mensagem formatada para o WhatsApp (`5517997225062`).
+   - Registro silencioso imediato no banco de dados (`EvaluationRequest` via `/api/evaluations` com `keepalive: true`) no instante em que o cliente clica no botão de envio, garantindo que todas as solicitações fiquem salvas na nova aba **Avaliações** (`/admin/avaliacoes`) do painel administrativo.
+
+5. **Selo de Atribuição no Vídeo Hero e Padronização Global de E-mail (`src/components/Hero.tsx`, `src/components/Footer.tsx`, `src/app/politicas-de-privacidade`):**
+   - Adicionado selo discreto em formato pílula com `backdrop-filter: blur(4px)` no canto inferior direito do vídeo aéreo da Home (`Imagens aéreas: Cidades do Brasil TV (YouTube)`), abrindo o vídeo original em nova aba.
+   - Substituição integral do antigo e-mail por `negocioscontratofeito@gmail.com` em todos os arquivos públicos, schemas JSON-LD e documentação do projeto.
+
 

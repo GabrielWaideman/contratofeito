@@ -41,7 +41,7 @@ export const propertySchema = z.object({
     .optional()
     .nullable()
     .or(z.literal(''))
-    .transform(val => (!val || val === '' ? null : val)),
+    .transform(val => (!val ? null : val)),
   imageUrl: z.string().min(1, 'A imagem de capa é obrigatória').max(500),
   images: z.array(z.string().min(1, 'Caminho da imagem inválido')).default([]),
   features: z.array(z.string().trim()).default([]),
@@ -51,6 +51,22 @@ export const propertySchema = z.object({
 })
 
 export type PropertyInput = z.infer<typeof propertySchema>
+
+export const propertySaleSchema = z.object({
+  sellerName: z.string().trim().min(2, 'Informe o nome do vendedor').max(200, 'Nome muito longo'),
+  buyerName: z.string().trim().min(2, 'Informe o nome do comprador').max(200, 'Nome muito longo'),
+  saleValue: z.coerce.number().nonnegative('O valor contábil da venda não pode ser negativo'),
+  commissionReceivable: z.coerce.number().nonnegative('O valor da corretagem a receber não pode ser negativo').default(0),
+  commissionReceived: z.coerce.number().nonnegative('O valor da corretagem recebida não pode ser negativo').default(0),
+  hadExchange: z.boolean().default(false),
+  saleNotes: z
+    .string()
+    .optional()
+    .nullable()
+    .transform(val => (!val || val.trim() === '' ? null : val.trim())),
+})
+
+export type PropertySaleInput = z.infer<typeof propertySaleSchema>
 
 // ─── Usuários Admin ───────────────────────────────────────────────────────────
 export const createUserSchema = z.object({

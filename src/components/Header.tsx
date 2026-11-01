@@ -21,7 +21,7 @@ export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }
     { name: 'Início', href: '/' },
     { name: 'Imóveis', href: '/imoveis' },
     { name: 'Sobre Nós', href: '/sobre' },
-    { name: 'Avaliações', href: '/#avaliacoes' },
+    { name: 'Avaliações', href: '/avaliacoes' },
   ]
 
   return (

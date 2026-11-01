@@ -57,7 +57,7 @@ export default function PoliticasPage() {
         addressCountry: 'BR',
       },
       telephone: '+5517997225062',
-      email: 'emersonantoniodemendonca@yahoo.com.br',
+      email: 'negocioscontratofeito@gmail.com',
     },
   }
 

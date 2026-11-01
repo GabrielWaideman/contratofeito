@@ -23,7 +23,7 @@ export async function PUT(
     const result = updateUserSchema.safeParse(body)
 
     if (!result.success) {
-      const firstError = result.error.errors[0]?.message || 'Dados inválidos.'
+      const firstError = result.error.issues[0]?.message || 'Dados inválidos.'
       return NextResponse.json({ error: firstError }, { status: 400 })
     }
 
