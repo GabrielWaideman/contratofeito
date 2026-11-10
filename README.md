@@ -328,4 +328,35 @@ Nesta sessão, implementamos o controle contábil de imóveis vendidos, reorgani
    - Adicionado selo discreto em formato pílula com `backdrop-filter: blur(4px)` no canto inferior direito do vídeo aéreo da Home (`Imagens aéreas: Cidades do Brasil TV (YouTube)`), abrindo o vídeo original em nova aba.
    - Substituição integral do antigo e-mail por `negocioscontratofeito@gmail.com` em todos os arquivos públicos, schemas JSON-LD e documentação do projeto.
 
+---
+### Sessão de 09/11/2026 (Identidade Profissional do Corretor Responsável, Adequação de Termos e Ajustes Visuais)
+
+Nesta sessão, reforçamos a identificação direta do corretor responsável (**Emerson Antonio | CRECI-SP 246817F**) em todos os pontos estratégicos do site, adequamos os termos jurídicos e aprimoramos o contraste visual na página do imóvel:
+
+1. **Cabeçalho Global (`src/components/Header.tsx`):**
+   - Inclusão da assinatura suave **`Emerson Antonio | Corretor de Imóveis | CRECI-SP 246817-F`** alinhada ao lado direito do logo no cabeçalho desktop e no topo do menu retrátil mobile, com suporte aos temas claro e escuro.
+
+2. **Rodapé Global (`src/components/Footer.tsx`):**
+   - Adicionado o destaque **`Emerson Antonio | Gestão Imobiliária`** logo abaixo da logo oficial e realçado o selo **`CRECI-SP 246817F`**.
+   - Removida a frase final redundante na descrição da marca e atualizado o aviso de direitos autorais para **`© 2026 Emerson Antonio | Contrato Feito. Todos os direitos reservados.`**
+
+3. **Seção Sobre Nós na Home (`src/components/AboutSection.tsx`):**
+   - Título principal ajustado para **`GESTÃO IMOBILIÁRIA EM ÁLVARES FLORENCE`**.
+   - Card de registro profissional atualizado para **`CRECI 246817F`** no topo com **`Emerson Antonio`** em destaque logo abaixo.
+
+4. **Página Sobre Nós (`/sobre` — `src/app/sobre/SobreClient.tsx`, `src/app/api/about/route.ts` e Banco de Dados):**
+   - Selo superior (badge) alterado para **`EMERSON ANTONIO | GESTÃO IMOBILIÁRIA`**.
+   - Subtítulo do Hero atualizado no código e no banco MySQL para **`"Contrato Feito: intermediação e segurança na compra e venda de imóveis com Emerson Antonio em Álvares Florence e região."`**
+
+5. **Página de Avaliações (`/avaliacoes` — `src/app/avaliacoes/AvaliacoesClient.tsx`):**
+   - Selo superior do Hero atualizado para **`EMERSON ANTONIO · CRECI-SP 246817F`**.
+
+6. **Políticas de Uso e Privacidade (`/politicas-de-privacidade` — `src/app/politicas-de-privacidade/PoliticasClient.tsx` e `page.tsx`):**
+   - Substituição completa de **`Contrato Feito Negócios Imobiliários`** e do termo **`Imobiliária`** por **`Emerson Antonio - Corretor de Imóveis`**, com revisão integral de concordância nominal e verbal em todas as cláusulas dos Termos de Uso, Política de Privacidade (LGPD), Glossários e metadados JSON-LD.
+
+7. **Página de Detalhes do Imóvel (`/imoveis/[id]` — `src/app/imoveis/[id]/PropertyClient.tsx`):**
+   - Rodapé do quadro principal atualizado para **`CRECI-SP 246817F · Atendimento de segunda a sábado · Emerson Antonio - Corretor de Imóveis`**.
+   - Reforço no contraste das bordas externas (`border-gray-300 shadow-md`) e divisórias internas (`border-gray-200`) do painel de informações principais (`InfoStrip`).
+
+
 

@@ -31,12 +31,29 @@ export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }
       <div className="container mx-auto px-4 md:px-8 flex justify-between items-center">
         
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group shrink-0">
           <Image src="/logo.png" alt="Contrato Feito Logo" width={300} height={100} className="h-20 w-auto object-contain" />
         </Link>
 
+        {/* Identificação ao lado do Logo */}
+        <div className="hidden lg:flex flex-1 items-center justify-start pl-4 xl:pl-6">
+          <p
+            className={`text-xs xl:text-[13px] tracking-wide whitespace-nowrap transition-colors ${
+              theme === 'dark' ? 'text-slate-300' : 'text-slate-500'
+            }`}
+          >
+            <span className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-700'}`}>
+              Emerson Antonio
+            </span>
+            <span className="mx-2 text-brand-500/70">|</span>
+            <span>Corretor de Imóveis</span>
+            <span className="mx-2 text-brand-500/70">|</span>
+            <span className="font-medium">CRECI-SP 246817-F</span>
+          </p>
+        </div>
+
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-8 shrink-0">
           {navLinks.map((link) => (
             <Link 
               key={link.name} 
@@ -70,6 +87,15 @@ export default function Header({ theme = 'light' }: { theme?: 'light' | 'dark' }
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-slate-100 py-4 px-4 flex flex-col gap-4">
+          <div className="pb-3 border-b border-slate-100 text-center">
+            <p className="text-xs text-slate-500 tracking-wide">
+              <span className="font-semibold text-slate-700">Emerson Antonio</span>
+              <span className="mx-1.5 text-brand-500/70">|</span>
+              <span>Corretor de Imóveis</span>
+              <span className="mx-1.5 text-brand-500/70">|</span>
+              <span className="font-medium">CRECI-SP 246817-F</span>
+            </p>
+          </div>
           {navLinks.map((link) => (
             <Link 
               key={link.name} 

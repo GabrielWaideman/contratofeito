@@ -162,7 +162,7 @@ export default function AvaliacoesClient() {
           <div className="container mx-auto px-4 md:px-8 relative z-10 text-center max-w-4xl">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-600/15 border border-brand-500/30 text-brand-400 text-xs font-extrabold uppercase tracking-widest mb-5">
               <ShieldCheck size={14} />
-              Contrato Feito · CRECI-SP 246817F
+              Emerson Antonio · CRECI-SP 246817F
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight mb-5">

@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
   title: 'Políticas de Uso e Privacidade | Contrato Feito',
   description:
-    'Conheça as Políticas de Uso e Privacidade da Contrato Feito Negócios Imobiliários. Regras de navegação, segurança digital e tratamento responsável de dados pessoais (LGPD).',
+    'Conheça as Políticas de Uso e Privacidade de Emerson Antonio - Corretor de Imóveis. Regras de navegação, segurança digital e tratamento responsável de dados pessoais (LGPD).',
   alternates: {
     canonical: `${getSiteUrl()}/politicas-de-privacidade`,
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'Políticas de Uso e Privacidade - Contrato Feito Imobiliária',
+        alt: 'Políticas de Uso e Privacidade - Emerson Antonio - Corretor de Imóveis',
       },
     ],
   },
@@ -41,13 +41,13 @@ export default function PoliticasPage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Políticas de Uso e Privacidade – Contrato Feito Negócios Imobiliários',
+    name: 'Políticas de Uso e Privacidade – Emerson Antonio - Corretor de Imóveis',
     description:
       'Termos de uso do site e política de privacidade em conformidade com a Lei Geral de Proteção de Dados (LGPD) e o Marco Civil da Internet.',
     url: `${getSiteUrl()}/politicas-de-privacidade`,
     publisher: {
       '@type': 'RealEstateAgent',
-      name: 'Contrato Feito Negócios Imobiliários',
+      name: 'Emerson Antonio - Corretor de Imóveis',
       url: getSiteUrl(),
       address: {
         '@type': 'PostalAddress',

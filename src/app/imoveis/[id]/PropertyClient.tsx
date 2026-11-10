@@ -157,10 +157,10 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
   ].filter(Boolean) as MetricEntry[]
 
   return (
-    <div className="mt-4 rounded-2xl border border-gray-100 bg-white/60 backdrop-blur-sm overflow-hidden shadow-sm">
+    <div className="mt-4 rounded-2xl border border-gray-300 bg-white overflow-hidden shadow-md">
 
       {/* Linha de topo: título + localização + preço */}
-      <div className="px-6 md:px-8 pt-6 pb-5 border-b border-gray-100">
+      <div className="px-6 md:px-8 pt-6 pb-5 border-b border-gray-200">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
 
           {/* Esquerda: badges, título, localização */}
@@ -209,7 +209,7 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
       </div>
 
       {/* Linha de métricas — grid proporcional, sem scroll em nenhum tamanho */}
-      <div className="px-6 md:px-8 pt-5 pb-4 border-b border-gray-100">
+      <div className="px-6 md:px-8 pt-5 pb-4 border-b border-gray-200">
         <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${metrics.length}, 1fr)` }}>
           {metrics.map(({ icon, value, label }) => (
             <div key={label} className="flex flex-col items-center gap-1 group text-center">
@@ -246,9 +246,9 @@ function InfoStrip({ property, whatsappMsg }: { property: Property; whatsappMsg:
       </div>
 
       {/* Rodapé do strip: CRECI */}
-      <div className="px-6 md:px-8 pb-4 border-t border-gray-50">
+      <div className="px-6 md:px-8 pb-4 border-t border-gray-200">
         <p className="text-gray-500 text-xs font-semibold pt-3">
-          CRECI-SP 246817F &nbsp;·&nbsp; Atendimento de segunda a sábado &nbsp;·&nbsp; Contrato Feito Imobiliária
+          CRECI-SP 246817F &nbsp;·&nbsp; Atendimento de segunda a sábado &nbsp;·&nbsp; Emerson Antonio - Corretor de Imóveis
         </p>
       </div>
     </div>

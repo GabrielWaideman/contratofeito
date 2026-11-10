@@ -99,14 +99,14 @@ export default function PoliticasClient() {
               </h1>
 
               <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8 text-justify">
-                Documento oficial da <strong className="text-white font-semibold">Contrato Feito Negócios Imobiliários</strong> que estabelece as regras de navegação, termos de serviço e o nosso rigoroso compromisso com a proteção e o tratamento de seus dados pessoais.
+                Documento oficial de <strong className="text-white font-semibold">Emerson Antonio - Corretor de Imóveis</strong> que estabelece as regras de navegação, termos de serviço e o nosso rigoroso compromisso com a proteção e o tratamento de seus dados pessoais.
               </p>
 
               {/* Informações Regulatórias Rápidas */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-slate-800 text-xs">
                 <div className="bg-dark-900/80 border border-slate-800/80 p-3 rounded-xl">
-                  <span className="block text-slate-400 font-medium">Controladora:</span>
-                  <span className="text-white font-bold">Contrato Feito</span>
+                  <span className="block text-slate-400 font-medium">Controlador:</span>
+                  <span className="text-white font-bold">Emerson Antonio - Corretor de Imóveis</span>
                 </div>
                 <div className="bg-dark-900/80 border border-slate-800/80 p-3 rounded-xl">
                   <span className="block text-slate-400 font-medium">Registro Profissional:</span>
@@ -297,7 +297,7 @@ export default function PoliticasClient() {
                       </li>
                       <li>
                         <a href="#priv-2" className="block py-1 hover:text-brand-600 transition-colors">
-                          2. Quem Somos (Controladora)
+                          2. Quem Somos (Controlador)
                         </a>
                       </li>
                       <li>
@@ -354,7 +354,7 @@ export default function PoliticasClient() {
                     href="mailto:negocioscontratofeito@gmail.com"
                     className="block text-center bg-brand-600 hover:bg-brand-700 text-white font-bold py-2 px-3 rounded-lg text-xs transition-colors shadow-sm"
                   >
-                    Falar com a Imobiliária
+                    Falar com Emerson Antonio - Corretor de Imóveis
                   </a>
                 </div>
               </div>
@@ -381,10 +381,10 @@ export default function PoliticasClient() {
                     
                     <div id="termos-intro" className="prose prose-slate max-w-none text-slate-600 text-sm leading-relaxed space-y-3 text-justify">
                       <p className="font-semibold text-slate-900">
-                        Bem-vindo ao CONTRATO FEITO NEGÓCIOS IMOBILIÁRIOS.
+                        Bem-vindo ao site de EMERSON ANTONIO - CORRETOR DE IMÓVEIS.
                       </p>
                       <p>
-                        A seguir apresentamos os Termos de Uso (“Termos”), documento que relaciona as principais regras que devem ser observadas por todos que acessam o Site da Imobiliária (atualmente operando em{' '}
+                        A seguir apresentamos os Termos de Uso (“Termos”), documento que relaciona as principais regras que devem ser observadas por todos que acessam o Site de Emerson Antonio - Corretor de Imóveis (atualmente operando em{' '}
                         <a
                           href="https://contratofeito.vercel.app/"
                           target="_blank"
@@ -437,15 +437,15 @@ export default function PoliticasClient() {
                           <strong className="text-slate-800">2.1. Acesso ao Site:</strong> O acesso ao Site será efetuado através do uso da internet, não sendo permitido o acesso por nenhum outro meio diverso não autorizado por meio destes Termos.
                         </p>
                         <p>
-                          <strong className="text-slate-800">2.2. Funcionalidades Disponíveis:</strong> No Site Você poderá conhecer a Imobiliária e ter acesso a todos os serviços oferecidos por meio desta, sendo possível:
+                          <strong className="text-slate-800">2.2. Funcionalidades Disponíveis:</strong> No Site Você poderá conhecer Emerson Antonio - Corretor de Imóveis e ter acesso a todos os serviços oferecidos por meio deste, sendo possível:
                         </p>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                           {[
-                            { letter: 'a', text: 'Acessar a área institucional do Site para conhecer um pouco mais sobre a Imobiliária;' },
+                            { letter: 'a', text: 'Acessar a área institucional do Site para conhecer um pouco mais sobre Emerson Antonio - Corretor de Imóveis;' },
                             { letter: 'b', text: 'Encomendar o seu imóvel, conforme as características que Você informar;' },
                             { letter: 'c', text: 'Pesquisar os imóveis urbanos e rurais disponíveis no Site para compra e locação;' },
-                            { letter: 'd', text: 'Cadastrar o seu próprio imóvel para venda por meio da Imobiliária; e' },
-                            { letter: 'e', text: 'Informar seus dados de contato para que a imobiliária lhe dê um atendimento direto.' },
+                            { letter: 'd', text: 'Cadastrar o seu próprio imóvel para venda por meio de Emerson Antonio - Corretor de Imóveis; e' },
+                            { letter: 'e', text: 'Informar seus dados de contato para que Emerson Antonio - Corretor de Imóveis lhe dê um atendimento direto.' },
                           ].map((item) => (
                             <li key={item.letter} className="flex items-start gap-3 p-3 bg-slate-50 border border-slate-200/80 rounded-xl">
                               <span className="w-6 h-6 rounded-lg bg-brand-100 text-brand-700 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
@@ -473,10 +473,10 @@ export default function PoliticasClient() {
                           <strong className="text-slate-800">3.2. Seus Dados:</strong> Você é e continuará sendo o titular e proprietário de todos os dados, submetidos e/ou compartilhados no Site por Você (“Seus Dados”) bem como será o exclusivo responsável por eles.
                         </p>
                         <p>
-                          <strong className="text-slate-800">3.3. Legalidade dos Seus Dados:</strong> A Imobiliária não se obriga a processar ou tratar quaisquer dos Seus Dados se houver razões para crer que tal processamento ou tratamento possa imputá-la qualquer infração de qualquer lei aplicável ou que o Site esteja sendo utilizado, sob o seu critério exclusivo, para quaisquer fins ilegais, ilícitos ou contrários à moralidade.
+                          <strong className="text-slate-800">3.3. Legalidade dos Seus Dados:</strong> Emerson Antonio - Corretor de Imóveis não se obriga a processar ou tratar quaisquer dos Seus Dados se houver razões para crer que tal processamento ou tratamento possa imputar-lhe qualquer infração de qualquer lei aplicável ou que o Site esteja sendo utilizado, sob o seu critério exclusivo, para quaisquer fins ilegais, ilícitos ou contrários à moralidade.
                         </p>
                         <p>
-                          <strong className="text-slate-800">3.4. Armazenamento:</strong> A Imobiliária não presta e o Site não constitui serviço de armazenamento, portanto, a Imobiliária não possui qualquer obrigação de armazenar, reter ou fornecer a Você ou a quaisquer terceiros cópia de Seus Dados ou qualquer conteúdo.
+                          <strong className="text-slate-800">3.4. Armazenamento:</strong> Emerson Antonio - Corretor de Imóveis não presta e o Site não constitui serviço de armazenamento, portanto, Emerson Antonio - Corretor de Imóveis não possui qualquer obrigação de armazenar, reter ou fornecer a Você ou a quaisquer terceiros cópia de Seus Dados ou qualquer conteúdo.
                         </p>
                         <p>
                           <strong className="text-slate-800">3.5. Não mineração:</strong> É vedada a utilização de softwares de mineração de dados no Site, de qualquer tipo ou espécie, além de outro aqui não tipificado, que atue de modo similar.
@@ -559,7 +559,7 @@ export default function PoliticasClient() {
                               5.1.2. Alerta de Insegurança
                             </div>
                             <p className="text-xs text-amber-800 leading-relaxed text-justify">
-                              Caso o navegador não apresente os certificados e/ou retorne com a mensagem de que o acesso não é seguro, interrompa imediatamente o uso do Site e comunique a Imobiliária para que as devidas providências sejam tomadas.
+                              Caso o navegador não apresente os certificados e/ou retorne com a mensagem de que o acesso não é seguro, interrompa imediatamente o uso do Site e comunique Emerson Antonio - Corretor de Imóveis para que as devidas providências sejam tomadas.
                             </p>
                           </div>
                         </div>
@@ -592,7 +592,7 @@ export default function PoliticasClient() {
                       </h3>
                       <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
-                          <strong className="text-slate-800">7.1. Canais de Atendimento:</strong> Você poderá utilizar os Canais de Atendimento da Imobiliária disponibilizados no Site toda vez que presenciar ou verificar algum conteúdo impróprio no Site, seja ele notadamente ilícito ou contrário às regras de uso estipuladas nestes Termos.
+                          <strong className="text-slate-800">7.1. Canais de Atendimento:</strong> Você poderá utilizar os Canais de Atendimento de Emerson Antonio - Corretor de Imóveis disponibilizados no Site toda vez que presenciar ou verificar algum conteúdo impróprio no Site, seja ele notadamente ilícito ou contrário às regras de uso estipuladas nestes Termos.
                         </p>
                         <p>
                           <strong className="text-slate-800">7.2. Atualização dos Termos:</strong> Estes Termos estão sujeitos a constante melhoria e aprimoramento. Assim, nos reservamos o direito de modificá-los a qualquer momento, conforme sua finalidade ou conveniência, tal qual para adequação e conformidade legal de disposição de lei ou norma que tenha força jurídica equivalente, incluindo as de órgãos reguladores, ou seja, Você deverá verificá-lo sempre que efetuar o acesso no Site.
@@ -607,7 +607,7 @@ export default function PoliticasClient() {
                           <strong className="text-slate-800">7.4. Nulidade:</strong> Se alguma disposição destes Termos for julgada inaplicável ou sem efeito, o restante continuará a viger normalmente.
                         </p>
                         <p>
-                          <strong className="text-slate-800">7.5. Comunicação:</strong> Você reconhece que toda comunicação realizada por e-mail, telefone ou outros meios digitais é válida, eficaz e suficiente para a divulgação de qualquer assunto que se refira ao Site ou ao serviço que tenha solicitado que a Imobiliária o contatasse via estes canais de comunicação.
+                          <strong className="text-slate-800">7.5. Comunicação:</strong> Você reconhece que toda comunicação realizada por e-mail, telefone ou outros meios digitais é válida, eficaz e suficiente para a divulgação de qualquer assunto que se refira ao Site ou ao serviço que tenha solicitado que Emerson Antonio - Corretor de Imóveis o contatasse via estes canais de comunicação.
                         </p>
                         <p>
                           <strong className="text-slate-800">7.6. Direcionamentos:</strong> O acesso ao Site poderá direcionar Você a outras plataformas que, em razão de suas particularidades, contarão com seus próprios Termos de Uso.
@@ -628,18 +628,18 @@ export default function PoliticasClient() {
                   )}
 
                   {/* 8. GLOSSÁRIO DOS TERMOS DE USO */}
-                  {matchesSearch('GLOSSÁRIO Imobiliária Canais de Atendimento Layout Link Usuários') && (
+                  {matchesSearch('GLOSSÁRIO Emerson Antonio Corretor de Imóveis Canais de Atendimento Layout Link Usuários') && (
                     <article id="termos-8" className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm scroll-mt-36">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">8.</span> GLOSSÁRIO DOS TERMOS DE USO
                       </h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
                         {[
-                          { term: 'i. Imobiliária', desc: 'Prestadora dos serviços oferecidos por meio do Site (Contrato Feito) e responsável pelo tratamento dos dados pessoais dos Usuários coletados por meio do Site (Controladora).' },
-                          { term: 'ii. Canais de Atendimento', desc: 'Meios de contato disponibilizados pela Imobiliária para esclarecimento de dúvidas, que pode ser consultado a qualquer momento no rodapé do Site.' },
+                          { term: 'i. Emerson Antonio - Corretor de Imóveis', desc: 'Prestador dos serviços oferecidos por meio do Site (Contrato Feito) e responsável pelo tratamento dos dados pessoais dos Usuários coletados por meio do Site (Controlador).' },
+                          { term: 'ii. Canais de Atendimento', desc: 'Meios de contato disponibilizados por Emerson Antonio - Corretor de Imóveis para esclarecimento de dúvidas, que podem ser consultados a qualquer momento no rodapé do Site.' },
                           { term: 'iii. Layout', desc: 'Conjunto compreendido entre aparência, design e fluxos do Site.' },
                           { term: 'iv. Link', desc: 'Terminologia para endereço de internet.' },
-                          { term: 'v. Usuários', desc: 'Pessoas naturais e/ou jurídicas relacionadas diretamente com a Imobiliária, que possuam uma conta de acesso e/ou acessem o Site com interesse nos serviços ofertados pela Imobiliária.' },
+                          { term: 'v. Usuários', desc: 'Pessoas naturais e/ou jurídicas relacionadas diretamente com Emerson Antonio - Corretor de Imóveis, que possuam uma conta de acesso e/ou acessem o Site com interesse nos serviços ofertados por Emerson Antonio - Corretor de Imóveis.' },
                         ].map((item) => (
                           <div key={item.term} className="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl">
                             <span className="font-bold text-slate-900 block mb-1 text-brand-700">
@@ -691,7 +691,7 @@ export default function PoliticasClient() {
                   </div>
 
                   {/* 2. QUEM SOMOS */}
-                  {matchesSearch('Quem somos Imobiliária Contrato Feito Controladora e Operadora Usuário') && (
+                  {matchesSearch('Quem somos Emerson Antonio Corretor de Imóveis Contrato Feito Controlador e Operador Usuário') && (
                     <article id="priv-2" className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm scroll-mt-36">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
                         <span className="text-brand-600">2.</span> QUEM SOMOS
@@ -700,10 +700,10 @@ export default function PoliticasClient() {
                         <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
                           <div className="flex items-center gap-2 font-bold text-slate-900 mb-2">
                             <Building2 size={16} className="text-brand-600" />
-                            Imobiliária (Contrato Feito)
+                            Emerson Antonio - Corretor de Imóveis (Contrato Feito)
                           </div>
                           <p className="text-slate-600 leading-relaxed text-xs sm:text-sm text-justify">
-                            Prestadora dos serviços, desenvolvedora do CRM próprio e única responsável pelo controle e tratamento dos dados pessoais dos Usuários coletados por meio do Site (atuando como <strong>Controladora e Operadora</strong>).
+                            Prestador dos serviços, responsável pelo sistema próprio e único responsável pelo controle e tratamento dos dados pessoais dos Usuários coletados por meio do Site (atuando como <strong>Controlador e Operador</strong>).
                           </p>
                         </div>
 
@@ -713,7 +713,7 @@ export default function PoliticasClient() {
                             Usuário
                           </div>
                           <p className="text-slate-600 leading-relaxed text-xs sm:text-sm text-justify">
-                            Indivíduos relacionados diretamente com a Imobiliária e que acessam o Site (“Você”) com interesse nos serviços ofertados pela Imobiliária.
+                            Indivíduos relacionados diretamente com Emerson Antonio - Corretor de Imóveis e que acessam o Site (“Você”) com interesse nos serviços ofertados por Emerson Antonio - Corretor de Imóveis.
                           </p>
                         </div>
                       </div>
@@ -728,7 +728,7 @@ export default function PoliticasClient() {
                       </h3>
                       <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
-                          <strong className="text-slate-800">3.1. Como a Imobiliária coleta os Dados:</strong> Os Dados, incluindo Dados Pessoais, poderão ser coletados quando Você os submete ou quando Você interage com o Site, o que inclui:
+                          <strong className="text-slate-800">3.1. Como Emerson Antonio - Corretor de Imóveis coleta os Dados:</strong> Os Dados, incluindo Dados Pessoais, poderão ser coletados quando Você os submete ou quando Você interage com o Site, o que inclui:
                         </p>
 
                         {/* Detalhamento visual dos dados coletados */}
@@ -748,7 +748,7 @@ export default function PoliticasClient() {
                               <ul className="list-disc pl-4 space-y-1">
                                 <li>Identificar e autenticar Você;</li>
                                 <li>Viabilizar o seu acesso aos produtos e serviços oferecidos através do Site;</li>
-                                <li>Atendimento direto pelos corretores da Imobiliária, quando solicitado através do Site.</li>
+                                <li>Atendimento direto por Emerson Antonio - Corretor de Imóveis, quando solicitado através do Site.</li>
                               </ul>
                             </div>
                           </div>
@@ -774,11 +774,11 @@ export default function PoliticasClient() {
                         </div>
 
                         <p className="text-xs sm:text-sm">
-                          <strong className="text-slate-800">3.1.1. Coleta por outros meios:</strong> Além dos Dados listados acima, a Imobiliária também poderá coletar Dados Pessoais por outros meios além do Site, para se informar de todo o tratamento realizado pela Imobiliária, Você deverá contatá-la diretamente.
+                          <strong className="text-slate-800">3.1.1. Coleta por outros meios:</strong> Além dos Dados listados acima, Emerson Antonio - Corretor de Imóveis também poderá coletar Dados Pessoais por outros meios além do Site; para se informar de todo o tratamento realizado por Emerson Antonio - Corretor de Imóveis, Você deverá contatá-lo diretamente.
                         </p>
 
                         <p>
-                          <strong className="text-slate-800">3.2. Dados necessários:</strong> Os serviços prestados através do Site dependem diretamente de alguns Dados informados, principalmente Dados cadastrais. Caso você opte por não fornecer à Imobiliária alguns desses Dados, a Imobiliária ficará impossibilitada de prestar total ou parcialmente os seus serviços a Você.
+                          <strong className="text-slate-800">3.2. Dados necessários:</strong> Os serviços prestados através do Site dependem diretamente de alguns Dados informados, principalmente Dados cadastrais. Caso você opte por não fornecer a Emerson Antonio - Corretor de Imóveis alguns desses Dados, Emerson Antonio - Corretor de Imóveis ficará impossibilitado de prestar total ou parcialmente os seus serviços a Você.
                         </p>
 
                         <p>
@@ -786,11 +786,11 @@ export default function PoliticasClient() {
                         </p>
 
                         <p className="text-xs sm:text-sm pl-4 border-l-2 border-slate-300">
-                          <strong className="text-slate-800">3.3.1. Recusa de Tratamento Ilegítimo:</strong> Da mesma forma, a Imobiliária não é obrigada a processar ou tratar quaisquer dos seus Dados se houver razões para crer que tal processamento ou tratamento possa imputar qualquer infração de qualquer lei aplicável, ou se Você estiver utilizando o Site para quaisquer fins ilegais, ilícitos ou contrários à moralidade.
+                          <strong className="text-slate-800">3.3.1. Recusa de Tratamento Ilegítimo:</strong> Da mesma forma, Emerson Antonio - Corretor de Imóveis não é obrigado a processar ou tratar quaisquer dos seus Dados se houver razões para crer que tal processamento ou tratamento possa imputar qualquer infração de qualquer lei aplicável, ou se Você estiver utilizando o Site para quaisquer fins ilegais, ilícitos ou contrários à moralidade.
                         </p>
 
                         <p>
-                          <strong className="text-slate-800">3.4. Base de Dados:</strong> A base de dados formada por meio da coleta de Dados é de propriedade da imobiliária e está sob a responsabilidade desta, sendo que seu uso, acesso e compartilhamento, quando necessários, serão feitos dentro dos limites e propósitos dos negócios descritos nesta Política.
+                          <strong className="text-slate-800">3.4. Base de Dados:</strong> A base de dados formada por meio da coleta de Dados é de propriedade de Emerson Antonio - Corretor de Imóveis e está sob a responsabilidade deste, sendo que seu uso, acesso e compartilhamento, quando necessários, serão feitos dentro dos limites e propósitos dos negócios descritos nesta Política.
                         </p>
 
                         {/* Cookies Box */}
@@ -815,15 +815,15 @@ export default function PoliticasClient() {
                     </article>
                   )}
 
-                  {/* 4. COMO A IMOBILIÁRIA PODE COMPARTILHAR DADOS E INFORMAÇÕES */}
+                  {/* 4. COMO EMERSON ANTONIO - CORRETOR DE IMÓVEIS PODE COMPARTILHAR DADOS E INFORMAÇÕES */}
                   {matchesSearch('compartilhar dados informações autoridades judiciais movimentações societárias') && (
                     <article id="priv-4" className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm scroll-mt-36">
                       <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
-                        <span className="text-brand-600">4.</span> COMO A IMOBILIÁRIA PODE COMPARTILHAR DADOS E INFORMAÇÕES
+                        <span className="text-brand-600">4.</span> COMO EMERSON ANTONIO - CORRETOR DE IMÓVEIS PODE COMPARTILHAR DADOS E INFORMAÇÕES
                       </h3>
                       <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p className="font-semibold text-slate-800">
-                          4.1. Hipóteses de compartilhamento dos Dados. Os Dados coletados e as atividades registradas podem ser compartilhados pela imobiliária:
+                          4.1. Hipóteses de compartilhamento dos Dados. Os Dados coletados e as atividades registradas podem ser compartilhados por Emerson Antonio - Corretor de Imóveis:
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                           <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
@@ -852,7 +852,7 @@ export default function PoliticasClient() {
                             </span>
                             <strong className="text-slate-900 block mb-1 text-xs sm:text-sm">Hipóteses Específicas</strong>
                             <p className="text-xs text-slate-600 leading-relaxed text-justify">
-                              Para hipóteses específicas que, quando aplicáveis, serão informadas diretamente pela Imobiliária.
+                              Para hipóteses específicas que, quando aplicáveis, serão informadas diretamente por Emerson Antonio - Corretor de Imóveis.
                             </p>
                           </div>
                         </div>
@@ -881,14 +881,14 @@ export default function PoliticasClient() {
                         </p>
                         <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-xs sm:text-sm text-slate-700 space-y-2 text-justify">
                           <p>
-                            <strong className="text-slate-900">5.4.1. Responsabilidade sobre sites terceiros:</strong> Caberá a Você ler as Políticas de Privacidade e Tratamento de Dados de tais portais ou plataformas fora do Site, sendo de sua responsabilidade aceitá-la ou rejeitá-la. A Imobiliária não é responsável pelas Políticas de Privacidade e Tratamento de Dados de terceiros e nem pelo conteúdo de quaisquer websites ou serviços ligados a ambientes que não sejam o do Site.
+                            <strong className="text-slate-900">5.4.1. Responsabilidade sobre sites terceiros:</strong> Caberá a Você ler as Políticas de Privacidade e Tratamento de Dados de tais portais ou plataformas fora do Site, sendo de sua responsabilidade aceitá-la ou rejeitá-la. Emerson Antonio - Corretor de Imóveis não é responsável pelas Políticas de Privacidade e Tratamento de Dados de terceiros e nem pelo conteúdo de quaisquer websites ou serviços ligados a ambientes que não sejam o do Site.
                           </p>
                           <p>
                             <strong className="text-slate-900">5.4.2. Serviços de parceiros:</strong> Alguns parceiros comerciais, eventualmente, podem oferecer serviços por meio de funcionalidades ou sites que podem ser acessados a partir do Site. Os Dados fornecidos por Você a estes parceiros serão de responsabilidade destes, estando assim sujeitos às suas próprias práticas de coleta e uso de dados.
                           </p>
                         </div>
                         <p>
-                          <strong className="text-slate-800">5.5. Processamento por terceiros sob diretriz da Imobiliária:</strong> Caso empresas terceirizadas realizem o Tratamento em nome da Imobiliária de quaisquer Dados Pessoais coletados por meio do Site, as mesmas respeitarão as condições aqui estipuladas e as normas de segurança da informação, obrigatoriamente.
+                          <strong className="text-slate-800">5.5. Processamento por terceiros sob diretriz de Emerson Antonio - Corretor de Imóveis:</strong> Caso empresas terceirizadas realizem o Tratamento em nome de Emerson Antonio - Corretor de Imóveis de quaisquer Dados Pessoais coletados por meio do Site, as mesmas respeitarão as condições aqui estipuladas e as normas de segurança da informação, obrigatoriamente.
                         </p>
                       </div>
                     </article>
@@ -902,13 +902,13 @@ export default function PoliticasClient() {
                       </h3>
                       <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
-                          <strong className="text-slate-800">6.1. Definição do Armazenamento:</strong> Os Dados Pessoais coletados e os registros de atividades são armazenados conforme definido pela Imobiliária. Caso tenha alguma dúvida, entre em contato diretamente com a Imobiliária.
+                          <strong className="text-slate-800">6.1. Definição do Armazenamento:</strong> Os Dados Pessoais coletados e os registros de atividades são armazenados conforme definido por Emerson Antonio - Corretor de Imóveis. Caso tenha alguma dúvida, entre em contato diretamente com Emerson Antonio - Corretor de Imóveis.
                         </p>
                         <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex items-start gap-3">
                           <Server size={20} className="text-brand-600 shrink-0 mt-0.5" />
                           <p className="text-xs sm:text-sm text-slate-700 text-justify">
                             <strong className="text-slate-900 block mb-1">6.2. Infraestrutura e Cloud Computing:</strong>
-                            Os Dados coletados serão armazenados no banco de dados da Imobiliária, em servidores localizados no Brasil, bem como em ambiente de uso de recursos ou servidores na nuvem (<em>cloud computing</em>), o que poderá exigir uma transferência e/ou processamento destes Dados fora do Brasil, sempre observando níveis adequados de segurança da informação.
+                            Os Dados coletados serão armazenados no banco de dados de Emerson Antonio - Corretor de Imóveis, em servidores localizados no Brasil, bem como em ambiente de uso de recursos ou servidores na nuvem (<em>cloud computing</em>), o que poderá exigir uma transferência e/ou processamento destes Dados fora do Brasil, sempre observando níveis adequados de segurança da informação.
                           </p>
                         </div>
                       </div>
@@ -923,7 +923,7 @@ export default function PoliticasClient() {
                       </h3>
                       <div className="space-y-4 text-slate-600 text-sm leading-relaxed text-justify">
                         <p>
-                          <strong className="text-slate-800">7.1. Seus Direitos Básicos:</strong> Você poderá solicitar à Imobiliária a confirmação da existência de tratamento de Dados Pessoais, além da exibição ou retificação de seus Dados Pessoais.
+                          <strong className="text-slate-800">7.1. Seus Direitos Básicos:</strong> Você poderá solicitar a Emerson Antonio - Corretor de Imóveis a confirmação da existência de tratamento de Dados Pessoais, além da exibição ou retificação de seus Dados Pessoais.
                         </p>
 
                         {/* Cards de Direitos do Titular */}
@@ -934,7 +934,7 @@ export default function PoliticasClient() {
                             </div>
                             <strong className="text-slate-900 text-xs sm:text-sm block mb-1">Limitação</strong>
                             <p className="text-[11px] text-slate-600 leading-relaxed text-justify">
-                              Requerer a limitação do uso de seus Dados Pessoais tratados pela Imobiliária.
+                              Requerer a limitação do uso de seus Dados Pessoais tratados por Emerson Antonio - Corretor de Imóveis.
                             </p>
                           </div>
 
@@ -992,7 +992,7 @@ export default function PoliticasClient() {
                           <strong className="text-slate-800">8.2. Inaplicabilidade:</strong> Caso algum ponto desta Política seja considerado inaplicável por Autoridade de Dados ou judicial, as demais condições permanecerão em pleno vigor e efeito.
                         </p>
                         <p>
-                          <strong className="text-slate-800">8.3. Canais de Atendimento:</strong> Em caso de qualquer dúvida com relação ao Tratamento de seus Dados Pessoais, você poderá entrar em contato diretamente com a Imobiliária.
+                          <strong className="text-slate-800">8.3. Canais de Atendimento:</strong> Em caso de qualquer dúvida com relação ao Tratamento de seus Dados Pessoais, você poderá entrar em contato diretamente com Emerson Antonio - Corretor de Imóveis.
                         </p>
                         
                         <div className="p-4 bg-slate-900 text-white rounded-2xl space-y-2 text-justify">
@@ -1003,7 +1003,7 @@ export default function PoliticasClient() {
                             Essa Política será interpretada segundo a legislação brasileira, no idioma português, sendo eleito o foro do seu domicílio para dirimir qualquer controvérsia que envolva este documento, salvo ressalva específica de competência pessoal, territorial ou funcional pela legislação aplicável.
                           </p>
                           <p className="text-xs text-slate-400 pt-2 border-t border-slate-800">
-                            <strong>8.4.1. Usuários no exterior:</strong> Você, caso não possua domicílio no Brasil, e em razão dos serviços oferecidos pela Imobiliária apenas em território nacional, se submete à legislação brasileira, concordando, portanto, que em havendo litígio a ser solucionado, a ação deverá ser proposta no <strong>Foro da Comarca de Álvares Florence/SP</strong>.
+                            <strong>8.4.1. Usuários no exterior:</strong> Você, caso não possua domicílio no Brasil, e em razão dos serviços oferecidos por Emerson Antonio - Corretor de Imóveis apenas em território nacional, se submete à legislação brasileira, concordando, portanto, que em havendo litígio a ser solucionado, a ação deverá ser proposta no <strong>Foro da Comarca de Álvares Florence/SP</strong>.
                           </p>
                         </div>
                       </div>
@@ -1021,7 +1021,7 @@ export default function PoliticasClient() {
                       </p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs sm:text-sm">
                         {[
-                          { term: 'Controlador e Operador de Dados', desc: 'Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões e a execução técnica referente ao tratamento de dados pessoais. Neste caso, a própria Imobiliária (Contrato Feito).' },
+                          { term: 'Controlador e Operador de Dados', desc: 'Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões e a execução técnica referente ao tratamento de dados pessoais. Neste caso, o próprio Emerson Antonio - Corretor de Imóveis (Contrato Feito).' },
                           { term: 'Dados', desc: 'Quaisquer informações inseridas, tratadas ou transmitidas através do Site.' },
                           { term: 'Dados Pessoais', desc: 'Dados relacionados a pessoa natural identificada ou identificável.' },
                           { term: 'Anonimização', desc: 'Utilização de meios técnicos razoáveis e disponíveis no momento do Tratamento, por meio dos quais um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo.' },

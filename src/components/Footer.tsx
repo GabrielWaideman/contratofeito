@@ -6,22 +6,30 @@ export default function Footer() {
   return (
     <footer id="contato" className="bg-dark-950 pt-20 pb-28 md:pb-10 border-t border-dark-800">
       <div className="container mx-auto px-4 md:px-8">
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_0.8fr_1.4fr_0.9fr] gap-12 mb-16">
-          
+
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 mb-6 group">
+            <Link href="/" className="inline-flex items-center gap-2 mb-3 group">
               <img
                 src="/logo.png"
                 alt="Contrato Feito Logo"
                 className="h-20 w-auto object-contain"
               />
             </Link>
-            <p className="text-gray-400 mb-6 text-sm leading-relaxed">
-              Transformando a maneira como você compra e vende imóveis em Álvares Florence e região. Foco exclusivo, transparência total.
+            <div className="mb-4">
+              <p className="text-sm md:text-base tracking-wide">
+                <span className="text-white font-bold">Emerson Antonio</span>
+                <span className="text-brand-500 font-bold mx-2">|</span>
+                <span className="text-slate-300 font-semibold">Gestão Imobiliária</span>
+              </p>
+            </div>
+            <p className="text-gray-400 mb-5 text-sm leading-relaxed">
+              Transformando a maneira como você compra e vende imóveis em Álvares Florence e região.
             </p>
-            <div className="text-gray-300 font-bold text-sm bg-dark-900 border border-dark-800 inline-block px-4 py-2 rounded-lg">
+            <div className="inline-flex items-center gap-2 text-white font-bold text-sm bg-dark-900 border border-brand-600/50 shadow-sm shadow-brand-950/50 px-4 py-2 rounded-lg">
+              <span className="w-2 h-2 rounded-full bg-brand-500"></span>
               CRECI-SP 246817F
             </div>
           </div>
@@ -74,7 +82,7 @@ export default function Footer() {
             <div className="flex gap-3 flex-wrap">
 
               {/* Instagram */}
-              <a href="https://www.instagram.com/contratofeitoimobiliaria/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-400 hover:bg-brand-600 hover:text-white transition-all">
+              <a href="https://www.instagram.com/emersonantonio_corretor/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-400 hover:bg-brand-600 hover:text-white transition-all">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -90,21 +98,21 @@ export default function Footer() {
               </a>
 
               {/* TikTok */}
-              <a href="https://www.tiktok.com/@contratofeitoimobiliaria" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-400 hover:bg-brand-600 hover:text-white transition-all">
+              <a href="https://www.tiktok.com/@emersonantonio_corretor" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-400 hover:bg-brand-600 hover:text-white transition-all">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.26 8.26 0 0 0 4.82 1.54V6.78a4.85 4.85 0 0 1-1.05-.09z"/>
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.26 8.26 0 0 0 4.82 1.54V6.78a4.85 4.85 0 0 1-1.05-.09z" />
                 </svg>
               </a>
 
               {/* YouTube */}
               <a href="https://www.youtube.com/@contratofeitoimobiliaria" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-brand-400 hover:bg-red-600 hover:text-white transition-all">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.6 12 3.6 12 3.6s-7.54 0-9.38.45A3.02 3.02 0 0 0 .5 6.19C.06 8.04 0 12 0 12s.06 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.4 12 20.4 12 20.4s7.54 0 9.38-.45a3.02 3.02 0 0 0 2.12-2.14C23.94 15.96 24 12 24 12s-.06-3.96-.5-5.81zM9.6 15.6V8.4l6.27 3.6-6.27 3.6z"/>
+                  <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.54 3.6 12 3.6 12 3.6s-7.54 0-9.38.45A3.02 3.02 0 0 0 .5 6.19C.06 8.04 0 12 0 12s.06 3.96.5 5.81a3.02 3.02 0 0 0 2.12 2.14C4.46 20.4 12 20.4 12 20.4s7.54 0 9.38-.45a3.02 3.02 0 0 0 2.12-2.14C23.94 15.96 24 12 24 12s-.06-3.96-.5-5.81zM9.6 15.6V8.4l6.27 3.6-6.27 3.6z" />
                 </svg>
               </a>
 
             </div>
-            
+
             <div className="mt-8">
               <p className="text-slate-400 text-sm mb-3">Inicie seu atendimento</p>
               <a
@@ -117,12 +125,12 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          
+
         </div>
 
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm text-center md:text-left">
-            &copy; {new Date().getFullYear()} Contrato Feito Imobiliária. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} Emerson Antonio | Contrato Feito. Todos os direitos reservados.
           </p>
           <div className="flex items-center gap-3">
             <p className="text-slate-500 text-sm">

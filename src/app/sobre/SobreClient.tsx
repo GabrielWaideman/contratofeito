@@ -128,7 +128,7 @@ export default function SobreClient() {
             {/* Badge */}
             <div className="inline-flex items-center gap-1.5 bg-white/85 backdrop-blur-sm border border-brand-200 text-brand-700 text-[9px] sm:text-xs font-bold uppercase tracking-widest px-2.5 sm:px-4 py-1 sm:py-2 rounded-full mb-3 sm:mb-6 shadow-sm">
               <Building2 size={11} className="text-brand-600" />
-              Contrato Feito Imobiliária Digital
+              Emerson Antonio | Gestão Imobiliária
             </div>
 
             {/* Título */}
@@ -138,7 +138,9 @@ export default function SobreClient() {
 
             {/* Subtítulo */}
             <p className="text-sm sm:text-lg md:text-xl text-slate-800 max-w-xl leading-relaxed mb-1 sm:mb-0 font-semibold drop-shadow-[0_1px_8px_rgba(255,255,255,0.95)]">
-              {data.heroSubtitle}
+              {data.heroSubtitle === 'Conheça a Contrato Feito — sua imobiliária digital em Álvares Florence e região.'
+                ? 'Contrato Feito: intermediação e segurança na compra e venda de imóveis com Emerson Antonio em Álvares Florence e região.'
+                : data.heroSubtitle}
             </p>
 
             {/* Stats bar */}

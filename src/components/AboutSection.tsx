@@ -41,7 +41,7 @@ export default function AboutSection() {
           <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
             <h2 className="text-brand-600 font-bold tracking-widest text-sm uppercase mb-3 border-l-4 border-brand-600 pl-3">Sobre Nós</h2>
             <h3 className="text-3xl md:text-5xl font-extrabold text-dark-900 leading-tight mb-6 uppercase tracking-tight">
-              Sua imobiliária digital em <span className="text-brand-600">Álvares Florence</span>
+              Gestão imobiliária em <span className="text-brand-600">Álvares Florence</span>
             </h3>
             
             <p className="text-lg text-slate-600 mb-6 leading-relaxed">
@@ -54,8 +54,8 @@ export default function AboutSection() {
 
             <div className="flex flex-col sm:flex-row gap-6">
               <div className="bg-white rounded-xl p-6 border-l-4 border-brand-600 shadow-lg flex-1">
-                <div className="text-brand-600 font-black text-3xl mb-1">CRECI</div>
-                <div className="text-dark-900 font-bold text-xl">246817F</div>
+                <div className="text-brand-600 font-black text-2xl md:text-3xl mb-1">CRECI 246817F</div>
+                <div className="text-dark-900 font-bold text-xl">Emerson Antonio</div>
                 <div className="text-slate-500 text-sm mt-2">Registro profissional ativo e regular.</div>
               </div>
               
